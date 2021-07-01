@@ -5,3 +5,6 @@ https://doc.traefik.io/traefik/v2.3/providers/file/
 
 
 https://www.tutorialspoint.com/apache_kafka/apache_kafka_basic_operations.htm
+
+
+docker stats -a --no-stream --format "{{.Container}}-{{.CPUPerc}}-{{.MemPerc}}"
