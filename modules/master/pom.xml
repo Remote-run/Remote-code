@@ -3,8 +3,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>no.ntnu.remotecode</groupId>
-    <artifactId>core</artifactId>
-    <name>remote-code core</name>
+    <artifactId>master</artifactId>
+    <name>remote-code master</name>
 
     <version>1.0</version>
     <packaging>war</packaging>

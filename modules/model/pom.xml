@@ -4,7 +4,7 @@
 
     <groupId>no.ntnu.remotecode</groupId>
     <artifactId>model</artifactId>
-    <name>remote-code model</name>
+    <name>remote-code models</name>
     <version>1.0</version>
 
     <properties>

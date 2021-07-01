@@ -48,8 +48,8 @@ RUN chown 1001:0 /aplication_storage/token_key
 USER 1001
 
 COPY --chown=1001:0 src/main/liberty/config /config/
-COPY --chown=1001:0 ./config/server.env /config/
-COPY --chown=1001:0 ./target/resource_jars /opt/ol/wlp/usr/shared/resources/
-COPY --chown=1001:0 ./target/core-1.0.war /config/apps
+COPY --chown=1001:0 core/config/server.env /config/
+COPY --chown=1001:0 core/target/resource_jars /opt/ol/wlp/usr/shared/resources/
+COPY --chown=1001:0 core/target/core-1.0.war /config/apps
 
 EXPOSE 9085 9448

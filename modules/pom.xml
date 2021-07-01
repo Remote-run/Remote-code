@@ -10,7 +10,9 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>auth</module>
         <module>model</module>
-        <module>core</module>
+        <module>master</module>
+        <module>slave</module>
     </modules>
 </project>
