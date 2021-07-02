@@ -1,6 +1,8 @@
 package no.ntnu.remotecode.slave.docker;
 
 
+import no.ntnu.remotecode.slave.docker.engineinterface.DockerCommand;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.nio.file.FileSystemException;

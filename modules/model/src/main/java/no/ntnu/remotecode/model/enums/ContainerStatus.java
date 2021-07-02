@@ -1,4 +1,4 @@
-package no.ntnu.remotecode.slave.model.enums;
+package no.ntnu.remotecode.model.enums;
 
 /**
  * The different states a container running in the system can have.

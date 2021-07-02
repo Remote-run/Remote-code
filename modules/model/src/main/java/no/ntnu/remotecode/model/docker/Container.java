@@ -1,12 +1,29 @@
-package no.ntnu.remotecode.slave.model;
+package no.ntnu.remotecode.model.docker;
 
-import no.ntnu.remotecode.slave.model.enums.ContainerStatus;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import no.ntnu.remotecode.model.Template;
+import no.ntnu.remotecode.model.enums.ContainerStatus;
 
+import javax.persistence.*;
+
+
+@Entity
+@Data
+@NoArgsConstructor
+@Inheritance(strategy = InheritanceType.JOINED)
+@Table(name = "container")
 public class Container {
+
+
+    @javax.persistence.Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private double Id;
 
     /**
      * The template used to create this container.
      */
+    @ManyToOne
     private Template containerTemplate;
 
     /**
@@ -23,6 +40,7 @@ public class Container {
     /**
      * The current run status of the container.
      */
+    @Enumerated(EnumType.STRING)
     private ContainerStatus containerStatus;
 
     /**

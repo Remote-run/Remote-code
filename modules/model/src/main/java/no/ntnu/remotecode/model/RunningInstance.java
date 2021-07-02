@@ -1,4 +1,6 @@
-package no.ntnu.remotecode.slave.model;
+package no.ntnu.remotecode.model;
+
+import no.ntnu.remotecode.model.docker.Container;
 
 import java.time.Instant;
 

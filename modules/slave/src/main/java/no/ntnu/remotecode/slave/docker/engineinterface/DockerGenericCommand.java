@@ -1,4 +1,6 @@
-package no.ntnu.remotecode.slave.docker;
+package no.ntnu.remotecode.slave.docker.engineinterface;
+
+import no.ntnu.remotecode.slave.docker.engineinterface.DockerCommand;
 
 import java.util.ArrayList;
 import java.util.Arrays;

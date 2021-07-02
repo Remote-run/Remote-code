@@ -1,4 +1,4 @@
-package no.ntnu.remotecode.slave.model;
+package no.ntnu.remotecode.model;
 
 public class ComputeNode {
 

@@ -1,5 +1,7 @@
 package no.ntnu.remotecode.slave.docker;
 
+import no.ntnu.remotecode.slave.docker.engineinterface.DockerCommand;
+
 import java.util.*;
 
 // todo: documentation here is shit
@@ -35,9 +37,8 @@ public class DockerRunCommand extends DockerCommand {
      * @param from the absolute path on the host machine or the volume to bind from
      * @param to   the absolute path on the container to mount the from dir/volume
      */
-    public DockerRunCommand addVolume(String from, String to) {
+    public void addVolume(String from, String to) {
         volumes.put(from, to);
-        return this;
     }
 
     /**
@@ -46,9 +47,8 @@ public class DockerRunCommand extends DockerCommand {
      * @param varName  the name of the env variable to set
      * @param varValue the value the the env variable to set
      */
-    public DockerRunCommand addEnvVariable(String varName, String varValue) {
+    public void addEnvVariable(String varName, String varValue) {
         envVariables.put(varName, varValue);
-        return this;
     }
 
     /**
@@ -56,9 +56,8 @@ public class DockerRunCommand extends DockerCommand {
      *
      * @param network The network used by the container.
      */
-    public DockerRunCommand setNetwork(String network) {
+    public void setNetwork(String network) {
         this.network = network;
-        return this;
     }
 
 
@@ -67,9 +66,8 @@ public class DockerRunCommand extends DockerCommand {
      *
      * @param commandParts the resource allocation parts of the command to set.
      */
-    public DockerRunCommand setResourceAllocationParts(List<String> commandParts) {
+    public void setResourceAllocationParts(List<String> commandParts) {
         this.resourceAllocationParts = commandParts;
-        return this;
     }
 
 
@@ -78,9 +76,8 @@ public class DockerRunCommand extends DockerCommand {
      *
      * @param image The image to build from.
      */
-    public DockerRunCommand setImage(String image) {
+    public void setImage(String image) {
         this.image = image;
-        return this;
     }
 
 
@@ -93,9 +90,8 @@ public class DockerRunCommand extends DockerCommand {
      *
      * @return The docker run command object
      */
-    public DockerRunCommand addContainerLabel(String labelKey, String labelValue) {
+    public void addContainerLabel(String labelKey, String labelValue) {
         this.labels.put(labelKey, labelValue);
-        return this;
     }
 
     /**

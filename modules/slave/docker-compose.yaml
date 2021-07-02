@@ -1,0 +1,29 @@
+version: '3.8'
+
+
+services:
+
+  worker:
+    container_name: slave
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+
+
+    environment:
+      PAYARA_ARG: "aa"
+
+
+
+    volumes:
+      - type: volume
+        source: $PWD/container_files
+        target: /remote_code_files/
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+
+
+    restart: unless-stopped
+
+
