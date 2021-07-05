@@ -4,6 +4,8 @@ public enum ContainerAction {
 
     CREATE,
 
+    START,
+
     STOP,
 
     DELETE,

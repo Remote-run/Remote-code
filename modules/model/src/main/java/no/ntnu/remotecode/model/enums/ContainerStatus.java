@@ -7,9 +7,9 @@ package no.ntnu.remotecode.model.enums;
  */
 public enum ContainerStatus {
     /**
-     * the container is requested, but is currnetly under construction
+     * the container is requested, but not created yet
      */
-    BUILDING,
+    REQUESTED,
 
     /**
      * The container is currently running, and maintaining some level of cpu usage

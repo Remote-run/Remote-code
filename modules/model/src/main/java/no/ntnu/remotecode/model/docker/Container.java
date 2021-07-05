@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import no.ntnu.remotecode.model.Template;
 import no.ntnu.remotecode.model.enums.ContainerStatus;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 
 
@@ -35,6 +36,7 @@ public class Container {
     /**
      * The user id of the user who created the container.
      */
+    @JsonbTransient
     private double containerOwnerId;
 
     /**

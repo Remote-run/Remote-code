@@ -1,4 +1,4 @@
-package no.ntnu.remotecode.slave.docker.engineinterface;
+package no.ntnu.remotecode.slave.docker;
 
 
 import java.io.BufferedReader;
@@ -94,18 +94,6 @@ public class DockerFunctions {
         return statusMap;
     }
 
-    /**
-     * Deletes any container or image to the provided ticket id using the normal naming conentions.
-     * same as calling
-     * DockerFunctons.removeContainer(Ticket.commonPrefix + ticketId);
-     * DockerFunctons.removeImage(Ticket.commonPrefix + ticketId);
-     *
-     * @param ticketId the id of the ticket to clean
-     */
-    public static void cleanTicket(UUID ticketId) {
-        DockerFunctions.removeContainer(Ticket.commonPrefix + ticketId);
-        DockerFunctions.removeImage(Ticket.commonPrefix + ticketId);
-    }
 
     /**
      * Deletes the container with the provided name

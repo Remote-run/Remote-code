@@ -1,10 +1,7 @@
 package no.ntnu.remotecode.slave.docker;
 
-import no.ntnu.remotecode.slave.docker.engineinterface.DockerCommand;
-
 import java.util.*;
 
-// todo: documentation here is shit
 
 /**
  * The default run command for a container. Can be configured
@@ -14,10 +11,14 @@ public class DockerRunCommand extends DockerCommand {
     private final HashMap<String, String> volumes = new HashMap<>();
     private final HashMap<String, String> envVariables = new HashMap<>();
     private final HashMap<String, String> labels = new HashMap<>();
+
     private List<String> resourceAllocationParts;
     private String image;
     private final String containerName;
     private String network;
+
+    private boolean detached = false;
+
 
     /**
      * Creates a new runCommand
@@ -28,8 +29,19 @@ public class DockerRunCommand extends DockerCommand {
     public DockerRunCommand(String image, String containerName) {
         this.image         = image;
         this.containerName = containerName;
-        this.network       = "host";
+        this.network       = "bridge";
     }
+
+
+    /**
+     * Sets whether or not the container will be detached when run.
+     *
+     * @param detached whether or not the container will be detached when run.
+     */
+    public void setDetached(boolean detached) {
+        this.detached = detached;
+    }
+
 
     /**
      * Adds a volume to the run command.
@@ -87,8 +99,6 @@ public class DockerRunCommand extends DockerCommand {
      *
      * @param labelKey   The key of the label to add.
      * @param labelValue The value to associate with the key
-     *
-     * @return The docker run command object
      */
     public void addContainerLabel(String labelKey, String labelValue) {
         this.labels.put(labelKey, labelValue);
@@ -107,6 +117,15 @@ public class DockerRunCommand extends DockerCommand {
         commandParts.add("--rm");
 
         commandParts.add("--name " + this.containerName);
+
+        if (this.detached) {
+            if (super.isBlocking() || super.isKeepError() || super.isKeepOutput()) {
+                throw new RuntimeException("Container set to keep operate on output but is set as blocking");
+            } else {
+                commandParts.add("-d");
+            }
+        }
+
 
         // compute resources
         if (this.resourceAllocationParts != null) {

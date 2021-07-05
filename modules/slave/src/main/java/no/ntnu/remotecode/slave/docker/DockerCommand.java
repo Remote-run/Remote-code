@@ -1,5 +1,8 @@
-package no.ntnu.remotecode.slave.docker.engineinterface;
+package no.ntnu.remotecode.slave.docker;
 
+
+import lombok.AccessLevel;
+import lombok.Getter;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,12 +22,16 @@ public abstract class DockerCommand {
     private File outputFile = null;
     private File errorFile = null;
 
+    @Getter(AccessLevel.PROTECTED)
     private boolean keepOutput = false;
+    @Getter(AccessLevel.PROTECTED)
     private boolean keepError = false;
 
     private BiConsumer<Process, Throwable> onComplete;
 
+    @Getter(AccessLevel.PROTECTED)
     private boolean isBlocking = false;
+
 
     private int timeoutSeconds = - 1;
     private Consumer<Process> onTimeout = null;
@@ -35,9 +42,9 @@ public abstract class DockerCommand {
      * @param timeoutSeconds the timeout in seconds for the process
      */
     public void setTimeout(int timeoutSeconds) {
-
         this.timeoutSeconds = timeoutSeconds;
     }
+
 
     /**
      * Sets the method to run if the processes run time exceeds the defined limit

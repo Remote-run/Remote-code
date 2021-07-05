@@ -8,3 +8,12 @@ https://www.tutorialspoint.com/apache_kafka/apache_kafka_basic_operations.htm
 
 
 docker stats -a --no-stream --format "{{.Container}}-{{.CPUPerc}}-{{.MemPerc}}"
+
+slaver er tilstandsløse og prøver kunn og oprette tilstanden som masteren spørr etter
+
+kafka mellinger:
+
+MASTER -> slave
+
+ny container status ønsket:
+    sender med en
