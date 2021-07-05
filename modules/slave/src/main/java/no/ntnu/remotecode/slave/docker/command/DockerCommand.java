@@ -1,4 +1,4 @@
-package no.ntnu.remotecode.slave.docker;
+package no.ntnu.remotecode.slave.docker.command;
 
 
 import lombok.AccessLevel;
@@ -33,7 +33,7 @@ public abstract class DockerCommand {
     private boolean isBlocking = false;
 
 
-    private int timeoutSeconds = - 1;
+    private int timeoutSeconds = -1;
     private Consumer<Process> onTimeout = null;
 
     /**
@@ -141,14 +141,14 @@ public abstract class DockerCommand {
         // it seems that if the io is not drained the process can block or even dedlock
         if (this.outputFile != null) {
             builder.redirectOutput(ProcessBuilder.Redirect.appendTo(outputFile));
-        } else if (! keepOutput) {
+        } else if (!keepOutput) {
             builder.redirectOutput(new File("/dev/null"));
         }
 
 
         if (this.errorFile != null) {
             builder.redirectError(ProcessBuilder.Redirect.appendTo(errorFile));
-        } else if (! keepError) {
+        } else if (!keepError) {
             builder.redirectError(new File("/dev/null"));
         }
 
@@ -166,7 +166,7 @@ public abstract class DockerCommand {
                 Process processCopy = process;
                 Thread t = new Thread(() -> {
                     try {
-                        if (! processCopy.waitFor(this.timeoutSeconds, TimeUnit.SECONDS)) {
+                        if (!processCopy.waitFor(this.timeoutSeconds, TimeUnit.SECONDS)) {
                             // if the timeout is reached before the process is complete
                             processCopy.destroy();
                             if (this.onTimeout != null) {

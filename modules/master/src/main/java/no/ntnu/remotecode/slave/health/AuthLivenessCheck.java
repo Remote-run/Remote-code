@@ -15,15 +15,14 @@ import java.lang.management.MemoryMXBean;
 @Liveness
 @ApplicationScoped
 public class AuthLivenessCheck implements HealthCheck {
+
     MemoryMXBean memBean = ManagementFactory.getMemoryMXBean();
     long memUsed = memBean.getHeapMemoryUsage().getUsed();
     long memMax = memBean.getHeapMemoryUsage().getMax();
 
     @Override
     public HealthCheckResponse call() {
-        return HealthCheckResponse.named("Auth Service Liveness Check")
-                                  .withData("memory used", memUsed)
-                                  .withData("memory max", memMax)
-                                  .status(memUsed < memMax * 0.9).build();
+        return HealthCheckResponse.named("Auth Service Liveness Check").withData("memory used", memUsed)
+                                  .withData("memory max", memMax).status(memUsed < memMax * 0.9).build();
     }
 }

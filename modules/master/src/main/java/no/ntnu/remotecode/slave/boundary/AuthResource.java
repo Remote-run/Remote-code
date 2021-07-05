@@ -37,15 +37,13 @@ public class AuthResource {
      * Returns http 401 response if not.
      *
      * @param usernamePasswordData the {@link UsernamePasswordData} object.
-     *
      * @return http 200 with the Json web token in the {@link HttpHeaders#AUTHORIZATION} of the response.
      */
     @POST
     @Path("login")
     @Produces(MediaType.APPLICATION_JSON)
     public Response login(
-            @Valid UsernamePasswordData usernamePasswordData
-    ) {
+            @Valid UsernamePasswordData usernamePasswordData) {
         Optional<String> loginToken = authService.getToken(usernamePasswordData);
 
         return loginToken.map(s -> Response.ok().header(HttpHeaders.AUTHORIZATION, "Bearer " + s))
@@ -58,15 +56,13 @@ public class AuthResource {
      * Change the password for the current logged in {@link AuthenticatedUser} to the values spesified in the provided {@link UserChangePasswordData}
      *
      * @param changPasswordData the {@link UserChangePasswordData} object.
-     *
      * @return http 200 on sucsess if wrong old password http 403 is returned
      */
     @PUT
     @Path("changepass")
     @Valid
     public Response changePassword(
-            @Valid UserChangePasswordData changPasswordData
-    ) {
+            @Valid UserChangePasswordData changPasswordData) {
         if (authService.changePassword(changPasswordData.getNewPassword(), changPasswordData.getOldPassword())) {
             return Response.ok().build();
         } else {
@@ -80,14 +76,13 @@ public class AuthResource {
      * This endpoint is used by other services not Users.
      *
      * @param newAuthUserData the {@link NewAuthUserData} object.
-     *
      * @return a new auth user object if successful null if not
      */
     @POST
     @Path("newuser")
     @RolesAllowed(value = {Group.CONTAINER_GROUP_NAME})
     public AuthenticatedUser newUser(NewAuthUserData newAuthUserData) {
-        if (! authService.isPrincipalInUse(newAuthUserData.getUserName())) {
+        if (!authService.isPrincipalInUse(newAuthUserData.getUserName())) {
             return authService.createUser(newAuthUserData).orElse(null);
         }
         return null;

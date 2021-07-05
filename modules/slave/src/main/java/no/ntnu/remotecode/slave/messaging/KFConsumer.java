@@ -1,21 +1,25 @@
 package no.ntnu.remotecode.slave.messaging;
 
+import com.google.gson.Gson;
+import no.ntnu.remotecode.model.docker.Container;
+import no.ntnu.remotecode.slave.ContainerManager;
+import no.ntnu.remotecode.slave.DebugLogger;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
-import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
-import org.apache.kafka.common.serialization.StringSerializer;
 
 import java.time.Duration;
 import java.util.List;
 import java.util.Properties;
 
 public class KFConsumer {
+
+    public static DebugLogger dbl = new DebugLogger(true);
+
     public static void run(List<String> topics) {
 
-        String topicName = "abc-test2";
+        ContainerManager containerManager = new ContainerManager();
 
         Properties props = new Properties();
 
@@ -51,9 +55,16 @@ public class KFConsumer {
                                   record.key(),
                                   record.value(),
                                   record.topic(),
-                                  record.headers().toString()
-                );
+                                  record.headers().toString());
+                if (record.key().equals("abcabc")) {
+                    dbl.log("fond match");
+                    Gson      gson      = new Gson();
+                    Container container = gson.fromJson(record.value(), Container.class);
+                    dbl.log("ok parse");
+                    containerManager.startContainer(container);
+                }
             });
+
             consumer.commitAsync();
 
             if (runnaway > 200) {

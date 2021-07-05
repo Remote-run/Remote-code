@@ -20,7 +20,7 @@ public class Template {
     @javax.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private double Id;
-   
+
     /**
      * The id of the admin user who created the template.
      */
@@ -33,9 +33,16 @@ public class Template {
     private String templateName;
 
     /**
-     * The docker file to build new template instances from.
+     * The name of the template dir containing the build docker file
      */
-    private String buildFileName;
+    private String buildDirName;
 
+    /**
+     * The name of the built image used for this template.
+     */
+    private String TemplateImageName;
+
+
+    private String gitCloneRepo;
 
 }

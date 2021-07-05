@@ -5,12 +5,11 @@ import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.StringSerializer;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.Properties;
-import java.util.UUID;
 
 public class KFProducer {
+
     public static void run(List<String> topics) {
         // Check arguments length value
         //        if (args.length == 0) {
@@ -56,17 +55,20 @@ public class KFProducer {
         //        props.put("value.serializer",
         //                  Class.forName("org.apache.kafka.common.serialization.StringSerializer")
         //        );
-        Producer<String, String> producer = new org.apache.kafka.clients.producer.KafkaProducer
-                <String, String>(props);
-
-        topics.forEach(s -> {
-            for (int i = 0; i < 10; i++) {
-                producer.send(new ProducerRecord<String, String>(s,
-                                                                 "ts" + UUID.randomUUID().toString(),
-                                                                 Instant.now().toString()
-                ), (metadata, exception) -> {System.out.println("sucsess " + metadata.toString());});
-            }
-        });
+        Producer<String, String> producer = new org.apache.kafka.clients.producer.KafkaProducer<String, String>(props);
+        ProducerRecord<String, String> producerRecord = new ProducerRecord<String, String>(topics.get(0),
+                                                                                           "abcabc",
+                                                                                           "{\"Id\":0.0,\"containerTemplate\":{\"Id\":0.0,\"creatorId\":1.0,\"templateName\":\"test-manual\",\"buildDirName\":\"test_tf_dir\",\"TemplateImageName\":\"testi-imagename\",\"gitCloneRepo\":\"https://github.com/Remote-run/remote-code-tf-test.git\"},\"containerName\":\"abc-test\",\"containerOwnerId\":2.0,\"containerStatus\":\"REQUESTED\",\"dataDirName\":\"test-dir-name\"}");
+        producer.send(producerRecord);
+        //        topics.forEach(s -> {
+        //            for (int i = 0; i < 10; i++) {
+        //                producer.send(new ProducerRecord<String, String>(s,
+        //                                                                 "ts" + UUID.randomUUID().toString(),
+        //                                                                 Instant.now().toString()), (metadata, exception) -> {
+        //                    System.out.println("sucsess " + metadata.toString());
+        //                });
+        //            }
+        //        });
         System.out.println("Message sent successfully");
         producer.close();
     }

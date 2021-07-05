@@ -61,7 +61,6 @@ public class AuthenticationService {
      * Util method checks if the auth {@link CredentialValidationResult} result is valid.
      *
      * @param result the result from a credential validation
-     *
      * @return {@code true} if the {@code CredentialValidationResult} is valid, {@code false} if not
      */
     protected boolean isAuthValid(CredentialValidationResult result) {
@@ -73,7 +72,6 @@ public class AuthenticationService {
      *
      * @param userId   the users id
      * @param password the users password
-     *
      * @return {@code true} if the login is valid, {@code false} if not
      */
     protected boolean isAuthValid(String userId, String password) {
@@ -86,7 +84,6 @@ public class AuthenticationService {
      *
      * @param userId   Users id
      * @param password Users password
-     *
      * @return the {@code CredentialValidationResult} result for this username password combination.
      */
     protected CredentialValidationResult getValidationResult(String userId, String password) {
@@ -99,7 +96,6 @@ public class AuthenticationService {
      * if not an empty {@code Optional} instance is returned.
      *
      * @param principal the principal to search for
-     *
      * @return optional containing the user.
      */
     public Optional<AuthenticatedUser> getUserFromPrincipal(String principal) {
@@ -121,7 +117,6 @@ public class AuthenticationService {
      * If the login fails an empty {@code Optional} instance is returned
      *
      * @param usernamePasswordData the {@link UsernamePasswordData} containing the login data
-     *
      * @return a {@link Optional} with the login token.
      */
     public Optional<String> getToken(UsernamePasswordData usernamePasswordData) {
@@ -130,13 +125,11 @@ public class AuthenticationService {
         if (userOptional.isPresent()) {
             var user = userOptional.get();
             var validationResult = getValidationResult(String.valueOf(user.getId()),
-                                                       usernamePasswordData.getPassword()
-            );
+                                                       usernamePasswordData.getPassword());
             if (isAuthValid(validationResult)) {
                 return Optional.of(keyService.generateNewJwtToken(usernamePasswordData.getUserName(),
                                                                   user.getId(),
-                                                                  validationResult.getCallerGroups()
-                ));
+                                                                  validationResult.getCallerGroups()));
             }
         }
 
@@ -148,7 +141,6 @@ public class AuthenticationService {
      * If no {@code AuthenticatedUser} with the provided id id found a empty {@code optional} is returned.
      *
      * @param userId the id of the user to find
-     *
      * @return an {@code Optional} containing the {@code AuthenticatedUser} with the provided id.
      */
     public Optional<AuthenticatedUser> getUserFromId(long userId) {
@@ -176,7 +168,6 @@ public class AuthenticationService {
      * Checks if the provided {@code principal} is in use.
      *
      * @param principal the principal to check
-     *
      * @return {@code true} if the principal is used {@code false} if not.
      */
     public boolean isPrincipalInUse(String principal) {
@@ -200,14 +191,12 @@ public class AuthenticationService {
      * the request is asumed to be erroneous and an empty {@code Optional} is returned.
      *
      * @param newAuthUserData the {@code NewAuthUserData} containing the new user data.
-     *
      * @return An {@code Optional} containing the new {@code AuthenticatedUser} if successful or {@code empty} if not.
      */
     public Optional<AuthenticatedUser> createUser(NewAuthUserData newAuthUserData) {
-        if (! isPrincipalInUse(newAuthUserData.getUserName()) && ! newAuthUserData.getGroups().isEmpty()) {
+        if (!isPrincipalInUse(newAuthUserData.getUserName()) && !newAuthUserData.getGroups().isEmpty()) {
             AuthenticatedUser user = new AuthenticatedUser(hasher.generate(newAuthUserData.getPassword().toCharArray()),
-                                                           newAuthUserData.getUserName()
-            );
+                                                           newAuthUserData.getUserName());
             if (newAuthUserData.getGroups().stream().noneMatch(Group::isValidGroupName)) {
                 log.severe("Invalig groop names recived");
                 return Optional.empty();
@@ -232,7 +221,6 @@ public class AuthenticationService {
      *
      * @param newPass the new password
      * @param oldPass the old password
-     *
      * @return {@code true} if password is changed {@code false} if not
      */
     public boolean changePassword(String newPass, String oldPass) {

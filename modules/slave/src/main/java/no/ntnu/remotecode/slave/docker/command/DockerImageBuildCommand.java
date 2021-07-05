@@ -1,4 +1,4 @@
-package no.ntnu.remotecode.slave.docker;
+package no.ntnu.remotecode.slave.docker.command;
 
 
 import java.io.File;
@@ -26,16 +26,13 @@ public class DockerImageBuildCommand extends DockerCommand {
      * @param imageName  The image name
      * @param buildDir   The context used in the build
      * @param dockerFile The docker file to build from
-     *
      * @throws FileNotFoundException If the docker file or the build context is not found.
      * @throws FileSystemException   If the docker file is a dir or the build context is a file.
      */
-    public DockerImageBuildCommand(String imageName,
-                                   File buildDir,
-                                   File dockerFile
-    ) throws FileNotFoundException, FileSystemException {
-        this.imageName  = imageName;
-        this.buildDir   = buildDir;
+    public DockerImageBuildCommand(
+            String imageName, File buildDir, File dockerFile) throws FileNotFoundException, FileSystemException {
+        this.imageName = imageName;
+        this.buildDir = buildDir;
         this.dockerFile = dockerFile;
 
         this.validateBuildDir();
@@ -81,9 +78,9 @@ public class DockerImageBuildCommand extends DockerCommand {
      * @throws FileSystemException   If the build dir is a file.
      */
     private void validateBuildDir() throws FileNotFoundException, FileSystemException {
-        if (! buildDir.exists()) {
+        if (!buildDir.exists()) {
             throw new FileNotFoundException("Docker build dir not found");
-        } else if (! buildDir.isDirectory()) {
+        } else if (!buildDir.isDirectory()) {
             throw new FileSystemException("Docker build dir is not a dir");
         }
     }
@@ -95,9 +92,9 @@ public class DockerImageBuildCommand extends DockerCommand {
      * @throws FileSystemException   If the docker file is a dir.
      */
     private void validateDockerfile() throws FileNotFoundException, FileSystemException {
-        if (! dockerFile.exists()) {
+        if (!dockerFile.exists()) {
             throw new FileNotFoundException("Docker file not found");
-        } else if (! dockerFile.isFile()) {
+        } else if (!dockerFile.isFile()) {
             throw new FileSystemException("Docker file is not a file");
         }
     }

@@ -79,7 +79,6 @@ public class KeyService {
      * @param principalName the user principal name
      * @param userId        the user id
      * @param groups        A set containing the group names the user is a member of
-     *
      * @return the base 64 encoded JWT sting containing the provided values.
      */
     public String generateNewJwtToken(String principalName, long userId, Set<String> groups) {
@@ -147,7 +146,6 @@ public class KeyService {
      * Tries to deserialize the {@link KeyPair} from the provided {@link File}.
      *
      * @param file the file to deserialize from.
-     *
      * @return the deserialized key pair
      * @throws IOException if error reading the key pair
      */
@@ -167,7 +165,6 @@ public class KeyService {
      *
      * @param object the keypair to serialize.
      * @param file   the file to serialize to.
-     *
      * @throws IOException error writing object
      */
     private void serializeKeyPairToFile(KeyPair object, String file) throws IOException {

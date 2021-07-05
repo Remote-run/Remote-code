@@ -47,18 +47,16 @@ public class AdminResource {
      * change the password for the {@link AuthenticatedUser} with the id defined in the provided {@link AdminChangePasswordData}
      *
      * @param adminChangePasswordData the {@link AdminChangePasswordData} containing the user id and the new password
-     *
      * @return http 200 if successful
      */
     @PATCH
     @Path("changepassword")
     public Response changePassword(
-            @Valid AdminChangePasswordData adminChangePasswordData
-    ) {
+            @Valid AdminChangePasswordData adminChangePasswordData) {
         Response.ResponseBuilder resp;
         boolean sucsess = adminService
                 .changeUserPassword(adminChangePasswordData.getUserId(), adminChangePasswordData.getNewPassword());
-        if (! sucsess) {
+        if (!sucsess) {
             resp = Response.ok("Could not find user").status(Response.Status.INTERNAL_SERVER_ERROR);
         } else {
             resp = Response.ok();

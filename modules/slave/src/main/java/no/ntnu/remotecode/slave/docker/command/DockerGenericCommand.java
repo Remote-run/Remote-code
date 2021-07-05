@@ -1,4 +1,4 @@
-package no.ntnu.remotecode.slave.docker;
+package no.ntnu.remotecode.slave.docker.command;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,6 +8,7 @@ import java.util.Arrays;
  * simple wrapper to the DockerCommand class to alow for simple commands like image list etc..
  */
 public class DockerGenericCommand extends DockerCommand {
+
     private final ArrayList<String> command = new ArrayList<>();
 
     /**

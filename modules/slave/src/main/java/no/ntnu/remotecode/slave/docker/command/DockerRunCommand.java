@@ -1,6 +1,9 @@
-package no.ntnu.remotecode.slave.docker;
+package no.ntnu.remotecode.slave.docker.command;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -19,6 +22,7 @@ public class DockerRunCommand extends DockerCommand {
 
     private boolean detached = false;
 
+    private boolean rmWhenStopped = true;
 
     /**
      * Creates a new runCommand
@@ -27,9 +31,9 @@ public class DockerRunCommand extends DockerCommand {
      * @param containerName the name to give the container while running
      */
     public DockerRunCommand(String image, String containerName) {
-        this.image         = image;
+        this.image = image;
         this.containerName = containerName;
-        this.network       = "bridge";
+        this.network = "bridge";
     }
 
 
@@ -92,6 +96,15 @@ public class DockerRunCommand extends DockerCommand {
         this.image = image;
     }
 
+    /**
+     * Sets whether or not to rm the container tmp volumes when stopped
+     * (default: <code>true</code>:
+     *
+     * @param rmWhenStopped
+     */
+    public void setRmWhenStopped(boolean rmWhenStopped) {
+        this.rmWhenStopped = rmWhenStopped;
+    }
 
     /**
      * Adds a label to set when running the container. if the label value is <code>null</code>
@@ -114,7 +127,11 @@ public class DockerRunCommand extends DockerCommand {
 
         commandParts.add("docker");
         commandParts.add("container run");
-        commandParts.add("--rm");
+
+        if (this.rmWhenStopped) {
+            commandParts.add("--rm");
+
+        }
 
         commandParts.add("--name " + this.containerName);
 

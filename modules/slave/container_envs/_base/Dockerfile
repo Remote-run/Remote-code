@@ -33,7 +33,7 @@ EXPOSE 80
 RUN mkdir /root/.ssh
 RUN ssh-keyscan github.com >> ~/.ssh/known_hosts
 
-CMD git clone $GIT_BASE_REPO && \
+CMD  git clone $GIT_BASE_REPO  &>2 /dev/null; \
   code-server \
     --bind-addr 0.0.0.0:80 \
     --auth  none \

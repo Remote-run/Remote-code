@@ -33,7 +33,6 @@ public class AdminService {
      *
      * @param userId      the id to change
      * @param newPassword the new password for the id
-     *
      * @return true if user is found and password changed otherwise false
      */
     public boolean changeUserPassword(long userId, String newPassword) {
