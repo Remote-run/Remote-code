@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.nio.file.FileSystemException;
 import java.util.List;
+import java.util.Map;
 
 public class DockerContainerService {
 
@@ -24,11 +25,35 @@ public class DockerContainerService {
     DockerImageService dockerImageService = new DockerImageService();
 
 
-    public boolean startContainer() {
-        return true;
+    public boolean startContainer(Container container) {
+        /*
+        1. check if the container is on this computer at all.
+            - if it is and is running return OK
+            - if it is and not running try to start, if sucsess return ok
+        2. If it is not on this computer build, start the container
+         */
+        String               containerName = container.getContainerName();
+        Map<String, Boolean> statusMap     = dockerBasicFunctions.getContainerStatuses();
+
+        if (statusMap.containsKey(containerName)) {
+            if (statusMap.get(containerName)) {
+                // if container exist and is running nothing have to be done so return ok
+                return true;
+            } else {
+                return dockerBasicFunctions.startContainer(containerName);
+            }
+        } else {
+            try {
+                return createContainer(container);
+
+            } catch (FileSystemException | FileNotFoundException | InterruptedException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
     }
 
-    public void createContainer(Container container) throws FileSystemException, FileNotFoundException, InterruptedException {
+    private boolean createContainer(Container container) throws FileSystemException, FileNotFoundException, InterruptedException {
         /*
         1. sjekk om tmplate dir sitt bilde e laget om ikke legg in en laging i køen
         2. sjekk om container diren e laget om ikke lag en, og putt inn template repo
@@ -58,9 +83,15 @@ public class DockerContainerService {
 
         runCommand.setDetached(true);
         //        runCommand.setDumpIO(true);
-
-        runCommand.run();
+        Process process  = runCommand.run();
+        int     exitCode = 1;
+        try {
+            exitCode = process.waitFor();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         dbl.log("started command");
+        return exitCode == 0;
     }
 
 }

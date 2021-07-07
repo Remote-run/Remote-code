@@ -7,7 +7,7 @@ public class ContainerStatus {
 
     private String containerName;
 
-    private ContainerStatus newContainerStatus;
+    private ContainerStatus containerStatus;
 
     private float cpuUsage;
 

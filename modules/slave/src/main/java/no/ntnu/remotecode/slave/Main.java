@@ -8,13 +8,10 @@ import com.google.gson.Gson;
 import no.ntnu.remotecode.model.Template;
 import no.ntnu.remotecode.model.docker.Container;
 import no.ntnu.remotecode.model.enums.ContainerStatus;
+import no.ntnu.remotecode.slave.docker.command.DockerFunctions;
 import no.ntnu.remotecode.slave.messaging.KFConsumer;
-import no.ntnu.remotecode.slave.messaging.KFProducer;
 
-import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.Map;
 
 //import KafkaProducer packages
 
@@ -24,16 +21,18 @@ import java.util.concurrent.TimeUnit;
 public class Main {
 
     public static void main(String[] args) throws ClassNotFoundException {
-        List<String>             topics   = List.of("new_tasks");
-        ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
-        executor.schedule(() -> KFProducer.run(topics), 10, TimeUnit.SECONDS);
-        KFConsumer.run(topics);
+        //        List<String>             topics   = List.of("new_tasks");
+        //        ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+        //        executor.schedule(() -> KFProducer.run(topics), 10, TimeUnit.SECONDS);
+        //        KFConsumer.run(topics);
 
         //                KFProducer.run(topics);
         //                System.out.println(ConsumerConfig.configDef().toEnrichedRst());
 
+        DockerFunctions      functions = new DockerFunctions();
+        Map<String, Boolean> ab        = functions.getContainerStatuses();
+        ab.forEach((s, aBoolean) -> System.out.printf("%s-%s\n", s, aBoolean));
 
-        //        manualDeployTest();
     }
 
 

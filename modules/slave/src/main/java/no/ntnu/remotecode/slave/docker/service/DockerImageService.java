@@ -66,7 +66,7 @@ public class DockerImageService {
 
     }
 
-    public boolean doImageExistLocally(String imageName) {
+    private boolean doImageExistLocally(String imageName) {
         List<String> localImages = dockerBasicFunctions.getLocalImageNames();
 
         return localImages.contains(imageName);

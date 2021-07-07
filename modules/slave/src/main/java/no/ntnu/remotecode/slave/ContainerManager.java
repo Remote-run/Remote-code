@@ -17,10 +17,8 @@ public class ContainerManager implements DockerInterface {
     private final IDockerBasicFunctions dockerFunctions = new DockerFunctions();
 
     public boolean startContainer(Container container) {
-
         try {
-            containerService.createContainer(container);
-
+            containerService.startContainer(container);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -28,17 +26,16 @@ public class ContainerManager implements DockerInterface {
     }
 
     public boolean stopContainer(Container container) {
-
         dockerFunctions.stopContainer(container.getContainerName());
         return true;
     }
 
     public void deleteContainer(Container container) {
-
+        dockerFunctions.deleteContainer(container.getContainerName());
     }
 
     public void getRunningContainerInfo(Container container) {
-
+        
     }
 
 
