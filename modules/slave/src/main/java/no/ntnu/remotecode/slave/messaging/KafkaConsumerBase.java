@@ -14,6 +14,7 @@ import java.time.Duration;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.function.BiConsumer;
@@ -23,7 +24,7 @@ public abstract class KafkaConsumerBase {
 
     public static DebugLogger dbl = new DebugLogger(true);
 
-    private ThreadPoolExecutor executor;
+    private ExecutorService executor;
     private Map<String, Consumer<ConsumerRecord<String, String>>> topicHandlers;
 
     private String kafkaHostAddress;

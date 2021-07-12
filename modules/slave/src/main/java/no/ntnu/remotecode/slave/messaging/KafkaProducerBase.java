@@ -1,13 +1,17 @@
 package no.ntnu.remotecode.slave.messaging;
 
+import no.ntnu.remotecode.slave.messaging.message.RemoteCodeMessage;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.StringSerializer;
 
-import java.util.List;
 import java.util.Properties;
 
+
+/**
+ * Singelton base for the cafka producer.
+ */
 public abstract class KafkaProducerBase {
 
     private KafkaProducerBase instance;
@@ -15,17 +19,23 @@ public abstract class KafkaProducerBase {
     public KafkaProducerBase getInstance() {
         if (instance == null) {
             instance = createInstance();
+            instance.generateProducer();
         }
         return instance;
     }
 
 
-    private String kafkaHostAddress;
-    private String producerId;
+    private String kafkaHostAddress = getKafkaHostAddress();
+    private String producerId = getProducerId();
 
     private Producer<String, String> producer;
 
     abstract protected KafkaProducerBase createInstance();
+
+
+    abstract protected String getKafkaHostAddress();
+
+    abstract protected String getProducerId();
 
 
     private void generateProducer() {
@@ -56,13 +66,15 @@ public abstract class KafkaProducerBase {
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
 
-        Producer<String, String> producer = new org.apache.kafka.clients.producer.KafkaProducer<String, String>(props);
-        producer.close();
+        this.producer = new org.apache.kafka.clients.producer.KafkaProducer<String, String>(props);
+    }
+
+    public synchronized void submitMessage(RemoteCodeMessage message) {
+        this.producer.send(message.getAsRecord());
     }
 
     public synchronized void submitMessage(String topic, String key, String message) {
-        ProducerRecord<String, String> newRecord = new ProducerRecord<String, String>(key, message);
-
+        ProducerRecord<String, String> newRecord = new ProducerRecord<String, String>(topic, key, message);
         this.producer.send(newRecord);
     }
 }

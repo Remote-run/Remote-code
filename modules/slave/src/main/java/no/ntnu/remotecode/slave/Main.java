@@ -9,7 +9,6 @@ import no.ntnu.remotecode.model.Template;
 import no.ntnu.remotecode.model.docker.Container;
 import no.ntnu.remotecode.model.enums.ContainerStatus;
 import no.ntnu.remotecode.slave.docker.command.DockerFunctions;
-import no.ntnu.remotecode.slave.messaging.KFConsumer;
 
 import java.util.Map;
 
@@ -57,7 +56,6 @@ public class Main {
         Gson gson = new Gson();
 
         System.out.println(gson.toJson(container));
-        return;
 
         //        DockerContainerService containerService = new DockerContainerService();
         //
