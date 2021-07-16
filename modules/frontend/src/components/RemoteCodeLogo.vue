@@ -5,8 +5,8 @@
     <h1 id="top">Remote</h1>
     <h1 id="bottom">Code</h1>
     <div id="spacer" :style="{height: spikeHeight }"/>
-    <div id="longspike" :style="abc"/>
-    <div id="shortspike" :style="abc"/>
+    <div id="longspike" :style="{width: spikeWidth}"/>
+    <div id="shortspike" :style="{width: spikeWidth}"/>
 
   </div>
 </template>
@@ -18,27 +18,20 @@ import { Prop } from 'vue-property-decorator'
 export default class RemoteCodeLogo extends Vue {
   @Prop({ default: 10 }) fontSize!: number;
   @Prop({ default: '10px' }) spikeHeight!: string;
-  // @Prop({ default: 20 }) colGap!: number;
-  // @Prop({ default: 20 }) rowGap!: number;
-
-  abc = {
-    // width: this.fontSize * 0.0055 + 'em'
-    width: 0.09 + 'em'
-  }
+  @Prop({ default: '0.1em' }) spikeWidth!: string;
 }
 </script>
 
 <style scoped lang="scss">
 
-$mainBlue: #00008f;
-$secondaryBlue: #0001db;
+@use "src/assets/main";
 
 .remote-code-logo {
   display: grid;
   width: fit-content;
 
   #longspike {
-    background-color: $secondaryBlue;
+    background-color: main.$blue2;
     //width: 20px;
     //height: 30px;
     grid-column: 3;
@@ -46,7 +39,7 @@ $secondaryBlue: #0001db;
   }
 
   #shortspike {
-    background-color: $secondaryBlue;
+    background-color: main.$blue2;
     //width: 20px;
     //height: 30px;
     grid-column: 2;
