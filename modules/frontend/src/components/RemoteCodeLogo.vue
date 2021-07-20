@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="remote-code-logo"
-       :style="{gridRowGap: fontSize * 0.03 + 'em', gridColumnGap: fontSize * 0.02 + 'em', fontSize: fontSize +'em'}">
+       :style="{gridRowGap: gap, gridColumnGap: gap, fontSize: fontSize}">
 
     <h1 id="top">Remote</h1>
     <h1 id="bottom">Code</h1>
@@ -9,7 +9,6 @@
     <div id="shortspike" :style="{width: spikeWidth}"/>
 
   </div>
-  <slot/>
 </template>
 
 <script lang="ts">
@@ -17,9 +16,10 @@ import { Vue } from 'vue-class-component'
 import { Prop } from 'vue-property-decorator'
 
 export default class RemoteCodeLogo extends Vue {
-  @Prop({ default: 10 }) fontSize!: number;
+  @Prop({ default: '5rem' }) fontSize!: string;
   @Prop({ default: '10px' }) spikeHeight!: string;
   @Prop({ default: '0.1em' }) spikeWidth!: string;
+  @Prop({ default: '10px' }) gap!: string;
 }
 </script>
 
@@ -30,19 +30,16 @@ export default class RemoteCodeLogo extends Vue {
 .remote-code-logo {
   display: grid;
   width: fit-content;
+  grid-template-rows: auto auto auto 1fr;
 
   #longspike {
     background-color: main.$blue2;
-    //width: 20px;
-    //height: 30px;
     grid-column: 3;
     grid-row: 1/3;
   }
 
   #shortspike {
     background-color: main.$blue2;
-    //width: 20px;
-    //height: 30px;
     grid-column: 2;
     grid-row: 1/4;
   }
@@ -53,16 +50,7 @@ export default class RemoteCodeLogo extends Vue {
   }
 
   h1 {
-    color: #707070;
-    font-family: 'Roboto', sans-serif;
-    margin: 0;
-    font-size: inherit;
-    text-align: right;
-
     line-height: 0.75;
-    //height: 30px;
-
-    //margin-bottom: auto;
 
     #top {
       grid-row: 2;

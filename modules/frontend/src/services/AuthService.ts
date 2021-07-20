@@ -20,7 +20,7 @@ class AuthServiceC {
     }
   }
 
-  public getIsAdmin () {
+  public isAdmin () {
     if (this.jwtObj == null) {
       return false
     }

@@ -17,6 +17,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -56,6 +57,10 @@ public class AuthenticationStartup {
     public void initialize() {
         this.persistUserGroups();
         this.createIfAbsent(adminUsername, adminPassword, List.of(Group.ADMIN_GROUP_NAME));
+        Map<String, String> env = System.getenv();
+        for (String envName : env.keySet()) {
+            System.out.format("%s=%s%n", envName, env.get(envName));
+        }
     }
 
     /**

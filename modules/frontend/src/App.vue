@@ -1,10 +1,13 @@
 <template>
-  <div v-if="isLoggedIn()">
-    aaa
+  <!--  <div id="app-display" v-if="isLoggedIn()">-->
+  <div id="app-display" v-if="true">
+    <SideNavigator/>
+    <router-view/>
+    <RemoteCodeLogo font-size="6rem" spike-height="8vh" spike-width="0.6rem" gap="2rem" class="login-logo"/>
   </div>
-  <div v-if="!isLoggedIn()">
-    <Login/>
-  </div>
+  <!--  <div v-if="!isLoggedIn()">-->
+  <!--    <Login/>-->
+  <!--  </div>-->
 </template>
 
 <script lang="ts">
@@ -19,10 +22,14 @@ import NewProjectDialoug from '@/components/NewProjectDialoug.vue'
 import { AuthService } from '@/services/AuthService'
 import CurrentProjects from '@/views/CurrentProjects.vue'
 import Login from '@/views/Login.vue'
+import SideNavigator from '@/components/SideNavigator.vue'
+import RemoteCodeLogo from '@/components/RemoteCodeLogo.vue'
 
 @Options({
 
   components: {
+    RemoteCodeLogo,
+    SideNavigator,
     Login,
     CurrentProjects,
     NewProjectDialoug,
@@ -46,6 +53,11 @@ export default class App extends Vue {
 
 @use "src/assets/main";
 
+body {
+  //background: #fcfcfc;
+  margin: 0;
+}
+
 #bipbop {
   display: flex;
   justify-content: center;
@@ -54,7 +66,7 @@ export default class App extends Vue {
 }
 
 #app {
-
+  height: 100vh;
   font-family: 'Roboto', Avenir, Helvetica, Arial, sans-serif;
   color: main.$gray1;
 
@@ -64,7 +76,9 @@ export default class App extends Vue {
   //color: #2c3e50;
 
   h1 {
-
+    margin: 0;
+    font-size: inherit;
+    text-align: right;
   }
 
   h2 {
@@ -77,8 +91,22 @@ export default class App extends Vue {
   h3 {
   }
 
-  label {
+  button {
 
+  }
+
+  label {
+    padding: 0;
+    margin: 0;
+    font-size: 2rem;
+    text-align: left;
+  }
+
+  input {
+    border-radius: 5px;
+    height: 1.3rem;
+    border: none;
+    box-shadow: main.$appBoxShadow;
   }
 
   hr {

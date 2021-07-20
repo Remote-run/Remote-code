@@ -26,6 +26,8 @@
 <script lang="ts">
 import { Vue } from 'vue-class-component'
 import { Prop } from 'vue-property-decorator'
+import { APP_ROUTES } from '@/router/Routes'
+import { AuthService } from '@/services/AuthService'
 
 export default class SideNavigator extends Vue {
   @Prop({ default: 10 }) fontSize!: number;
@@ -33,24 +35,29 @@ export default class SideNavigator extends Vue {
   @Prop({ default: '0.1em' }) spikeWidth!: string;
 
   selectedIndex = -1;
-  isAdmin = true;
 
   mounted () {
     this.selectedIndex = this.findSelectedNavLocation()
   }
 
   userNavItems = [
-    { title: 'test1', path: '/test1' },
-    { title: 'test2', path: '/test2' }
+    { title: 'Current projects', path: APP_ROUTES.CURENT_PROJECTS },
+    { title: 'Logg out', path: APP_ROUTES.LOGG_OUT }
   ]
 
   adminNavItems = [
-    { title: 'test1', path: '/test1' },
-    { title: 'test2', path: '/test2' }
+    { title: 'Current projects', path: APP_ROUTES.CURENT_PROJECTS },
+    { title: 'Current templates', path: APP_ROUTES.MY_TEMPLATES },
+    { title: 'New template', path: APP_ROUTES.NEW_TEMPLATE },
+    { title: 'Logg out', path: APP_ROUTES.LOGG_OUT }
   ]
 
   getNavItems (): { title: string, path: string }[] {
-    return this.userNavItems
+    if (AuthService.isAdmin()) {
+      return this.adminNavItems
+    } else {
+      return this.userNavItems
+    }
   }
 
   findSelectedNavLocation (): number {
