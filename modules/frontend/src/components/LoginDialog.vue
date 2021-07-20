@@ -1,16 +1,16 @@
 <template lang="html">
   <div class="login-form"
-       :style="{gridRowGap: fontSize * 0.03 + 'em', gridColumnGap: fontSize * 0.02 + 'em', fontSize: fontSize +'em'}">
+       :style="{gridRowGap: gap, gridColumnGap: gap}">
 
     <div id="longspike" :style="{width: spikeWidth }"/>
     <div id="shortspike" :style="{width: spikeWidth}"/>
     <div class="input-box" :style="{gridRow: '1/2', gridColumn: '3/4'}">
       <label class="input-label">Username</label>
-      <input type="text" id="username">
+      <input type="text">
     </div>
     <div class="input-box" :style="{gridRow: '2/3', gridColumn: '3/4'}">
       <label class="input-label">Password</label>
-      <input type="password" id="passwd">
+      <input type="password">
     </div>
     <div class="btn-box" :style="{gridRow: '3/4', gridColumn: '3/4'}">
       <button>login</button>
@@ -27,21 +27,21 @@ import * as restService from '@/services/RestService'
 import { AuthService } from '@/services/AuthService'
 
 export default class LoginDialog extends Vue {
-  @Prop({ default: 10 }) fontSize!: number;
   @Prop({ default: '10px' }) spikeHeight!: string;
   @Prop({ default: '0.1em' }) spikeWidth!: string;
+  @Prop({ default: '10px' }) gap!: string;
 
   private login (username: string, password: string) {
     restService.login(username, password).then(response => {
-        if (response.status === 200) {
-          const token = response.headers.Authorization
-          console.log(token)
-          AuthService.logIn(token)
-          // this.$router.push(this.navOnComplete)
-        } else {
-          this.onFailedLogin()
-        }
+      if (response.status === 200) {
+        const token = response.headers.Authorization
+        console.log(token)
+        AuthService.logIn(token)
+        // this.$router.push(this.navOnComplete)
+      } else {
+        this.onFailedLogin()
       }
+    }
     ).catch(reason => this.onLoginError(reason))
   }
 
@@ -65,15 +65,13 @@ export default class LoginDialog extends Vue {
 }
 
 .input-label {
-  padding: 0;
-  margin: 0;
-  font-size: 50px;
-  text-align: left;
+
 }
 
 .login-form {
   display: grid;
   width: fit-content;
+  grid-template-rows: auto auto auto 1fr;
 
   #longspike {
     background-color: main.$blue2;
