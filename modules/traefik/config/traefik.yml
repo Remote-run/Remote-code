@@ -55,8 +55,8 @@ certificatesResolvers:
       # Optional
       # Default: "https://acme-v02.api.letsencrypt.org/directory"
       #
-      #caServer: "https://acme-staging-v02.api.letsencrypt.org/directory"
-      caServer: "https://acme-v02.api.letsencrypt.org/directory"
+      caServer: "https://acme-staging-v02.api.letsencrypt.org/directory"
+      #      caServer: "https://acme-v02.api.letsencrypt.org/directory"
 
 
       # Preferred chain to use.

@@ -5,11 +5,11 @@
     <div id="longspike" :style="{width: spikeWidth }"/>
     <div id="shortspike" :style="{width: spikeWidth}"/>
     <div class="input-box" :style="{gridRow: '1/2', gridColumn: '3/4'}">
-      <h2 class="input-label">Username</h2>
+      <label class="input-label">Username</label>
       <input type="text" id="username">
     </div>
     <div class="input-box" :style="{gridRow: '2/3', gridColumn: '3/4'}">
-      <h2 class="input-label">Password</h2>
+      <label class="input-label">Password</label>
       <input type="password" id="passwd">
     </div>
     <div class="btn-box" :style="{gridRow: '3/4', gridColumn: '3/4'}">
@@ -23,43 +23,34 @@
 <script lang="ts">
 import { Vue } from 'vue-class-component'
 import { Prop } from 'vue-property-decorator'
+import * as restService from '@/services/RestService'
+import { AuthService } from '@/services/AuthService'
 
 export default class LoginDialog extends Vue {
   @Prop({ default: 10 }) fontSize!: number;
   @Prop({ default: '10px' }) spikeHeight!: string;
   @Prop({ default: '0.1em' }) spikeWidth!: string;
 
-  selectedIndex = -1;
-  isAdmin = true;
-
-  mounted () {
-    this.selectedIndex = this.findSelectedNavLocation()
-  }
-
-  userNavItems = [
-    { title: 'test1', path: '/test1' },
-    { title: 'test2', path: '/test2' }
-  ]
-
-  adminNavItems = [
-    { title: 'test1', path: '/test1' },
-    { title: 'test2', path: '/test2' }
-  ]
-
-  getNavItems (): { title: string, path: string }[] {
-    return this.userNavItems
-  }
-
-  findSelectedNavLocation (): number {
-    let currentPathIndex = -1
-    const currentPath = this.$route.path
-    const navList = this.getNavItems()
-    navList.forEach((value, index) => {
-      if (value.path === currentPath) {
-        currentPathIndex = index
+  private login (username: string, password: string) {
+    restService.login(username, password).then(response => {
+        if (response.status === 200) {
+          const token = response.headers.Authorization
+          console.log(token)
+          AuthService.logIn(token)
+          // this.$router.push(this.navOnComplete)
+        } else {
+          this.onFailedLogin()
+        }
       }
-    })
-    return currentPathIndex
+    ).catch(reason => this.onLoginError(reason))
+  }
+
+  private onLoginError (reason: string) {
+    console.log(reason)
+  }
+
+  private onFailedLogin () {
+    console.log('loginerror')
   }
 }
 </script>
@@ -83,7 +74,6 @@ export default class LoginDialog extends Vue {
 .login-form {
   display: grid;
   width: fit-content;
-  font-family: 'Roboto', sans-serif;
 
   #longspike {
     background-color: main.$blue2;

@@ -1,7 +1,7 @@
 package no.ntnu.remotecode.model.DTO.kafkamessage;
 
 import lombok.Data;
-import no.ntnu.remotecode.model.docker.Container;
+import no.ntnu.remotecode.model.Project;
 import no.ntnu.remotecode.model.enums.ContainerAction;
 
 
@@ -11,7 +11,7 @@ import no.ntnu.remotecode.model.enums.ContainerAction;
 @Data
 public class ContainerTask {
 
-    private Container container;
+    private Project project;
 
     private ContainerAction action;
 }

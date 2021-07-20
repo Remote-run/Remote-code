@@ -107,7 +107,6 @@
         </dependency>
 
 
-
     </dependencies>
 
 
@@ -159,7 +158,7 @@
                 <artifactId>liberty-maven-plugin</artifactId>
                 <version>3.3.4</version>
                 <configuration>
-                    <container>true</container>
+                    <project>true</project>
                     <skipDefaultPorts>true</skipDefaultPorts>
                     <dockerRunOpts>--network woldseth_network --add-host host.docker.internal:host-gateway
                     </dockerRunOpts>

@@ -6,7 +6,7 @@ package no.ntnu.remotecode.slave;
 
 import com.google.gson.Gson;
 import no.ntnu.remotecode.model.Template;
-import no.ntnu.remotecode.model.docker.Container;
+import no.ntnu.remotecode.model.Project;
 import no.ntnu.remotecode.model.enums.ContainerStatus;
 import no.ntnu.remotecode.slave.docker.command.DockerFunctions;
 
@@ -44,18 +44,18 @@ public class Main {
         template.setTemplateImageName("testi-imagename");
         template.setGitCloneRepo("https://github.com/Remote-run/remote-code-tf-test.git");
 
-        Container container = new Container();
+        Project project = new Project();
 
-        container.setContainerTemplate(template);
-        container.setContainerName("abc-test");
-        container.setContainerOwnerId(2);
-        container.setContainerStatus(ContainerStatus.REQUESTED);
-        container.setDataDirName("test-dir-name");
+        project.setContainerTemplate(template);
+        project.setContainerName("abc-test");
+        project.setContainerOwnerId(2);
+        project.setContainerStatus(ContainerStatus.REQUESTED);
+        project.setDataDirName("test-dir-name");
 
 
         Gson gson = new Gson();
 
-        System.out.println(gson.toJson(container));
+        System.out.println(gson.toJson(project));
 
         //        DockerContainerService containerService = new DockerContainerService();
         //

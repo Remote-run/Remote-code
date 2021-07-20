@@ -44,12 +44,10 @@ public class AuthenticationServiceTest {
     @WeldSetup
     public WeldInitiator weld = WeldInitiator.from(WeldInitiator.createWeld().addExtensions(ConfigExtension.class)
                                                                 .addBeanClasses(AuthenticationServiceTest.class,
-                                                                                AuthenticationService.class
-                                                                )).addBeans(
+                                                                                AuthenticationService.class)).addBeans(
             createKeyServiceBean(),
             createIdentetyStoreHandlerBean(),
-            createHasherBean()
-    ).activate(RequestScoped.class).build();
+            createHasherBean()).activate(RequestScoped.class).build();
 
     @BeforeAll
     static void setEnv() {
@@ -91,8 +89,7 @@ public class AuthenticationServiceTest {
     final String USER_PASSWORD = "abc";
     final String USER_PASSWORD_HASHED = "HASHED_PASS";
     final long USER_ID = 1337;
-    final List<String> USER_GROUPS_LIST = List
-            .of(Group.USER_GROUP_NAME, Group.BUYER_GROUP_NAME, Group.CONTAINER_GROUP_NAME);
+    final List<String> USER_GROUPS_LIST = List.of(Group.USER_GROUP_NAME, Group.ADMIN_GROUP_NAME);
     final Set<String> USER_GROUPS = Set.of("TEST1", "TEST2", "TEST3");
 
     final String USED_USERNAME = "bipbop";
@@ -254,8 +251,7 @@ public class AuthenticationServiceTest {
 
     private void setJwtValue(String newVal) {
         weld.select(AuthenticationService.class).get()
-            .setJwtSubject(Mockito.when(Mockito.mock(Instance.class).get())
-                                  .thenReturn(Optional.ofNullable(newVal))
+            .setJwtSubject(Mockito.when(Mockito.mock(Instance.class).get()).thenReturn(Optional.ofNullable(newVal))
                                   .getMock());
     }
 

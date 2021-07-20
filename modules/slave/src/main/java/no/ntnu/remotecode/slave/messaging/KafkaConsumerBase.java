@@ -1,8 +1,5 @@
 package no.ntnu.remotecode.slave.messaging;
 
-import com.google.gson.Gson;
-import no.ntnu.remotecode.model.docker.Container;
-import no.ntnu.remotecode.slave.ContainerManager;
 import no.ntnu.remotecode.slave.DebugLogger;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -11,13 +8,10 @@ import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 
 import java.time.Duration;
-import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
-import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 public abstract class KafkaConsumerBase {

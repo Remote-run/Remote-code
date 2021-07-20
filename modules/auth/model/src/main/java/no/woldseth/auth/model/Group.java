@@ -18,14 +18,20 @@ import java.util.Arrays;
 @Table(name = "group_names")
 public class Group implements Serializable {
 
-    public static final String BUYER_GROUP_NAME = "buyer";
+    /**
+     * The base group in the application containing all users.
+     * Used for endpoints where the requirement is simply being logged in.
+     */
     public static final String USER_GROUP_NAME = "user";
-    public static final String SELLER_GROUP_NAME = "seller";
-    public static final String ADMIN_GROUP_NAME = "admin";
-    public static final String CONTAINER_GROUP_NAME = "container";
-    public static final String API_CALLBACK_GROUP_NAME = "apicalback";
 
-    public static final String[] GROUPS = {CONTAINER_GROUP_NAME, USER_GROUP_NAME, BUYER_GROUP_NAME, SELLER_GROUP_NAME, ADMIN_GROUP_NAME, API_CALLBACK_GROUP_NAME};
+    /**
+     * The admin groop is responsible for administrating the other users.
+     * The admin has free reign to change modify, delete or add any data in the system.
+     */
+    public static final String ADMIN_GROUP_NAME = "admin";
+
+
+    public static final String[] GROUPS = {USER_GROUP_NAME, ADMIN_GROUP_NAME};
 
     /**
      * The group name.

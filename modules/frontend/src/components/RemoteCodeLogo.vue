@@ -9,6 +9,7 @@
     <div id="shortspike" :style="{width: spikeWidth}"/>
 
   </div>
+  <slot/>
 </template>
 
 <script lang="ts">

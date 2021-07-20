@@ -4,6 +4,7 @@ package no.ntnu.remotecode.model;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 
 /**
@@ -24,6 +25,7 @@ public class Template {
     /**
      * The id of the admin user who created the template.
      */
+    @JsonbTransient
     private double creatorId;
 
 
@@ -35,14 +37,19 @@ public class Template {
     /**
      * The name of the template dir containing the build docker file
      */
+    @JsonbTransient
     private String buildDirName;
 
     /**
      * The name of the built image used for this template.
      */
+    @JsonbTransient
     private String TemplateImageName;
 
 
     private String gitCloneRepo;
+
+
+    private String templateLink;
 
 }

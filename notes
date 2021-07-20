@@ -15,5 +15,11 @@ kafka mellinger:
 
 MASTER -> slave
 
-ny container status ønsket:
+ny project status ønsket:
     sender med en
+
+
+
+
+############################
+todo: mulighet for endring av docker filan i template, litt krunglete men ok

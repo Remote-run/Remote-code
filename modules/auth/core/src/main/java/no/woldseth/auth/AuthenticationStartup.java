@@ -34,20 +34,6 @@ public class AuthenticationStartup {
     AuthenticationService authenticationService;
 
     /**
-     * The inter container communication username
-     */
-    @Inject
-    @ConfigProperty(name = "woldseth.service.username", defaultValue = "container_default")
-    private String username;
-
-    /**
-     * The inter container communication password
-     */
-    @Inject
-    @ConfigProperty(name = "woldseth.service.password", defaultValue = "woldseth")
-    private String password;
-
-    /**
      * The admin user username
      */
     @Inject
@@ -63,31 +49,13 @@ public class AuthenticationStartup {
 
 
     /**
-     * The dibs api webhook callback username
-     */
-    @Inject
-    @ConfigProperty(name = "woldseth.service.dibsapi.username", defaultValue = "webhook_default")
-    private String dibsApiUserUsername;
-
-    /**
-     * The dibs api webhook callback password
-     */
-    @Inject
-    @ConfigProperty(name = "woldseth.service.dibsapi.password", defaultValue = "woldseth")
-    private String dibsApiUserPassword;
-
-    /**
      * starts the async tasks generate the users and groups.
      */
     @PostConstruct
     @Asynchronous
     public void initialize() {
         this.persistUserGroups();
-        this.createIfAbsent(username, password, List.of(Group.CONTAINER_GROUP_NAME));
         this.createIfAbsent(adminUsername, adminPassword, List.of(Group.ADMIN_GROUP_NAME));
-        this.createIfAbsent(dibsApiUserUsername, dibsApiUserPassword, List.of(Group.API_CALLBACK_GROUP_NAME));
-
-
     }
 
     /**
@@ -102,37 +70,6 @@ public class AuthenticationStartup {
         }
     }
 
-    /**
-     * Checks if the {@link AuthenticatedUser} used to for inter container communication in the cluster exists,
-     * and creates it if it does not
-     */
-    public void createContainerJwtUser() {
-        Optional<AuthenticatedUser> user = authenticationService.getUserFromPrincipal(username);
-
-        if (user.isEmpty()) {
-            var newAuthUserData = new NewAuthUserData();
-            newAuthUserData.setUserName(username);
-            newAuthUserData.setPassword(password);
-            newAuthUserData.setGroups(List.of(Group.CONTAINER_GROUP_NAME));
-            var authUser = authenticationService.createUser(newAuthUserData);
-        }
-    }
-
-    /**
-     * Checks if the admin {@link AuthenticatedUser} exists,
-     * and creates it if it does not
-     */
-    public void createAdminUser() {
-        Optional<AuthenticatedUser> user = authenticationService.getUserFromPrincipal(adminUsername);
-
-        if (user.isEmpty()) {
-            var newAuthUserData = new NewAuthUserData();
-            newAuthUserData.setUserName(adminUsername);
-            newAuthUserData.setPassword(adminPassword);
-            newAuthUserData.setGroups(List.of(Group.ADMIN_GROUP_NAME));
-            var authUser = authenticationService.createUser(newAuthUserData);
-        }
-    }
 
     public void createIfAbsent(String username, String password, List<String> groops) {
         Optional<AuthenticatedUser> user = authenticationService.getUserFromPrincipal(username);

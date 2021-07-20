@@ -1,6 +1,6 @@
 package no.ntnu.remotecode.slave.docker.service;
 
-import no.ntnu.remotecode.model.docker.Container;
+import no.ntnu.remotecode.model.Project;
 import no.ntnu.remotecode.slave.DebugLogger;
 import no.ntnu.remotecode.slave.docker.Interface.IDockerBasicFunctions;
 import no.ntnu.remotecode.slave.docker.Interface.IDockerHostFileSystemInterface;
@@ -25,14 +25,14 @@ public class DockerContainerService {
     DockerImageService dockerImageService = new DockerImageService();
 
 
-    public boolean startContainer(Container container) {
+    public boolean startContainer(Project project) {
         /*
         1. check if the container is on this computer at all.
             - if it is and is running return OK
             - if it is and not running try to start, if sucsess return ok
         2. If it is not on this computer build, start the container
          */
-        String               containerName = container.getContainerName();
+        String               containerName = project.getContainerName();
         Map<String, Boolean> statusMap     = dockerBasicFunctions.getContainerStatuses();
 
         if (statusMap.containsKey(containerName)) {
@@ -44,7 +44,7 @@ public class DockerContainerService {
             }
         } else {
             try {
-                return createContainer(container);
+                return createContainer(project);
 
             } catch (FileSystemException | FileNotFoundException | InterruptedException e) {
                 e.printStackTrace();
@@ -53,30 +53,30 @@ public class DockerContainerService {
         }
     }
 
-    private boolean createContainer(Container container) throws FileSystemException, FileNotFoundException, InterruptedException {
+    private boolean createContainer(Project project) throws FileSystemException, FileNotFoundException, InterruptedException {
         /*
         1. sjekk om tmplate dir sitt bilde e laget om ikke legg in en laging i køen
         2. sjekk om container diren e laget om ikke lag en, og putt inn template repo
          */
 
 
-        File hostDataDir = new File(hostFs.getContainerDataDirContainer(), container.getDataDirName());
+        File hostDataDir = new File(hostFs.getContainerDataDirContainer(), project.getDataDirName());
 
         if (!hostDataDir.exists()) {
             hostDataDir.mkdir();
         }
         dbl.log("made dir");
-        dockerImageService.buildImage(container.getContainerTemplate());
+        dockerImageService.buildImage(project.getContainerTemplate());
         dbl.log("built template");
-        DockerRunCommand runCommand = new DockerRunCommand(container.getContainerTemplate().getTemplateImageName(),
-                                                           container.getContainerName());
+        DockerRunCommand runCommand = new DockerRunCommand(project.getContainerTemplate().getTemplateImageName(),
+                                                           project.getContainerName());
 
         runCommand.setResourceAllocationParts(List.of("--gpus all"));
         runCommand.setNetwork("remote_code_net");
 
-        runCommand.addEnvVariable("GIT_BASE_REPO", container.getContainerTemplate().getGitCloneRepo());
+        runCommand.addEnvVariable("GIT_BASE_REPO", project.getContainerTemplate().getGitCloneRepo());
 
-        String hostdirP = new File(hostFs.getContainerDataDirHost(), container.getDataDirName()).toString();
+        String hostdirP = new File(hostFs.getContainerDataDirHost(), project.getDataDirName()).toString();
 
 
         runCommand.addVolume(hostdirP, containerVolumeMountPath);

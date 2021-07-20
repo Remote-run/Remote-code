@@ -11,9 +11,9 @@ public class MessageReceiver {
     public void containerTaskMessage(ContainerTask task) {
 
         switch (task.getAction()) {
-            case START -> containerManager.startContainer(task.getContainer());
-            case STOP -> containerManager.stopContainer(task.getContainer());
-            case DELETE -> containerManager.deleteContainer(task.getContainer());
+            case START -> containerManager.startContainer(task.getProject());
+            case STOP -> containerManager.stopContainer(task.getProject());
+            case DELETE -> containerManager.deleteContainer(task.getProject());
         }
 
 

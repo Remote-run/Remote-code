@@ -8,8 +8,8 @@ services:
 
     ports:
       # Front ports (must have 80 for ACME protocol)
-      - "158.38.101.5:80:80"
-      - "158.38.101.5:443:443"
+      - "158.38.65.10:80:80"
+      - "158.38.65.10:443:443"
       - "8090:8080"
 
     environment:
