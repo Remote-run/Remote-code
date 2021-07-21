@@ -153,17 +153,17 @@
                 </configuration>
             </plugin>
 
-            <plugin>
-                <groupId>io.openliberty.tools</groupId>
-                <artifactId>liberty-maven-plugin</artifactId>
-                <version>3.3.4</version>
-                <configuration>
-                    <project>true</project>
-                    <skipDefaultPorts>true</skipDefaultPorts>
-                    <dockerRunOpts>--network woldseth_network --add-host host.docker.internal:host-gateway
-                    </dockerRunOpts>
-                </configuration>
-            </plugin>
+            <!--            <plugin>-->
+            <!--                <groupId>io.openliberty.tools</groupId>-->
+            <!--                <artifactId>liberty-maven-plugin</artifactId>-->
+            <!--                <version>3.3.4</version>-->
+            <!--                <configuration>-->
+            <!--                    <project>true</project>-->
+            <!--                    <skipDefaultPorts>true</skipDefaultPorts>-->
+            <!--                    <dockerRunOpts>&#45;&#45;network woldseth_network &#45;&#45;add-host host.docker.internal:host-gateway-->
+            <!--                    </dockerRunOpts>-->
+            <!--                </configuration>-->
+            <!--            </plugin>-->
 
         </plugins>
     </build>

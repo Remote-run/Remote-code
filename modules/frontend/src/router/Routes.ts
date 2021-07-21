@@ -5,5 +5,7 @@ export enum APP_ROUTES {
   MY_TEMPLATES = '/templates',
 
   // Not navigatable from menu
-  NEW_PROJECT = '/projects/new'
+  NEW_PROJECT = '/projects/new',
+
+  LOGG_IN = '/loggin'
 }

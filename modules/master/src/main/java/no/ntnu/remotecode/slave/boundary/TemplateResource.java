@@ -3,18 +3,14 @@ package no.ntnu.remotecode.slave.boundary;
 
 import no.ntnu.remotecode.model.DTO.web.NewTemplateDTO;
 import no.ntnu.remotecode.model.Template;
-import no.ntnu.remotecode.slave.control.AuthenticationService;
 import no.woldseth.auth.model.Group;
 
 
 import javax.annotation.security.RolesAllowed;
-import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.ws.rs.*;
-import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.Optional;
 
 
 @Path("templates")

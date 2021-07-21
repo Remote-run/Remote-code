@@ -12,6 +12,7 @@ class AuthServiceC {
 
   constructor () {
     const maybeToken = this.getTokenFromStorage()
+    console.log(maybeToken)
 
     if (maybeToken !== null && maybeToken !== '') {
       this.loginLevel = LoginLevel.LOGGED_IN
@@ -58,12 +59,12 @@ class AuthServiceC {
   }
 
   private saveTokenToStorage (token: string) {
-    localStorage.setItem(token, this.jwtTokenKey)
+    localStorage.setItem(this.jwtTokenKey, token)
   }
 
   private parseToken (token: string): any {
     try {
-      return JSON.parse(atob(token.split('.')[1]))
+      return JSON.parse(atob(token.replace('Bearer ', '').split('.')[1]))
     } catch (e) {
       return null
     }

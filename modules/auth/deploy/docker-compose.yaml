@@ -1,25 +1,15 @@
 version: "3.8"
 
-x-DbLoggin:
-  environment: &postgres-login
-    DB_URL: 'DB_URL'
-    POSTGRES_PASSWORD: '${POSTGRES_MASTER_PASSWORD}'
-
-    USER_USERNAME: '${POSTGRES_USER_USERNAME}'
-    USER_DB_NAME: '${POSTGRES_USER_DB}'
-    USER_PASSWORD: '${POSTGRES_USER_PASSWORD}'
-    POSTGRES_IP: '${POSTGRES_IP}'
-    SQLURL: 'jdbc:postgresql://${POSTGRES_IP}:5432/${POSTGRES_USER_DB}'
-  networks: &postgres-ip
-    ipv4_address: '${POSTGRES_IP}'
 
 services:
 
   remote-code-auth:
     container_name: remote-code-auth
+    image: remote-code-auth:latest
     build:
       context: ./../core/
       dockerfile: ./Dockerfile
+
 
     expose:
       - "9080"

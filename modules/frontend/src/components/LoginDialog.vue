@@ -6,14 +6,14 @@
     <div id="shortspike" :style="{width: spikeWidth}"/>
     <div class="input-box" :style="{gridRow: '1/2', gridColumn: '3/4'}">
       <label class="input-label">Username</label>
-      <input type="text">
+      <input type="text" v-model="username">
     </div>
     <div class="input-box" :style="{gridRow: '2/3', gridColumn: '3/4'}">
       <label class="input-label">Password</label>
-      <input type="password">
+      <input type="password" v-model="password">
     </div>
     <div class="btn-box" :style="{gridRow: '3/4', gridColumn: '3/4'}">
-      <button>login</button>
+      <button @click="login()">login</button>
       <button>create user</button>
     </div>
     <div class="padder" :style="{gridRow: '4/5', gridColumn: '3/4'}"/>
@@ -21,8 +21,9 @@
 </template>
 
 <script lang="ts">
+
 import { Vue } from 'vue-class-component'
-import { Prop } from 'vue-property-decorator'
+import { Inject, InjectReactive, Prop, Provide } from 'vue-property-decorator'
 import * as restService from '@/services/RestService'
 import { AuthService } from '@/services/AuthService'
 
@@ -31,13 +32,16 @@ export default class LoginDialog extends Vue {
   @Prop({ default: '0.1em' }) spikeWidth!: string;
   @Prop({ default: '10px' }) gap!: string;
 
-  private login (username: string, password: string) {
-    restService.login(username, password).then(response => {
+  username = '';
+  password = '';
+
+  private login () {
+    restService.login(this.username, this.password).then(response => {
       if (response.status === 200) {
-        const token = response.headers.Authorization
+        const token = response.headers.authorization
         console.log(token)
         AuthService.logIn(token)
-        // this.$router.push(this.navOnComplete)
+        window.location.reload()
       } else {
         this.onFailedLogin()
       }

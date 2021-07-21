@@ -1,7 +1,10 @@
 import axios from 'axios'
 import { AuthService } from '@/services/AuthService'
 
-const BASE_URL = process.env.server_url
+const BASE_URL = process.env.VUE_APP_SERVER_URL
+
+console.log(process.env)
+console.log(BASE_URL)
 
 const apiConfig = {
   baseURL: BASE_URL
@@ -11,7 +14,7 @@ const apiConfig = {
 export function login (username: string, password: string) {
   return axios({
     ...apiConfig,
-    url: '/auth/authentication/login',
+    url: '/api/auth/authentication/login',
     method: 'POST',
     data: { userName: username, password: password }
   }

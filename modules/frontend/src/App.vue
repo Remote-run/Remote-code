@@ -1,13 +1,12 @@
 <template>
-  <!--  <div id="app-display" v-if="isLoggedIn()">-->
-  <div id="app-display" v-if="true">
+  <div id="app-display" v-if="isLoggedIn()">
     <SideNavigator/>
     <router-view/>
     <RemoteCodeLogo font-size="6rem" spike-height="8vh" spike-width="0.6rem" gap="2rem" class="login-logo"/>
   </div>
-  <!--  <div v-if="!isLoggedIn()">-->
-  <!--    <Login/>-->
-  <!--  </div>-->
+  <div v-if="!isLoggedIn()">
+    <Login/>
+  </div>
 </template>
 
 <script lang="ts">
@@ -24,6 +23,7 @@ import CurrentProjects from '@/views/CurrentProjects.vue'
 import Login from '@/views/Login.vue'
 import SideNavigator from '@/components/SideNavigator.vue'
 import RemoteCodeLogo from '@/components/RemoteCodeLogo.vue'
+import { Provide } from 'vue-property-decorator'
 
 @Options({
 

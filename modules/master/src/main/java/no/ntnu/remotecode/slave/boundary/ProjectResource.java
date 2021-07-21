@@ -4,9 +4,11 @@ package no.ntnu.remotecode.slave.boundary;
 import no.ntnu.remotecode.model.DTO.web.NewTemplateDTO;
 import no.ntnu.remotecode.model.Project;
 import no.ntnu.remotecode.model.Template;
+import no.ntnu.remotecode.slave.control.ProjectService;
 import no.woldseth.auth.model.Group;
 
 import javax.annotation.security.RolesAllowed;
+import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.ws.rs.*;
@@ -20,6 +22,8 @@ import javax.ws.rs.core.Response;
 @RolesAllowed(value = {Group.USER_GROUP_NAME})
 public class ProjectResource {
 
+    @Inject
+    ProjectService projectService;
 
     /**
      * Return a list of the logged in {@link no.woldseth.auth.model.AuthenticatedUser}'s {@link Project}'s.

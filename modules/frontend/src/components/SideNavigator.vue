@@ -12,11 +12,11 @@
 
     <div id="nav-flex">
       <div id="nav-text" v-for="(value, index) in getNavItems()" :key="value.title">
-        <router-link class="not-here-link" v-if="index !== selectedIndex" :to="value.path">{{
+        <router-link class="not-here-link" v-if="index !== findSelectedNavLocation()" :to="value.path">{{
             value.title
           }}
         </router-link>
-        <h2 v-if="index === selectedIndex">{{ value.title }}</h2>
+        <h2 v-if="index === findSelectedNavLocation()">{{ value.title }}</h2>
       </div>
     </div>
     <div class="padder" :style="{gridRow: 3/4}"/>
@@ -69,6 +69,7 @@ export default class SideNavigator extends Vue {
         currentPathIndex = index
       }
     })
+    console.log(currentPathIndex)
     return currentPathIndex
   }
 }
@@ -102,6 +103,7 @@ export default class SideNavigator extends Vue {
   #nav-text {
     font-size: 100px;
     margin: 0;
+    text-align: start;
 
     .not-here-link {
       font-size: inherit;

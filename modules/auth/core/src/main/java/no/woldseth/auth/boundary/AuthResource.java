@@ -81,7 +81,7 @@ public class AuthResource {
      */
     @POST
     @Path("newuser")
-    @RolesAllowed(value = {Group.CONTAINER_GROUP_NAME})
+    @RolesAllowed(value = {Group.ADMIN_GROUP_NAME})
     public AuthenticatedUser newUser(NewAuthUserData newAuthUserData) {
         if (!authService.isPrincipalInUse(newAuthUserData.getUserName())) {
             return authService.createUser(newAuthUserData).orElse(null);

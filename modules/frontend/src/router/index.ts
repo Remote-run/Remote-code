@@ -6,10 +6,7 @@ import MyTemplates from '@/views/MyTemplates.vue'
 import NewTemplate from '@/views/NewTemplate.vue'
 
 const routes: Array<RouteRecordRaw> = [
-  {
-    path: '/*',
-    redirect: APP_ROUTES.CURENT_PROJECTS
-  },
+
   {
     path: APP_ROUTES.CURENT_PROJECTS,
     name: 'Current projects',
@@ -34,6 +31,15 @@ const routes: Array<RouteRecordRaw> = [
     path: APP_ROUTES.LOGG_OUT,
     name: 'Logg out',
     component: NewProjectLanding
+  },
+  {
+    path: APP_ROUTES.LOGG_IN,
+    name: 'Logg in',
+    component: CurrentProjects
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    redirect: APP_ROUTES.CURENT_PROJECTS
   }
 ]
 
