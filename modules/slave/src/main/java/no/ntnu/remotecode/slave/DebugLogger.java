@@ -85,8 +85,9 @@ public class DebugLogger {
             System.out.printf("File name      : %s\n" + "File parent    : %s\n" + "Caonical path  : %s\n",
                               file.getName(),
                               file.getParent(),
-                              file.getCanonicalPath());
-            if (!file.exists()) {
+                              file.getCanonicalPath()
+            );
+            if (! file.exists()) {
                 System.out.println("- file dont exist -");
             } else if (file.isDirectory()) {
                 System.out.printf("- file is directory -\n" + "Num children    : %s\n", file.listFiles().length);
@@ -112,7 +113,8 @@ public class DebugLogger {
                                  tracePos.getClassName(),
                                  tracePos.getMethodName(),
                                  tracePos.getFileName(),
-                                 tracePos.getLineNumber());
+                                 tracePos.getLineNumber()
+            );
         } else {
             return " ";
         }
@@ -127,7 +129,7 @@ public class DebugLogger {
      */
     private StackTraceElement getCallerStackPoisson() {
         for (StackTraceElement stackTraceElement : Thread.currentThread().getStackTrace()) {
-            if (!stackTraceElement.getClassName().equals(this.getClass().getName()) && !stackTraceElement
+            if (! stackTraceElement.getClassName().equals(this.getClass().getName()) && ! stackTraceElement
                     .getMethodName().equals("getStackTrace")) {
                 return stackTraceElement;
             }

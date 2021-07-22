@@ -12,7 +12,7 @@
     <modules>
         <module>auth</module>
         <module>model</module>
-        <!--        <module>master</module>-->
+        <module>master</module>
         <module>slave</module>
     </modules>
 </project>

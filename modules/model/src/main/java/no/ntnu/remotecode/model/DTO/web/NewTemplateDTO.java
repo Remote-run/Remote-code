@@ -1,7 +1,11 @@
 package no.ntnu.remotecode.model.DTO.web;
 
-import javax.validation.constraints.NotBlank;
+import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
+import java.util.List;
+
+@Data
 public class NewTemplateDTO {
 
     /**
@@ -20,6 +24,6 @@ public class NewTemplateDTO {
      * The string to be converted to the build dockerfile
      */
     @NotBlank
-    private String dockerBuildSteps;
+    private List<String> dockerBuildSteps;
 
 }

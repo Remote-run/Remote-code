@@ -31,9 +31,9 @@ public class DockerRunCommand extends DockerCommand {
      * @param containerName the name to give the container while running
      */
     public DockerRunCommand(String image, String containerName) {
-        this.image = image;
+        this.image         = image;
         this.containerName = containerName;
-        this.network = "bridge";
+        this.network       = "bridge";
     }
 
 

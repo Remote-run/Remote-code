@@ -5,7 +5,6 @@ import no.woldseth.auth.model.Group;
 
 import javax.annotation.security.DeclareRoles;
 import javax.enterprise.context.ApplicationScoped;
-import javax.security.enterprise.identitystore.DatabaseIdentityStoreDefinition;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 

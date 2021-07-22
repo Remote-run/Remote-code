@@ -18,7 +18,7 @@ public interface IDockerBasicFunctions {
      * @return a map with all the current containers names and wether or not they are running
      */
     HashMap<String, Boolean> getContainerStatuses();
-    
+
 
     void stopContainer(String containerName);
 
@@ -41,6 +41,7 @@ public interface IDockerBasicFunctions {
      * returns {@code true} if the container exists and started sucsessfully returns {@code false} if not
      *
      * @param containerName the name of the container to delete
+     *
      * @return {@code true} if sucsess {@code false} if failure
      */
     boolean startContainer(String containerName);

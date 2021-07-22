@@ -25,14 +25,14 @@ public class DockerImageService {
 
     public void buildImage(Template template) throws InterruptedException, FileSystemException, FileNotFoundException {
         boolean doImageExist = doImageExistLocally(template.getTemplateImageName());
-        if (!doImageExist) {
+        if (! doImageExist) {
             if (buildMap.containsKey(template.getTemplateImageName())) {
                 Semaphore lock = buildMap.get(template.getTemplateImageName());
 
                 lock.acquire();
                 lock.release();
 
-                if (!lock.hasQueuedThreads()) {
+                if (! lock.hasQueuedThreads()) {
                     buildMap.remove(template.getTemplateImageName());
                 }
                 //                synchronized (lock) {
@@ -59,7 +59,9 @@ public class DockerImageService {
         DockerImageBuildCommand buildCommand = new DockerImageBuildCommand(template.getTemplateImageName(),
                                                                            hostTemplateBuildDir,
                                                                            new File(hostTemplateBuildDir,
-                                                                                    "Dockerfile"));
+                                                                                    "Dockerfile"
+                                                                           )
+        );
 
         buildCommand.setBlocking(true);
         buildCommand.run();

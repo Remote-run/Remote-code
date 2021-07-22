@@ -25,9 +25,9 @@ public abstract class KafkaConsumerBase {
     private String consumerId;
 
     public KafkaConsumerBase(ThreadPoolExecutor consumerTaskThreadPool, String kafkaHostAddress, String consumerId) {
-        this.executor = consumerTaskThreadPool;
+        this.executor         = consumerTaskThreadPool;
         this.kafkaHostAddress = kafkaHostAddress;
-        this.consumerId = consumerId;
+        this.consumerId       = consumerId;
     }
 
 

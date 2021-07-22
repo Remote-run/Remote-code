@@ -13,7 +13,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,10 +54,15 @@ public class ProjectService {
             Project project = optionalProject.get();
             project.setAccessesKey(newPass);
             entityManager.persist(project);
-            return true
+            return true;
         } else {
             return false;
         }
+
+    }
+
+
+    public Project initializeTemplate() {
 
     }
 

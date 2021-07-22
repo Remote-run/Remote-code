@@ -86,7 +86,8 @@ public class DockerFunctions implements IDockerBasicFunctions {
     @Override
     public void stopContainer(String containerName) {
         DockerGenericCommand command = new DockerGenericCommand(String.format("docker container stop %s",
-                                                                              containerName));
+                                                                              containerName
+        ));
         command.run();
     }
 
@@ -117,12 +118,14 @@ public class DockerFunctions implements IDockerBasicFunctions {
      * returns {@code true} if the container exists and started sucsessfully returns {@code false} if not
      *
      * @param containerName the name of the container to delete
+     *
      * @return {@code true} if sucsess {@code false} if failure
      */
     @Override
     public boolean startContainer(String containerName) {
         DockerGenericCommand command = new DockerGenericCommand(String.format("docker contaner start %s",
-                                                                              containerName));
+                                                                              containerName
+        ));
         Process process  = command.run();
         int     exitCode = 1;
         try {

@@ -36,6 +36,7 @@ public class TemplateResource {
      * Creates a new {@link Template} from the provided {@link NewTemplateDTO};
      *
      * @param newTemplate A dto containg the info requiered to create a new {@link Template}.
+     *
      * @return 200 if ok
      */
     @POST

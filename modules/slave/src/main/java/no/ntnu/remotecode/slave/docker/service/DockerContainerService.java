@@ -62,14 +62,15 @@ public class DockerContainerService {
 
         File hostDataDir = new File(hostFs.getContainerDataDirContainer(), project.getDataDirName());
 
-        if (!hostDataDir.exists()) {
+        if (! hostDataDir.exists()) {
             hostDataDir.mkdir();
         }
         dbl.log("made dir");
         dockerImageService.buildImage(project.getContainerTemplate());
         dbl.log("built template");
         DockerRunCommand runCommand = new DockerRunCommand(project.getContainerTemplate().getTemplateImageName(),
-                                                           project.getContainerName());
+                                                           project.getContainerName()
+        );
 
         runCommand.setResourceAllocationParts(List.of("--gpus all"));
         runCommand.setNetwork("remote_code_net");

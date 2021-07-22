@@ -11,6 +11,8 @@ import no.ntnu.remotecode.model.enums.ContainerAction;
 @Data
 public class ContainerTask {
 
+    private int id;
+   
     private Project project;
 
     private ContainerAction action;

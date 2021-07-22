@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Represents an template for creating new containers.
@@ -47,9 +48,15 @@ public class Template {
     private String TemplateImageName;
 
 
+    /**
+     * The repo to clone in to the projects built from this template
+     */
     private String gitCloneRepo;
 
-
+    /**
+     * The link to access to initiate a new project from this template
+     */
     private String templateLink;
+   
 
 }
