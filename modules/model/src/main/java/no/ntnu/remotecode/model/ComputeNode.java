@@ -11,16 +11,9 @@ import javax.persistence.GenerationType;
 @Entity
 public class ComputeNode {
 
-    @JsonbTransient
     @javax.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private double Id;
-   
-
-    private long nodeId;
-
-
-    private long maxMemUsedMByte;
 
 
 }

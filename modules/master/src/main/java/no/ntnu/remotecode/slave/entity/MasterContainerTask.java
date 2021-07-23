@@ -1,6 +1,6 @@
 package no.ntnu.remotecode.slave.entity;
 
-import no.ntnu.remotecode.model.DTO.kafkamessage.ContainerTask;
+import no.ntnu.remotecode.model.ContainerTask;
 import org.apache.kafka.common.serialization.Serializer;
 
 import javax.json.bind.Jsonb;

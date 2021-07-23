@@ -1,6 +1,6 @@
 package no.ntnu.remotecode.slave.messaging;
 
-import no.ntnu.remotecode.model.DTO.kafkamessage.ContainerTask;
+import no.ntnu.remotecode.model.ContainerTask;
 import no.ntnu.remotecode.slave.ContainerManager;
 
 public class MessageReceiver {

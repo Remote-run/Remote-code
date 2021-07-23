@@ -9,6 +9,7 @@ import no.ntnu.remotecode.model.enums.ContainerStatus;
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.UUID;
 
 
 @Entity
@@ -19,9 +20,14 @@ import java.time.Instant;
 public class Project {
 
 
+    //    @javax.persistence.Id
+    //    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //    private double Id;
+
     @javax.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private double Id;
+    private UUID id;
+
 
     /**
      * The template used to create this container.
