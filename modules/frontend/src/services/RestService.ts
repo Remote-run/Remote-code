@@ -25,7 +25,7 @@ export function login (username: string, password: string) {
 export function getCurrentProjects () {
   return axios({
     ...apiConfig,
-    url: '/projects',
+    url: '/api/app/projects',
     method: 'GET',
     headers: { Authorization: AuthService.isLoggedIn() ? AuthService.getToken() : null }
   }
@@ -35,7 +35,7 @@ export function getCurrentProjects () {
 export function deleteProject (projectID: number) {
   return axios({
     ...apiConfig,
-    url: '/projects/' + projectID,
+    url: '/api/app/projects/' + projectID,
     method: 'DELETE',
     headers: { Authorization: AuthService.isLoggedIn() ? AuthService.getToken() : null }
   }
@@ -45,7 +45,7 @@ export function deleteProject (projectID: number) {
 export function changeProjectPass (projectID: number, newPassword: string) {
   return axios({
     ...apiConfig,
-    url: '/projects/' + projectID,
+    url: '/api/app/projects/' + projectID,
     method: 'PATCH',
     data: newPassword,
     headers: { Authorization: AuthService.isLoggedIn() ? AuthService.getToken() : null }
@@ -56,7 +56,7 @@ export function changeProjectPass (projectID: number, newPassword: string) {
 export function initializeTemplateToProject (templateID: number) {
   return axios({
     ...apiConfig,
-    url: '/projects/new/' + templateID,
+    url: '/api/app/projects/new/' + templateID,
     method: 'GET',
     headers: { Authorization: AuthService.isLoggedIn() ? AuthService.getToken() : null }
   }
@@ -68,7 +68,7 @@ export function initializeTemplateToProject (templateID: number) {
 export function getCurrentTemplates () {
   return axios({
     ...apiConfig,
-    url: '/templates',
+    url: '/api/app/templates',
     method: 'GET',
     headers: { Authorization: AuthService.isLoggedIn() ? AuthService.getToken() : null }
   }
@@ -78,7 +78,7 @@ export function getCurrentTemplates () {
 export function AddNewTemplate (templateName: string, githubLink: string, dockerBuildSteps: string) {
   return axios({
     ...apiConfig,
-    url: '/templates/new',
+    url: '/api/app/templates/new',
     method: 'post',
     data: { templateName: templateName, githubLink: githubLink, dockerBuildSteps: dockerBuildSteps },
     headers: { Authorization: AuthService.isLoggedIn() ? AuthService.getToken() : null }

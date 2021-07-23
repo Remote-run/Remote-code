@@ -8,6 +8,7 @@ import no.ntnu.remotecode.model.enums.TaskStatus;
 
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
+import java.util.UUID;
 
 
 /**
@@ -19,7 +20,7 @@ public class ContainerTask {
 
     @javax.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     @ManyToOne
     private Project project;

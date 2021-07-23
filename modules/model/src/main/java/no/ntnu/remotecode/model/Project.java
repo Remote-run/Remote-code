@@ -20,13 +20,9 @@ import java.util.UUID;
 public class Project {
 
 
-    //    @javax.persistence.Id
-    //    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    //    private double Id;
-
     @javax.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private UUID id;
+    private long Id;
 
 
     /**

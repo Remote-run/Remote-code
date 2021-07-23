@@ -5,9 +5,12 @@
              http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
              version="2.1">
 
-    <persistence-unit name="auth-pu" transaction-type="JTA">
-        <jta-data-source>jdbc/auth-db</jta-data-source>
-        <class>no.remo</class>
+    <persistence-unit name="app-pu" transaction-type="JTA">
+        <jta-data-source>jdbc/app-db</jta-data-source>
+        <class>no.ntnu.remotecode.model.ContainerTask</class>
+        <class>no.ntnu.remotecode.model.Project</class>
+        <class>no.ntnu.remotecode.model.Template</class>
+        <class>no.ntnu.remotecode.model.ComputeNode</class>
         <properties>
             <property name="javax.persistence.schema-generation.database.action" value="create"/>
         </properties>

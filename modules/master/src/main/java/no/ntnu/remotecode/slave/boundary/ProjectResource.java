@@ -1,7 +1,13 @@
 package no.ntnu.remotecode.slave.boundary;
 
 
+import no.ntnu.remotecode.model.ContainerTask;
 import no.ntnu.remotecode.model.Project;
+import no.ntnu.remotecode.model.Template;
+import no.ntnu.remotecode.model.enums.ContainerAction;
+import no.ntnu.remotecode.model.enums.ContainerStatus;
+import no.ntnu.remotecode.slave.control.MasterMessagingService;
+import no.ntnu.remotecode.slave.control.MessageSender;
 import no.ntnu.remotecode.slave.control.ProjectService;
 import no.woldseth.auth.model.Group;
 
@@ -17,8 +23,42 @@ import javax.ws.rs.core.Response;
 @Path("projects")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-@RolesAllowed(value = {Group.USER_GROUP_NAME})
+//@RolesAllowed(value = {Group.USER_GROUP_NAME})
 public class ProjectResource {
+
+    @Inject
+    MessageSender mms;
+
+    @GET
+    @Path("/test")
+    public Response test() {
+        Template template = new Template();
+
+        template.setCreatorId(1);
+        template.setTemplateName("test-manual");
+        template.setBuildDirName("test_tf_dir");
+        template.setTemplateImageName("testi-imagename");
+        template.setGitCloneRepo("https://github.com/Remote-run/remote-code-tf-test.git");
+
+        Project project = new Project();
+
+        project.setContainerTemplate(template);
+        project.setContainerName("abc-test");
+        project.setContainerOwnerId(2);
+        project.setContainerStatus(ContainerStatus.REQUESTED);
+        project.setDataDirName("test-dir-name");
+
+        ContainerTask task = new ContainerTask();
+
+        task.setProject(project);
+        task.setAction(ContainerAction.START);
+        task.setReceiverId(123);
+
+
+        mms.add("test test bop bip");
+        return Response.ok().build();
+    }
+
 
     @Inject
     ProjectService projectService;
@@ -39,7 +79,6 @@ public class ProjectResource {
      * Deletes the {@link Project} with the provided id if the logged in {@link no.woldseth.auth.model.AuthenticatedUser} owns it.
      *
      * @param projectId The id of the {@link Project} to delete;
-     *
      * @return 200 if ok.
      */
     @DELETE
@@ -54,7 +93,6 @@ public class ProjectResource {
      *
      * @param projectId   The id of the project to change the password for
      * @param newPassword The new password to chang to.
-     *
      * @return 200 if ok
      */
     @PATCH
@@ -71,7 +109,6 @@ public class ProjectResource {
      * made for this template that is returned
      *
      * @param templateId The id of the template to create a project from.
-     *
      * @return 200 if ok.
      */
     @GET

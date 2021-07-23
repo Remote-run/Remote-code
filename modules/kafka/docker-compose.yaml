@@ -10,9 +10,13 @@ services:
     environment:
       - ALLOW_ANONYMOUS_LOGIN=yes
 
+    networks:
+      - remote_code_net
+
 
   kafka:
     image: bitnami/kafka
+    container_name: remote-code-kafka
     ports:
       - "9092:9092"
       - "9093:9093"
@@ -30,6 +34,9 @@ services:
     depends_on:
       - zookeeper
 
+    networks:
+      - remote_code_net
+
   kafka-ui:
     image: provectuslabs/kafka-ui
     container_name: kafka-ui
@@ -40,7 +47,12 @@ services:
       - KAFKA_CLUSTERS_0_NAME=local
       - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka:9092
       - KAFKA_CLUSTERS_0_ZOOKEEPER=zookeeper:2181
+    networks:
+      - remote_code_net
 
+networks:
+  remote_code_net:
+    external: true
 
 volumes:
   zookeeper_data:

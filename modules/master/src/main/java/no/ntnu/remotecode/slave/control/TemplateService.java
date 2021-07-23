@@ -35,7 +35,7 @@ public class TemplateService {
     Instance<Optional<String>> jwtSubject;
 
     @Inject
-    @ConfigProperty(name = "remote.code.datadir", defaultValue = "/root/remote-code-project")
+    @ConfigProperty(name = "remote.code.shared.files.path", defaultValue = "/application_storage/shared_files")
     private String sharedDataDir;
 
     //TODO: FIX/FILL

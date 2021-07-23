@@ -5,7 +5,7 @@ ARG REVISION=SNAPSHOT
 LABEL name="AUTH"
 LABEL version="$VERSION-$REVISION"
 
-LABEL traefik.docker.network=fishapp_network
+LABEL traefik.docker.network=remote_code_net
 LABEL traefik.http.routers.auth.rule="PathPrefix(`/api/auth/`)"
 
 USER root

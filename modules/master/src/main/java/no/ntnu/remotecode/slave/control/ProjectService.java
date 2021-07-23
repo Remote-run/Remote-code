@@ -15,6 +15,7 @@ import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Log
 @Transactional
@@ -62,8 +63,9 @@ public class ProjectService {
     }
 
 
-    public Project initializeTemplate() {
+    public Project initializeTemplate(UUID uuid) {
 
+        return null;
     }
 
 }

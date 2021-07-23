@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Represents an template for creating new containers.
@@ -19,9 +20,11 @@ import java.util.List;
 @Table(name = "container_template")
 public class Template {
 
+
     @javax.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private double Id;
+    private long Id;
+
 
     /**
      * The id of the admin user who created the template.
@@ -57,6 +60,6 @@ public class Template {
      * The link to access to initiate a new project from this template
      */
     private String templateLink;
-   
+
 
 }
