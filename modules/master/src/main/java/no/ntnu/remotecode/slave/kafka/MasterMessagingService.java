@@ -1,4 +1,4 @@
-package no.ntnu.remotecode.slave.control;
+package no.ntnu.remotecode.slave.kafka;
 
 import no.ntnu.remotecode.model.ComputeNode;
 import no.ntnu.remotecode.model.ContainerTask;

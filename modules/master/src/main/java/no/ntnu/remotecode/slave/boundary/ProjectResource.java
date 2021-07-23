@@ -6,13 +6,11 @@ import no.ntnu.remotecode.model.Project;
 import no.ntnu.remotecode.model.Template;
 import no.ntnu.remotecode.model.enums.ContainerAction;
 import no.ntnu.remotecode.model.enums.ContainerStatus;
-import no.ntnu.remotecode.slave.control.MasterMessagingService;
-import no.ntnu.remotecode.slave.control.MessageSender;
+import no.ntnu.remotecode.slave.kafka.MessageSender;
 import no.ntnu.remotecode.slave.control.ProjectService;
-import no.woldseth.auth.model.Group;
 
-import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.ws.rs.*;
@@ -23,6 +21,7 @@ import javax.ws.rs.core.Response;
 @Path("projects")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
+@Transactional
 //@RolesAllowed(value = {Group.USER_GROUP_NAME})
 public class ProjectResource {
 
@@ -55,7 +54,7 @@ public class ProjectResource {
         task.setReceiverId(123);
 
 
-        mms.add("test test bop bip");
+        mms.submitMessage("test", "alifhuliaewh", "test test bop bip");
         return Response.ok().build();
     }
 
