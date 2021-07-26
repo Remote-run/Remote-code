@@ -14,6 +14,7 @@ import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.io.File;
@@ -41,10 +42,26 @@ public class TemplateService {
     //TODO: FIX/FILL
     private String baseImageName = " ";
 
-    private static final String GET_USER_TEMPLATES = "select pr from Project as pr where pr.containerOwnerId = :uid";
+    private static final String GET_USER_TEMPLATES = "select tm from Template as tm where tm.creatorId = :uid";
+    private static final String GET_TEMPLATE_FROM_STRING = "select tm from Template as tm where tm.templateKey = :key";
+
+    private File getTemplateSaveDir() {
+        return new File(sharedDataDir, "templates");
+    }
 
     private long getUserId() {
         return Long.parseLong(jwtSubject.get().get());
+    }
+
+    public Optional<Template> getTemplateFromKey(UUID key) {
+
+        TypedQuery<Template> query = entityManager.createQuery(GET_TEMPLATE_FROM_STRING, Template.class);
+        query.setParameter("key", key);
+        try {
+            return Optional.of(query.getSingleResult());
+        } catch (PersistenceException e) {
+            return Optional.empty();
+        }
     }
 
     public List<Template> getUserTemplates() {
@@ -58,20 +75,20 @@ public class TemplateService {
     public boolean createNewTemplate(NewTemplateDTO newTemplateDTO) throws IOException {
 
 
-        String buildDirName = getUserId() + UUID.randomUUID().toString();
-
-        String templateKey = UUID.randomUUID().toString();
+        UUID templateKey = UUID.randomUUID();
 
 
-        File buildDir = new File(sharedDataDir, templateKey);
+        File buildDir = new File(getTemplateSaveDir(), templateKey.toString());
         buildDir.mkdirs();
 
         Template newTemplate = new Template();
 
+        newTemplate.setTemplateKey(templateKey);
+
         newTemplate.setTemplateName(newTemplateDTO.getTemplateName());
         newTemplate.setGitCloneRepo(newTemplateDTO.getGithubLink());
         newTemplate.setCreatorId(getUserId());
-        newTemplate.setBuildDirName(templateKey);
+        newTemplate.setBuildDirName(templateKey.toString());
 
 
         DockerFileBuilder builder = new DockerFileBuilder(baseImageName);
@@ -80,8 +97,7 @@ public class TemplateService {
 
         builder.writeToFile(new File(buildDir, "Dockerfile"));
 
-        newTemplate.setTemplateLink(templateKey);
-        newTemplate.setTemplateImageName(templateKey);
+        newTemplate.setTemplateImageName(templateKey.toString());
 
         entityManager.persist(newTemplate);
 

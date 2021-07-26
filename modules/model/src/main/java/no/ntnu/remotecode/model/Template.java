@@ -25,6 +25,13 @@ public class Template {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long Id;
 
+    /**
+     * The uuid key for this container.
+     */
+    @JsonbTransient
+    @Column(unique = true)
+    private UUID templateKey;
+
 
     /**
      * The id of the admin user who created the template.
@@ -55,11 +62,5 @@ public class Template {
      * The repo to clone in to the projects built from this template
      */
     private String gitCloneRepo;
-
-    /**
-     * The link to access to initiate a new project from this template
-     */
-    private String templateLink;
-
 
 }

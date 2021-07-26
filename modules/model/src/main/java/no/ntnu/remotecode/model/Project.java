@@ -24,6 +24,13 @@ public class Project {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long Id;
 
+    /**
+     * The uuid key for this container.
+     */
+    @JsonbTransient
+    @Column(unique = true)
+    private UUID projectKey;
+
 
     /**
      * The template used to create this container.
@@ -76,5 +83,4 @@ public class Project {
     private String accessesKey;
 
 
-    private String projectURL;
 }

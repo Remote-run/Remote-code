@@ -51,6 +51,7 @@ class AuthServiceC {
     this.loginLevel = LoginLevel.LOGGED_OUT
     this.jwtB64String = null
     this.jwtObj = null
+    localStorage.removeItem(this.jwtTokenKey)
   }
 
   private getTokenFromStorage (): string | null {

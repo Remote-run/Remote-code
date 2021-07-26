@@ -1,8 +1,8 @@
 <template>
   <div id="app-display" v-if="isLoggedIn()">
-    <SideNavigator/>
-    <router-view/>
-    <RemoteCodeLogo font-size="6rem" spike-height="8vh" spike-width="0.6rem" gap="2rem" class="login-logo"/>
+    <SideNavigator font-size="2rem" spike-height="2vh" spike-width="0.6rem" gap="1rem" id="side-nav"/>
+    <router-view id="router-v"/>
+    <RemoteCodeLogo font-size="6rem" spike-height="8vh" spike-width="0.6rem" gap="2rem" id="rc-logo"/>
   </div>
   <div v-if="!isLoggedIn()">
     <Login/>
@@ -56,6 +56,28 @@ export default class App extends Vue {
 body {
   //background: #fcfcfc;
   margin: 0;
+}
+
+#app-display {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-template-rows: 1fr auto 1fr;
+
+}
+
+#router-v {
+  grid-row: 1/3;
+  grid-column: 2/3;
+}
+
+#rc-logo {
+  grid-column: 3/4;
+  grid-row: 1/2;
+}
+
+#side-nav {
+  grid-column: 1/2;
+  grid-row: 2/3;
 }
 
 #bipbop {

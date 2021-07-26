@@ -16,6 +16,9 @@ import javax.validation.constraints.NotBlank;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 
 @Path("projects")
@@ -70,7 +73,8 @@ public class ProjectResource {
     @GET
     @Valid
     public Response getCurrentProjects() {
-        return Response.ok().build();
+        List<Project> projects = projectService.getUserProjects();
+        return Response.ok(projects).build();
     }
 
 
@@ -84,7 +88,13 @@ public class ProjectResource {
     @Valid
     @Path("/{id}")
     public Response deleteProject(@PathParam("id") Integer projectId) {
-        return Response.ok().build();
+        boolean suc = projectService.deleteProject(projectId);
+        if (suc) {
+            return Response.ok().build();
+        } else {
+
+            return Response.ok().status(Response.Status.NOT_FOUND).build();
+        }
     }
 
     /**
@@ -98,7 +108,13 @@ public class ProjectResource {
     @Valid
     @Path("/{id}")
     public Response changeProjectPass(@PathParam("id") Integer projectId, @NotBlank String newPassword) {
-        return Response.ok().build();
+        boolean suc = projectService.changeProjectPass(projectId, newPassword);
+        if (suc) {
+            return Response.ok().build();
+        } else {
+            return Response.ok().status(Response.Status.NOT_FOUND).build();
+
+        }
     }
 
 
@@ -113,7 +129,13 @@ public class ProjectResource {
     @GET
     @Valid
     @Path("/new/{id}")
-    public Response initializeNewProject(@PathParam("id") String templateId) {
-        return Response.ok().build();
+    public Response initializeNewProject(@PathParam("id") UUID templateId) {
+        Optional<Project> project = projectService.initializeTemplate(templateId);
+
+        if (project.isPresent()) {
+            return Response.ok(project.get()).build();
+        } else {
+            return Response.ok().status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
     }
 }
