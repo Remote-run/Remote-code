@@ -3,9 +3,6 @@ import { AuthService } from '@/services/AuthService'
 
 const BASE_URL = process.env.VUE_APP_SERVER_URL
 
-console.log(process.env)
-console.log(BASE_URL)
-
 const apiConfig = {
   baseURL: BASE_URL
 }
@@ -23,6 +20,7 @@ export function login (username: string, password: string) {
 
 /// --- CURRENT PROJECT ENDPOINTS --- ///
 export function getCurrentProjects () {
+  console.log({ Authorization: AuthService.isLoggedIn() ? AuthService.getToken() : null })
   return axios({
     ...apiConfig,
     url: '/api/app/projects',
@@ -53,7 +51,7 @@ export function changeProjectPass (projectID: number, newPassword: string) {
   )
 }
 
-export function initializeTemplateToProject (templateID: number) {
+export function initializeTemplateToProject (templateID: string) {
   return axios({
     ...apiConfig,
     url: '/api/app/projects/new/' + templateID,
@@ -75,7 +73,7 @@ export function getCurrentTemplates () {
   )
 }
 
-export function AddNewTemplate (templateName: string, githubLink: string, dockerBuildSteps: string) {
+export function AddNewTemplate (templateName: string, githubLink: string, dockerBuildSteps: string[]) {
   return axios({
     ...apiConfig,
     url: '/api/app/templates/new',

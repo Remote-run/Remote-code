@@ -15,4 +15,6 @@ public class ComputeNode {
     @javax.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    private int numGpus;
 }

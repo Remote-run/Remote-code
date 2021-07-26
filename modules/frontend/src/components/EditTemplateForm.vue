@@ -14,7 +14,7 @@
       <textarea v-model="templateDockerBuildSteps"></textarea>
     </div>
     <div class="btn-box">
-      <button>Save</button>
+      <button @click="submitTemplate()">Save</button>
     </div>
   </div>
 </template>
@@ -23,11 +23,18 @@
 import { Vue } from 'vue-class-component'
 import { Prop } from 'vue-property-decorator'
 import { Template } from '@/models/Template'
+import * as restService from '@/services/RestService'
+import { APP_ROUTES } from '@/router/Routes'
 
 export default class EditTemplateForm extends Vue {
-  templateName = '';
-  templateHttpCloneLink = '';
-  templateDockerBuildSteps = '';
+  // templateName = '';
+  // templateHttpCloneLink = '';
+  // templateDockerBuildSteps = '';
+  //
+  templateName = 'test template name';
+  templateHttpCloneLink = 'https://github.com/Remote-run/remote-code-tf-test.git';
+  templateDockerBuildSteps = 'RUN apt update && apt upgrade -y && apt install -y curl python3 python3-pip\n' +
+    'RUN pip3 install tensorflow pylint\n';
 
   // mounted () {
   //   if (this.activeTemplate !== undefined){
@@ -35,6 +42,26 @@ export default class EditTemplateForm extends Vue {
   //     this.templateHttpCloneLink = thisthis.activeTemplate.templateName;.
   //   }
   // }
+
+  parseBuildSteps (): string[] {
+    const buildSteps = this.templateDockerBuildSteps
+
+    const split = buildSteps.split('\n')
+
+    return split
+  }
+
+  submitTemplate () {
+    const dockerBuildParts: string[] = this.parseBuildSteps()
+
+    restService.AddNewTemplate(this.templateName, this.templateHttpCloneLink, dockerBuildParts).then(value => {
+      if (value.status === 200) {
+        this.$router.push(APP_ROUTES.MY_TEMPLATES)
+      } else {
+        console.log(value)
+      }
+    })
+  }
 }
 </script>
 
@@ -83,6 +110,10 @@ export default class EditTemplateForm extends Vue {
     flex-shrink: 1;
     //line-height: 0.90;
     flex-direction: column;
+
+    textarea {
+      height: 10rem;
+    }
   }
 }
 

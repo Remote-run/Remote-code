@@ -21,6 +21,7 @@ import java.util.UUID;
 public class Template {
 
 
+    @JsonbTransient
     @javax.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long Id;
@@ -28,7 +29,6 @@ public class Template {
     /**
      * The uuid key for this container.
      */
-    @JsonbTransient
     @Column(unique = true)
     private UUID templateKey;
 

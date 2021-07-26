@@ -39,9 +39,6 @@ import { Provide } from 'vue-property-decorator'
   }
 })
 export default class App extends Vue {
-  testTemplate = new Template(11, 'some test name', 'http.abc', 'https://remote-code.woldseth.xyz')
-  testProject = new Project(11, this.testTemplate, ContainerStatus.RUNNING, '11', 'testkode', 'https://remote-code.woldseth.xyz')
-
   isLoggedIn (): boolean {
     return AuthService.isLoggedIn()
   }
@@ -66,7 +63,7 @@ body {
 }
 
 #router-v {
-  grid-row: 1/3;
+  grid-row: 1/4;
   grid-column: 2/3;
 }
 

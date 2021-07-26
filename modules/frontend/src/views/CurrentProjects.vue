@@ -1,5 +1,6 @@
 <template lang="html">
   <div class="current-user-projects-page">
+
     <h2>Current user owned projects:</h2>
     <hr class="subhead-underline">
     <div v-for="proj in userProjects">
@@ -33,9 +34,6 @@ export default class CurrentProjects extends Vue {
   }
 
   fetchUserProjects () {
-    // const testTemplate = new Template(11, 'some test name', 'http.abc', 'https://remote-code.woldseth.xyz')
-    // const testProject = new Project(11, testTemplate, ContainerStatus.RUNNING, '11', 'testkode', 'https://remote-code.woldseth.xyz')
-    // this.userProjects = [testProject, testProject, testProject]
     restService.getCurrentProjects().then(value => {
       const status = value.status
       if (status === 200) {
