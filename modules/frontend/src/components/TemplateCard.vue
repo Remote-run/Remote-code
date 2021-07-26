@@ -15,7 +15,7 @@
       SHARE LINK:
     </h2>
     <h3>
-      {{ cardTemplate.templateLink }}
+      {{ getShareLink() }}
     </h3>
 
   </div>
@@ -31,10 +31,16 @@ import { Template } from '@/models/Template'
 export default class TemplateCard extends Vue {
   @Prop() cardTemplate!: Template;
 
+  intitTemplateLinkPrefix = process.env.VUE_APP_SERVER_URL + '/projects/new'
+
   // mounted () {
   // }
 
-  private editTemplate () {
+  getShareLink () {
+    return this.intitTemplateLinkPrefix + '/' + this.cardTemplate.templateKey
+  }
+
+  editTemplate () {
     window.location.replace('/')
   }
 

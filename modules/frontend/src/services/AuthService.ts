@@ -12,7 +12,6 @@ class AuthServiceC {
 
   constructor () {
     const maybeToken = this.getTokenFromStorage()
-    console.log(maybeToken)
 
     if (maybeToken !== null && maybeToken !== '') {
       this.loginLevel = LoginLevel.LOGGED_IN
@@ -37,7 +36,7 @@ class AuthServiceC {
   }
 
   public getToken (): string | null {
-    return this.jwtTokenKey
+    return this.jwtB64String
   }
 
   public logIn (token: string) {
@@ -51,6 +50,7 @@ class AuthServiceC {
     this.loginLevel = LoginLevel.LOGGED_OUT
     this.jwtB64String = null
     this.jwtObj = null
+    localStorage.removeItem(this.jwtTokenKey)
   }
 
   private getTokenFromStorage (): string | null {

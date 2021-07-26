@@ -21,7 +21,7 @@
         <microprofile.version>4.0.1</microprofile.version>
 
         <exec.mainClass>
-            no.ntnu.remotecode.slave.Main
+            no.ntnu.remotecode.master.Main
         </exec.mainClass>
         <slf4j.version>1.7.5</slf4j.version>
 

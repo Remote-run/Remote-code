@@ -1,25 +1,17 @@
 <template lang="html">
   <div class="side-bar-nav"
-       :style="{gridRowGap: fontSize * 0.03 + 'em', gridColumnGap: fontSize * 0.02 + 'em', fontSize: fontSize +'em'}">
-    <!--    <div class="side-bar-nav" :style="{gridRowGap: fontSize * 0.03 + 'em', gridColumnGap: fontSize * 0.02 + 'em', fontSize: fontSize +'em'}">-->
+       :style="{gridRowGap: menuitemPadding, gridColumnGap: gap, fontSize: fontSize}">
 
-    <!--    <div id="longspike" :style="{width: spikeWidth, gridRowEnd: navOptions.length -1  }"/>-->
-    <!--    <div id="shortspike" :style="{width: spikeWidth, gridRowEnd: navOptions.length -2 }"/>-->
+    <div id="longspike" :style="getLongspikeStyle()"/>
+    <div id="shortspike" :style="getShortSpikeStyle()"/>
 
-    <div id="longspike" :style="{width: spikeWidth }"/>
-    <div id="shortspike" :style="{width: spikeWidth}"/>
-    <div class="padder" :style="{gridRow: 1/2}"/>
-
-    <div id="nav-flex">
-      <div id="nav-text" v-for="(value, index) in getNavItems()" :key="value.title">
-        <router-link class="not-here-link" v-if="index !== findSelectedNavLocation()" :to="value.path">{{
-            value.title
-          }}
-        </router-link>
-        <h2 v-if="index === findSelectedNavLocation()">{{ value.title }}</h2>
-      </div>
+    <div id="nav-text" v-for="(value, index) in getNavItems()" :key="value.title" :style="getNavEntryStyle(index)">
+      <router-link class="not-here-link" v-if="index !== findSelectedNavLocation()" :to="value.path">{{
+          value.title
+        }}
+      </router-link>
+      <h2 v-if="index === findSelectedNavLocation()" :style="{fontSize: fontSize}">{{ value.title }}</h2>
     </div>
-    <div class="padder" :style="{gridRow: 3/4}"/>
   </div>
 </template>
 
@@ -30,9 +22,27 @@ import { APP_ROUTES } from '@/router/Routes'
 import { AuthService } from '@/services/AuthService'
 
 export default class SideNavigator extends Vue {
-  @Prop({ default: 10 }) fontSize!: number;
+  @Prop({ default: '2em' }) fontSize!: string;
   @Prop({ default: '10px' }) spikeHeight!: string;
   @Prop({ default: '0.1em' }) spikeWidth!: string;
+  @Prop({ default: '10px' }) gap!: string;
+  @Prop({ default: '10px' }) menuitemPadding!: string;
+
+  getNavEntryStyle (index: number): any {
+    return { fontSize: this.fontSize, gridRow: (index + 1 + 1) + '/' + (index + 1 + 2) }
+  }
+
+  getBottpmPadderStyle (): any {
+    return { height: this.spikeHeight, gridRow: (this.getNavItems().length - 1) + '/' + this.getNavItems().length }
+  }
+
+  getLongspikeStyle (): any {
+    return { width: this.spikeWidth, gridRow: '1/' + (this.getNavItems().length + 3) }
+  }
+
+  getShortSpikeStyle (): any {
+    return { width: this.spikeWidth, gridRow: '3/' + (this.getNavItems().length + 1) }
+  }
 
   selectedIndex = -1;
 
@@ -69,7 +79,7 @@ export default class SideNavigator extends Vue {
         currentPathIndex = index
       }
     })
-    console.log(currentPathIndex)
+    // console.log(currentPathIndex)
     return currentPathIndex
   }
 }
@@ -81,7 +91,7 @@ export default class SideNavigator extends Vue {
 
 .padder {
   height: 20px;
-  grid-column: 3/4;
+  grid-column: 1/2;
 }
 
 .side-bar-nav {
@@ -91,19 +101,18 @@ export default class SideNavigator extends Vue {
   #longspike {
     background-color: main.$blue2;
     grid-column: 2/3;
-    grid-row: 1/4;
   }
 
   #shortspike {
     background-color: main.$blue2;
     grid-column: 1/2;
-    grid-row: 2/3;
   }
 
   #nav-text {
-    font-size: 100px;
+    font-size: inherit;
     margin: 0;
     text-align: start;
+    grid-column: 3/4;
 
     .not-here-link {
       font-size: inherit;
@@ -123,13 +132,6 @@ export default class SideNavigator extends Vue {
       color: main.$blue2;
 
     }
-  }
-
-  #nav-flex {
-    grid-row: 2/3;
-    grid-column: 3/4;
-    display: flex;
-    flex-direction: column;
   }
 
 }

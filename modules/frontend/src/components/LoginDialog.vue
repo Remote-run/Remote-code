@@ -41,7 +41,7 @@ export default class LoginDialog extends Vue {
         const token = response.headers.authorization
         console.log(token)
         AuthService.logIn(token)
-        window.location.reload()
+        window.location.reload()// yup this is bad
       } else {
         this.onFailedLogin()
       }

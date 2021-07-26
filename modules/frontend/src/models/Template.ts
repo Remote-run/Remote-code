@@ -1,18 +1,18 @@
 export class Template {
-  private _Id: number;
+  private _templateKey: string;
   private _templateName: string;
   private _gitCloneRepo: string;
   private _templateLink: string;
 
-  constructor (Id: number, templateName: string, gitCloneRepo: string, templateLink: string) {
-    this._Id = Id
+  constructor (templateKey: string, templateName: string, gitCloneRepo: string, templateLink: string) {
+    this._templateKey = templateKey
     this._templateName = templateName
     this._gitCloneRepo = gitCloneRepo
     this._templateLink = templateLink
   }
 
-  get Id (): number {
-    return this._Id
+  get templateKey (): string {
+    return this._templateKey
   }
 
   get templateName (): string {

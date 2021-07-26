@@ -4,6 +4,7 @@ import { APP_ROUTES } from '@/router/Routes'
 import NewProjectLanding from '@/views/NewProjectLanding.vue'
 import MyTemplates from '@/views/MyTemplates.vue'
 import NewTemplate from '@/views/NewTemplate.vue'
+import LogOut from '@/views/LogOut.vue'
 
 const routes: Array<RouteRecordRaw> = [
 
@@ -30,7 +31,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: APP_ROUTES.LOGG_OUT,
     name: 'Logg out',
-    component: NewProjectLanding
+    component: LogOut
   },
   {
     path: APP_ROUTES.LOGG_IN,

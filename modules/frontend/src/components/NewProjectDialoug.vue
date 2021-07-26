@@ -8,12 +8,12 @@
 
     <div id="dialouge">
       <h2 class="label" :style="{gridArea: '1/1/2/2'}">Template name:</h2>
-      <h2 class="value" :style="{gridArea: '1/2/2/3'}">{{ selectedTemplate.templateName }}</h2>
+      <h2 class="value" :style="{gridArea: '1/2/2/3'}">{{ templateName }}</h2>
 
       <h2 class="label" :style="{gridArea: '2/1/3/2'}">Project access tag:</h2>
-      <h2 class="value" :style="{gridArea: '2/2/3/3'}">{{ newProject.accessesKey }}</h2>
+      <h2 class="value" :style="{gridArea: '2/2/3/3'}">{{ containerAccesKey }}</h2>
 
-      <button @click="goToProject()">go to project</button>
+      <button v-if="newProject !== undefined" @click="goToProject()">go to project</button>
     </div>
   </div>
   <div class="padder" :style="{gridRow: 3/4}"/>
@@ -25,19 +25,33 @@ import { Prop } from 'vue-property-decorator'
 import { Template } from '@/models/Template'
 import { Project } from '@/models/Project'
 import { ContainerStatus } from '@/models/ContainerStatus'
+import * as restService from '@/services/RestService'
 
-export default class SideNavigator extends Vue {
+export default class newProjectDialoug extends Vue {
   @Prop({ default: 10 }) fontSize!: number;
   @Prop({ default: '10px' }) spikeHeight!: string;
   @Prop({ default: '0.1em' }) spikeWidth!: string;
 
-  @Prop() selectedTemplate!: Template;
+  newProject!: Project;
 
-  newProject: Project = new Project(2131, this.selectedTemplate, ContainerStatus.RUNNING, 'jhalkd', 'acses key', 'http://nrk.no');
+  templateName = ' ';
+  containerAccesKey = ' ';
 
-  // mounted () {
-  //   this.selectedIndex = this.findSelectedNavLocation()
-  // }
+  mounted () {
+    const templateId = this.$route.params.id as string
+
+    restService.initializeTemplateToProject(templateId).then(value => {
+      console.log(value)
+      if (value.status === 200) {
+        this.newProject = value.data
+
+        this.templateName = this.newProject.containerTemplate.templateName
+        this.containerAccesKey = this.newProject.accessesKey
+      } else {
+
+      }
+    })
+  }
 
   private goToProject () {
     window.location.replace(this.newProject.projectURL)
