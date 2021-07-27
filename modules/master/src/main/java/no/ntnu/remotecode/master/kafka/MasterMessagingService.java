@@ -37,7 +37,7 @@ public class MasterMessagingService {
 
 
     public void reciveTaskResponse(TaskAck taskAck) {
-        int        taskId     = taskAck.getId();
+        long       taskId     = taskAck.getId();
         TaskStatus taskStatus = taskAck.getTaskStatus();
 
         Optional<ContainerTask> containerTask = Optional.ofNullable(entityManager.find(ContainerTask.class, taskId));

@@ -5,6 +5,7 @@ import no.ntnu.remotecode.model.enums.TaskStatus;
 
 @Data
 public class TaskAck {
-    int id;
+
+    long id;
     TaskStatus taskStatus;
 }

@@ -13,10 +13,13 @@ import no.ntnu.remotecode.master.docker.service.DockerContainerService;
  */
 public class ContainerManager implements DockerInterface {
 
+    public static DebugLogger dbl = new DebugLogger(true);
+   
     private final DockerContainerService containerService = new DockerContainerService();
     private final IDockerBasicFunctions dockerFunctions = new DockerFunctions();
 
     public boolean startContainer(Project project) {
+        dbl.log("container start order issued");
         try {
             containerService.startContainer(project);
         } catch (Exception e) {
@@ -30,8 +33,9 @@ public class ContainerManager implements DockerInterface {
         return true;
     }
 
-    public void deleteContainer(Project project) {
+    public boolean deleteContainer(Project project) {
         dockerFunctions.deleteContainer(project.getContainerName());
+        return true;
     }
 
     public void getRunningContainerInfo(Project project) {

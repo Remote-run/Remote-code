@@ -1,29 +1,29 @@
-version: '3.8'
+version: "3.8"
 
 
 services:
+  remote-code-worker:
+    container_name: remote-code-worker
+    image: remote-code-worker:latest
 
-  worker:
-    container_name: slave
     build:
       context: ./
       dockerfile: ./Dockerfile
 
-
-    environment:
-      PAYARA_ARG: "aa"
-
-
+    networks:
+      - remote_code_net
 
     volumes:
-      - type: volume
-        source: $PWD/container_files
-        target: /remote_code_files/
+      #      - type: volume
+      #        source: $PWD/container_files
+      #        target: /remote_code_files/
       - type: bind
         source: /var/run/docker.sock
         target: /var/run/docker.sock
 
-
     restart: unless-stopped
 
 
+networks:
+  remote_code_net:
+    external: true

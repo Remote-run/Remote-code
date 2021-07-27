@@ -5,12 +5,16 @@ package no.ntnu.remotecode.master;
 //import simple producer packages
 
 import com.google.gson.Gson;
+import no.ntnu.remotecode.master.messaging.MessageReceiver;
 import no.ntnu.remotecode.model.Template;
 import no.ntnu.remotecode.model.Project;
 import no.ntnu.remotecode.model.enums.ContainerStatus;
 import no.ntnu.remotecode.master.docker.command.DockerFunctions;
 
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 
 //import KafkaProducer packages
 
@@ -28,9 +32,10 @@ public class Main {
         //                KFProducer.run(topics);
         //                System.out.println(ConsumerConfig.configDef().toEnrichedRst());
 
-        DockerFunctions      functions = new DockerFunctions();
-        Map<String, Boolean> ab        = functions.getContainerStatuses();
-        ab.forEach((s, aBoolean) -> System.out.printf("%s-%s\n", s, aBoolean));
+        ExecutorService executorService = Executors.newFixedThreadPool(5);
+        MessageReceiver receiver        = new MessageReceiver(executorService);
+
+        receiver.run();
 
     }
 

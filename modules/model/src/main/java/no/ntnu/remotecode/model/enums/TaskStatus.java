@@ -7,4 +7,7 @@ public enum TaskStatus {
     WORKING,
     COMPLETE,
 
+
+    ERROR
+
 }

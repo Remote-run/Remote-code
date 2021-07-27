@@ -21,6 +21,8 @@ server
 /nbdist/
 /.nb-gradle/
 
+NFS_SHARED_FILE/*
+!NFS_SHARED_FILE/tmp_for_dev
 .DS_store
 *.war
 

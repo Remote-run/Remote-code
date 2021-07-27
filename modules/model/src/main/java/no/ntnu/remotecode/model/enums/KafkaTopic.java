@@ -7,4 +7,6 @@ public enum KafkaTopic {
      */
     CONTAINER_TASK,
 
+    TASK_ACK,
+
 }
