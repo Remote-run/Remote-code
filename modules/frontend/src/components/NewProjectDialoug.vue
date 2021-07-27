@@ -4,19 +4,19 @@
 
     <div id="longspike" :style="{width: spikeWidth }"/>
     <div id="shortspike" :style="{width: spikeWidth}"/>
-    <div class="padder" :style="{gridRow: 1/2}"/>
+    <!--    <div class="padder" :style="{gridRow: 1/2}"/>-->
 
     <div id="dialouge">
-      <h2 class="label" :style="{gridArea: '1/1/2/2'}">Template name:</h2>
-      <h2 class="value" :style="{gridArea: '1/2/2/3'}">{{ templateName }}</h2>
+      <h3 class="label" :style="{gridArea: '1/1/2/2'}">Template name:</h3>
+      <h3 class="value" :style="{gridArea: '1/2/2/3'}">{{ templateName }}</h3>
 
-      <h2 class="label" :style="{gridArea: '2/1/3/2'}">Project access tag:</h2>
-      <h2 class="value" :style="{gridArea: '2/2/3/3'}">{{ containerAccesKey }}</h2>
+      <h3 class="label" :style="{gridArea: '2/1/3/2'}">Project access tag:</h3>
+      <h3 class="value" :style="{gridArea: '2/2/3/3'}">{{ containerAccesKey }}</h3>
 
       <button v-if="newProject !== undefined" @click="goToProject()">go to project</button>
     </div>
   </div>
-  <div class="padder" :style="{gridRow: 3/4}"/>
+  <!--  <div class="padder" :style="{gridRow: 3/4}"/>-->
 </template>
 
 <script lang="ts">
@@ -28,9 +28,10 @@ import { ContainerStatus } from '@/models/ContainerStatus'
 import * as restService from '@/services/RestService'
 
 export default class newProjectDialoug extends Vue {
-  @Prop({ default: 10 }) fontSize!: number;
   @Prop({ default: '10px' }) spikeHeight!: string;
   @Prop({ default: '0.1em' }) spikeWidth!: string;
+
+  @Prop({ default: '0.1em' }) dialougLeftPad!: string;
 
   newProject!: Project;
 
@@ -87,30 +88,6 @@ export default class newProjectDialoug extends Vue {
   //#dialouge  {
   //}
 
-  #nav-text {
-    font-size: 100px;
-    margin: 0;
-
-    .not-here-link {
-      font-size: inherit;
-
-      //font-family: 'Roboto', sans-serif;
-      margin: inherit;
-      text-decoration: none;
-      color: main.$gray1;
-
-    }
-
-    h2 {
-      font-weight: normal;
-      font-size: inherit;
-      margin: inherit;
-      text-decoration: underline;
-      color: main.$blue2;
-
-    }
-  }
-
   #dialouge {
 
     font-size: 50px;
@@ -124,6 +101,7 @@ export default class newProjectDialoug extends Vue {
     }
 
     .value {
+      margin-left: 1em;
       text-align: start;
     }
   }

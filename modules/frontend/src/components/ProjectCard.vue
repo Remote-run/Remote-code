@@ -86,14 +86,26 @@ export default class ProjectCard extends Vue {
 .project-card {
   display: grid;
 
+  grid-row-gap: 0.5rem;
+
   background: main.$card-bg;
 
   border-radius: main.$border-radius;
   border-color: main.$card-border-color;
+  border-style: solid;
+  border-width: 1px;
+
+  box-shadow: main.$appBoxShadow;
+
+  padding: 1rem;
 
   h2 {
     grid-column: 2/3;
     grid-row: 1/3;
+  }
+
+  h3 {
+    margin: 0;
   }
 }
 </style>

@@ -1,5 +1,5 @@
 <template lang="html">
-  <div>
+  <div class="my-templates">
 
     <h2>Current user owned templates:</h2>
     <hr class="subhead-underline">
@@ -53,4 +53,10 @@ export default class MyTemplates extends Vue {
 <style scoped lang="scss">
 
 @use "src/assets/main";
+
+.my-templates {
+
+  padding-top: 20vh;
+
+}
 </style>

@@ -69,7 +69,7 @@ export default class LoginDialog extends Vue {
 }
 
 .input-label {
-
+  width: 20vw;
 }
 
 .login-form {
@@ -96,6 +96,13 @@ export default class LoginDialog extends Vue {
     flex-shrink: 1;
     //line-height: 0.90;
     flex-direction: row;
+    justify-content: space-between;
+    padding-top: 1rem;
+
+    button {
+      //padding-right: 0.3rem;
+      //padding-left: 0.3rem;
+    }
   }
 
   .input-box {

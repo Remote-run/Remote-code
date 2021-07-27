@@ -1,8 +1,9 @@
 <template>
   <div id="app-display" v-if="isLoggedIn()">
-    <SideNavigator font-size="2rem" spike-height="2vh" spike-width="0.6rem" gap="1rem" id="side-nav"/>
+    <SideNavigator font-size="2rem" spike-height="2vh" spike-width="0.5rem" gap="1rem" id="side-nav"
+                   menuitem-padding="1.6rem"/>
     <router-view id="router-v"/>
-    <RemoteCodeLogo font-size="6rem" spike-height="8vh" spike-width="0.6rem" gap="2rem" id="rc-logo"/>
+    <RemoteCodeLogo font-size="4rem" spike-height="2rem" spike-width="0.6rem" gap="1rem" id="rc-logo"/>
   </div>
   <div v-if="!isLoggedIn()">
     <Login/>
@@ -26,7 +27,6 @@ import RemoteCodeLogo from '@/components/RemoteCodeLogo.vue'
 import { Provide } from 'vue-property-decorator'
 
 @Options({
-
   components: {
     RemoteCodeLogo,
     SideNavigator,
@@ -57,8 +57,12 @@ body {
 
 #app-display {
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: 0.5fr 1fr 0.5fr;
   grid-template-rows: 1fr auto 1fr;
+  margin-right: 4%;
+  margin-left: 4%;
+  width: 92vw;
+  height: 100vh;
 
 }
 
@@ -70,18 +74,12 @@ body {
 #rc-logo {
   grid-column: 3/4;
   grid-row: 1/2;
+  margin-left: auto;
 }
 
 #side-nav {
   grid-column: 1/2;
   grid-row: 2/3;
-}
-
-#bipbop {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
 }
 
 #app {
@@ -94,48 +92,6 @@ body {
   text-align: center;
   //color: #2c3e50;
 
-  h1 {
-    margin: 0;
-    font-size: inherit;
-    text-align: right;
-  }
-
-  h2 {
-    text-align: start;
-    margin-bottom: 0;
-    font-weight: bolder;
-
-  }
-
-  h3 {
-  }
-
-  button {
-
-  }
-
-  label {
-    padding: 0;
-    margin: 0;
-    font-size: 2rem;
-    text-align: left;
-  }
-
-  input {
-    border-radius: 5px;
-    height: 1.3rem;
-    border: none;
-    box-shadow: main.$appBoxShadow;
-  }
-
-  hr {
-    display: block;
-    height: 2px;
-    //width: 28em; // tex 28chars
-    border: 0;
-    padding: 0;
-  }
-
   .card-divider {
     margin-left: 20%;
     margin-right: 20%;
@@ -146,6 +102,71 @@ body {
     background: main.$blue2;
     margin-right: 30%;
   }
+}
+
+h1 {
+  margin: 0;
+  font-size: inherit;
+  text-align: right;
+}
+
+h2 {
+  color: #747474;
+  font-size: 2rem;
+
+  text-align: start;
+  margin-bottom: 0;
+  font-weight: normal;
+  //font-weight: bolder;
+
+}
+
+h3 {
+  font-weight: normal;
+  font-family: inherit;
+  text-align: start;
+  font-size: 1.7rem;
+}
+
+button {
+  font-family: inherit;
+  background-color: main.$blue2;
+  border-radius: main.$border-radius;
+  font-size: 1.5rem;
+  color: white;
+  padding: 0.3em 1.8em 0.3em 1.8em;
+}
+
+label {
+  padding: 0;
+  margin: 0;
+  font-size: 2rem;
+  text-align: left;
+}
+
+input {
+  border-radius: 5px;
+  height: 1.3rem;
+  border: none;
+  box-shadow: main.$appBoxShadow;
+  padding: 0.3em 0.8em 0.3em 0.8em;
+  outline: none;
+}
+
+textarea {
+  border-radius: 5px;
+  border: #747474;
+  padding: 1em;
+  box-shadow: main.$appBoxShadow;
+  white-space: nowrap
+}
+
+hr {
+  display: block;
+  height: 2px;
+  //width: 28em; // tex 28chars
+  border: 0;
+  padding: 0;
 }
 
 #nav {

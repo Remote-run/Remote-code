@@ -46,7 +46,7 @@ export default class Login extends Vue {
 
 .login-dialog {
 
-  padding-top: 20%;
+  padding-top: 25%;
 }
 
 .login-logo {

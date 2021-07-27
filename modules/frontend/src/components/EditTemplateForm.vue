@@ -2,15 +2,15 @@
   <div class="edit-template-form">
 
     <div class="input-box">
-      <h2 class="input-label">Template name</h2>
+      <label class="input-label">Template name</label>
       <input type="text" id="username" v-model="templateName">
     </div>
     <div class="input-box">
-      <h2 class="input-label">Git hub HTTP clone link</h2>
+      <label class="input-label">Git hub HTTP clone link</label>
       <input type="text" id="passwd" v-model="templateHttpCloneLink">
     </div>
     <div class="input-box">
-      <h2 class="input-label">Docker build steps</h2>
+      <label class="input-label">Docker build steps</label>
       <textarea v-model="templateDockerBuildSteps"></textarea>
     </div>
     <div class="btn-box">
@@ -69,12 +69,7 @@ export default class EditTemplateForm extends Vue {
 
 @use "src/assets/main";
 
-.input-label {
-  padding: 0;
-  margin: 0;
-  font-size: 50px;
-  text-align: left;
-}
+$formWidth: 20vw;
 
 .edit-template-form {
   display: flex;
@@ -95,6 +90,7 @@ export default class EditTemplateForm extends Vue {
   }
 
   .btn-box {
+    padding-top: 2rem;
     font-family: inherit;
     font-weight: normal;
     display: flex;
@@ -104,6 +100,8 @@ export default class EditTemplateForm extends Vue {
   }
 
   .input-box {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
     font-family: inherit;
     font-weight: normal;
     display: flex;
@@ -111,8 +109,16 @@ export default class EditTemplateForm extends Vue {
     //line-height: 0.90;
     flex-direction: column;
 
+    input {
+      width: $formWidth;
+    }
+
     textarea {
-      height: 10rem;
+      height: 30vh;
+      width: $formWidth;
+      resize: none;
+      outline: none;
+      overflow: auto;
     }
   }
 }

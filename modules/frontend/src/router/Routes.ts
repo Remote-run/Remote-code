@@ -3,6 +3,7 @@ export enum APP_ROUTES {
   LOGG_OUT = '/loggout',
   NEW_TEMPLATE = '/template/new',
   MY_TEMPLATES = '/templates',
+  USER = '/user',
 
   // Not navigatable from menu
   NEW_PROJECT = '/projects/new/:id',

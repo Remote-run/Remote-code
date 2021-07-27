@@ -1,6 +1,6 @@
 <template lang="html">
-  <div class="new-template">
-    <EditTemplateForm/>
+  <div>
+    bip bop
   </div>
 </template>
 
@@ -23,7 +23,7 @@ import ProjectCard from '@/components/ProjectCard.vue'
 
   }
 })
-export default class NewTemplate extends Vue {
+export default class User extends Vue {
   // mounted () {
   //   this.selectedIndex = this.findSelectedNavLocation()
   // }
@@ -33,10 +33,4 @@ export default class NewTemplate extends Vue {
 <style scoped lang="scss">
 
 @use "src/assets/main";
-
-.new-template {
-
-  padding-top: 20vh;
-
-}
 </style>

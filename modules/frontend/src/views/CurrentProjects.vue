@@ -55,6 +55,9 @@ export default class CurrentProjects extends Vue {
 @use "src/assets/main";
 
 .current-user-projects-page {
+
+  padding-top: 20vh;
+
   h2 {
     text-align: start;
     margin-bottom: 0;

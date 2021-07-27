@@ -5,6 +5,7 @@ import NewProjectLanding from '@/views/NewProjectLanding.vue'
 import MyTemplates from '@/views/MyTemplates.vue'
 import NewTemplate from '@/views/NewTemplate.vue'
 import LogOut from '@/views/LogOut.vue'
+import User from '@/views/User.vue'
 
 const routes: Array<RouteRecordRaw> = [
 
@@ -22,6 +23,11 @@ const routes: Array<RouteRecordRaw> = [
     path: APP_ROUTES.NEW_TEMPLATE,
     name: 'New template',
     component: NewTemplate
+  },
+  {
+    path: APP_ROUTES.USER,
+    name: 'User',
+    component: User
   },
   {
     path: APP_ROUTES.NEW_PROJECT,

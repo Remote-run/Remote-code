@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="side-bar-nav"
+  <div v-if="aNotGreatSolution()" class="side-bar-nav"
        :style="{gridRowGap: menuitemPadding, gridColumnGap: gap, fontSize: fontSize}">
 
     <div id="longspike" :style="getLongspikeStyle()"/>
@@ -28,6 +28,11 @@ export default class SideNavigator extends Vue {
   @Prop({ default: '10px' }) gap!: string;
   @Prop({ default: '10px' }) menuitemPadding!: string;
 
+  aNotGreatSolution (): boolean {
+    console.log(this.$route)
+    return this.$route.name !== 'New project'
+  }
+
   getNavEntryStyle (index: number): any {
     return { fontSize: this.fontSize, gridRow: (index + 1 + 1) + '/' + (index + 1 + 2) }
   }
@@ -51,11 +56,13 @@ export default class SideNavigator extends Vue {
   }
 
   userNavItems = [
+    { title: 'User info', path: APP_ROUTES.USER },
     { title: 'Current projects', path: APP_ROUTES.CURENT_PROJECTS },
     { title: 'Logg out', path: APP_ROUTES.LOGG_OUT }
   ]
 
   adminNavItems = [
+    { title: 'User info', path: APP_ROUTES.USER },
     { title: 'Current projects', path: APP_ROUTES.CURENT_PROJECTS },
     { title: 'Current templates', path: APP_ROUTES.MY_TEMPLATES },
     { title: 'New template', path: APP_ROUTES.NEW_TEMPLATE },
@@ -128,7 +135,7 @@ export default class SideNavigator extends Vue {
       font-weight: normal;
       font-size: inherit;
       margin: inherit;
-      text-decoration: underline;
+      text-decoration: none;
       color: main.$blue2;
 
     }
