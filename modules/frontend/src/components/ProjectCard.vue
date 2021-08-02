@@ -10,7 +10,8 @@
       Status: <span :style="statusStyle">{{ cardProject.containerStatus.toString() }}</span>
     </h2>
     <div v-if="isDeleted">
-      <button @click="goToProject()">go to project</button>
+      <button @click="goToProject()">Go to project</button>
+      <button @click="deleteContainer()">Delete</button>
     </div>
   </div>
 </template>
@@ -18,13 +19,16 @@
 <script lang="ts">
 import { Vue } from 'vue-class-component'
 import { Project } from '@/models/Project'
-import { Prop } from 'vue-property-decorator'
+import { InjectReactive, Prop } from 'vue-property-decorator'
 import { ContainerStatus } from '@/models/ContainerStatus'
 
 import * as restService from '@/services/RestService'
 
 export default class ProjectCard extends Vue {
   @Prop() cardProject!: Project;
+  @Prop() projIndex!: number;
+
+  @InjectReactive('user-proj') userProjects: Project[] = [];
 
   mounted () {
     this.updateStatusStyle()
@@ -35,7 +39,12 @@ export default class ProjectCard extends Vue {
   }
 
   private goToProject () {
-    window.location.replace(this.cardProject.projectURL)
+    console.log(this.cardProject)
+    const projectUrl = 'http://' + this.cardProject.containerName + '.' + process.env.VUE_APP_SERVER_URL
+
+    console.log(projectUrl)
+
+    window.location.replace(projectUrl)
   }
 
   private stopContainer () {
@@ -43,9 +52,12 @@ export default class ProjectCard extends Vue {
   }
 
   private deleteContainer () {
-    restService.deleteProject(this.cardProject.id).then(value => {
+    restService.deleteProject(this.cardProject.containerName).then(value => {
       if (value.status === 200) {
         this.cardProject.containerStatus = ContainerStatus.DELETED
+
+        // TODO: fix
+        window.location.reload()
       }
     })
   }

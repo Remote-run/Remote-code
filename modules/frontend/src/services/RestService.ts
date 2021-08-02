@@ -4,7 +4,7 @@ import { AuthService } from '@/services/AuthService'
 const BASE_URL = process.env.VUE_APP_SERVER_URL
 
 const apiConfig = {
-  baseURL: BASE_URL
+  baseURL: 'http://' + BASE_URL
 }
 
 /// --- AUTH ENDPOINTS --- ///
@@ -30,7 +30,7 @@ export function getCurrentProjects () {
   )
 }
 
-export function deleteProject (projectID: number) {
+export function deleteProject (projectID: string) {
   return axios({
     ...apiConfig,
     url: '/api/app/projects/' + projectID,
@@ -62,6 +62,16 @@ export function initializeTemplateToProject (templateID: string) {
 }
 
 /// --- TEMPLATES ENDPOINTS --- ///
+
+export function deleteTemplate (templateID: string) {
+  return axios({
+    ...apiConfig,
+    url: '/api/app/templates/' + templateID,
+    method: 'DELETE',
+    headers: { Authorization: AuthService.isLoggedIn() ? AuthService.getToken() : null }
+  }
+  )
+}
 
 export function getCurrentTemplates () {
   return axios({

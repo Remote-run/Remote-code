@@ -29,7 +29,6 @@ export default class SideNavigator extends Vue {
   @Prop({ default: '10px' }) menuitemPadding!: string;
 
   aNotGreatSolution (): boolean {
-    console.log(this.$route)
     return this.$route.name !== 'New project'
   }
 

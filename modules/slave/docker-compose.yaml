@@ -13,10 +13,13 @@ services:
     networks:
       - remote_code_net
 
+    labels:
+      - "traefik.enable=false"
+
     volumes:
-      #      - type: volume
-      #        source: $PWD/container_files
-      #        target: /remote_code_files/
+      - type: bind
+        source: $PWD/../../NFS_SHARED_FILE
+        target: /application_storage
       - type: bind
         source: /var/run/docker.sock
         target: /var/run/docker.sock

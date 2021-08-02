@@ -55,7 +55,12 @@ export default class newProjectDialoug extends Vue {
   }
 
   private goToProject () {
-    window.location.replace(this.newProject.projectURL)
+    console.log(this.newProject)
+    const projectUrl = 'http://' + this.newProject.containerName + '.' + process.env.VUE_APP_SERVER_URL
+
+    console.log(projectUrl)
+
+    window.location.replace(projectUrl)
   }
 }
 </script>

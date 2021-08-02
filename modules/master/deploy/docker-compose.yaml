@@ -1,0 +1,32 @@
+version: "3.8"
+
+
+services:
+  remote-code-master:
+    container_name: remote-code-master
+    image: remote-code-master:latest
+    build:
+      context: ./../core
+      dockerfile: Dockerfile
+
+
+    expose:
+      - "9080"
+      - "9443"
+
+    env_file:
+      - runtime_envs/db_login.env
+      - runtime_envs/kafka.env
+
+    volumes:
+      - type: bind
+        source: $PWD/../../../NFS_SHARED_FILE
+        target: /application_storage/shared_files
+
+    networks:
+      - remote_code_net
+
+networks:
+  remote_code_net:
+    external: true
+

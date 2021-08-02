@@ -3,8 +3,8 @@
 
     <h2>Current user owned projects:</h2>
     <hr class="subhead-underline">
-    <div v-for="proj in userProjects">
-      <ProjectCard :card-project="proj"/>
+    <div v-for="(value, index)  in userProjects">
+      <ProjectCard :card-project="value" :proj-index="index"/>
       <hr class="card-divider">
     </div>
   </div>
@@ -20,6 +20,7 @@ import router from '@/router'
 import { Template } from '@/models/Template'
 import { ContainerStatus } from '@/models/ContainerStatus'
 import ProjectCard from '@/components/ProjectCard.vue'
+import { ProvideReactive } from 'vue-property-decorator'
 
 @Options({
   components: {
@@ -27,7 +28,7 @@ import ProjectCard from '@/components/ProjectCard.vue'
   }
 })
 export default class CurrentProjects extends Vue {
-  userProjects: Project[] = [];
+  @ProvideReactive('user-proj') userProjects: Project[] = [];
 
   mounted () {
     this.fetchUserProjects()

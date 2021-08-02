@@ -28,6 +28,7 @@ import { Prop } from 'vue-property-decorator'
 
 import * as restService from '@/services/RestService'
 import { Template } from '@/models/Template'
+import { ContainerStatus } from '@/models/ContainerStatus'
 
 export default class TemplateCard extends Vue {
   @Prop() cardTemplate!: Template;
@@ -46,7 +47,12 @@ export default class TemplateCard extends Vue {
   }
 
   private deleteTemplate () {
-    console.log('WIP')
+    restService.deleteTemplate(this.cardTemplate.templateKey).then(value => {
+      if (value.status === 200) {
+        // TODO: actually notify the parent they shold not display this card
+        window.location.reload()
+      }
+    })
   }
 }
 </script>
