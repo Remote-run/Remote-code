@@ -11,6 +11,10 @@ services:
       dockerfile: ./Dockerfile
 
 
+    labels:
+      - "traefik.http.routers.auth.rule=Host(`api.remote-code.woldseth.xyz`) && PathPrefix(`/auth/`)"
+
+
     expose:
       - "9080"
       - "9443"

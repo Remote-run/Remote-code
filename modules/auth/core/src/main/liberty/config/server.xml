@@ -6,6 +6,7 @@
         <feature>ejbLite-3.2</feature>
         <feature>beanValidation-2.0</feature>
 
+        <feature>jaxrs-2.1</feature>
 
     </featureManager>
 
@@ -17,9 +18,19 @@
                   id="defaultHttpEndpoint"
                   host="*"/>
 
-    <application location="core-1.0.war" type="war" context-root="/api/auth/">
+    <application location="core-1.0.war" type="war" context-root="/auth/">
     </application>
 
+    <cors domain="/auth"
+          allowedOrigins="https://remote-code.woldseth.xyz"
+          allowedMethods="OPTIONS, GET, POST, DELETE, PATCH"
+          allowCredentials="true"
+          allowedHeaders="*"
+          exposeHeaders="*"
+          maxAge="3600"
+    />
+
+    <!--          allowedHeaders="origin, content-type, accept, authorization, cache-control, Authorization"-->
 
     <include location="server_ds_config.xml"/>
 

@@ -33,7 +33,7 @@ import { ContainerStatus } from '@/models/ContainerStatus'
 export default class TemplateCard extends Vue {
   @Prop() cardTemplate!: Template;
 
-  intitTemplateLinkPrefix = process.env.VUE_APP_SERVER_URL + '/projects/new'
+  intitTemplateLinkPrefix = 'https://' + process.env.VUE_APP_SERVER_URL + '/projects/new'
 
   // mounted () {
   // }

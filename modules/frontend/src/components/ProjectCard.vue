@@ -26,9 +26,6 @@ import * as restService from '@/services/RestService'
 
 export default class ProjectCard extends Vue {
   @Prop() cardProject!: Project;
-  @Prop() projIndex!: number;
-
-  @InjectReactive('user-proj') userProjects: Project[] = [];
 
   mounted () {
     this.updateStatusStyle()
@@ -40,7 +37,7 @@ export default class ProjectCard extends Vue {
 
   private goToProject () {
     console.log(this.cardProject)
-    const projectUrl = 'http://' + this.cardProject.containerName + '.' + process.env.VUE_APP_SERVER_URL
+    const projectUrl = 'https://' + this.cardProject.containerName + '.' + process.env.VUE_APP_SERVER_URL
 
     console.log(projectUrl)
 
@@ -86,7 +83,6 @@ export default class ProjectCard extends Vue {
           break
       }
     }
-    console.log(this.statusStyle)
   }
 }
 </script>

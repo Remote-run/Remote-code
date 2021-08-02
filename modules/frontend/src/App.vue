@@ -95,12 +95,16 @@ body {
   .card-divider {
     margin-left: 20%;
     margin-right: 20%;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
     background: main.$gray1;
+
   }
 
   .subhead-underline {
     background: main.$blue2;
     margin-right: 30%;
+    margin-bottom: 2rem;
   }
 }
 

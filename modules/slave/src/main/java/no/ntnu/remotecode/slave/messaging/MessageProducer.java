@@ -5,12 +5,15 @@ import jakarta.json.bind.JsonbBuilder;
 import no.ntnu.remotecode.master.model.DTO.kafkamessage.TaskAck;
 import no.ntnu.remotecode.master.model.enums.KafkaTopic;
 import no.ntnu.remotecode.master.model.enums.TaskStatus;
+import no.ntnu.remotecode.slave.AppConfig;
 
 import java.util.concurrent.ExecutorService;
 
 public class MessageProducer extends KafkaProducerBase {
 
     private Jsonb jsonb;
+
+    private String nodeId = AppConfig.getInstance().getWorkerID();
 
     public MessageProducer(ExecutorService executorService) {
         super(executorService);
@@ -25,6 +28,6 @@ public class MessageProducer extends KafkaProducerBase {
         taskAck.setTaskStatus(taskStatus);
 
 
-        super.submitMessage(KafkaTopic.TASK_ACK.name(), "-1", jsonb.toJson(taskAck));
+        super.submitMessage(KafkaTopic.TASK_ACK.name(), nodeId, jsonb.toJson(taskAck));
     }
 }

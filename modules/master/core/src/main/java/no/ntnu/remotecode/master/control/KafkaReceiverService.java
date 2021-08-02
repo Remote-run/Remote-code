@@ -1,13 +1,18 @@
 package no.ntnu.remotecode.master.control;
 
+import lombok.extern.java.Log;
 import no.ntnu.remotecode.master.model.ContainerTask;
 import no.ntnu.remotecode.master.model.DTO.kafkamessage.TaskAck;
 import no.ntnu.remotecode.master.model.Project;
 import no.ntnu.remotecode.master.model.enums.ContainerStatus;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 
+@Log
+@Transactional
 public class KafkaReceiverService {
 
 
@@ -15,19 +20,18 @@ public class KafkaReceiverService {
     EntityManager entityManager;
 
     public void handleAckMessage(TaskAck taskAck) {
-
+        log.info("Handeling ack message");
         ContainerTask task = entityManager.find(ContainerTask.class, taskAck.getId());
 
         if (task == null) {
             throw new RuntimeException("KAFKA MESSAGE ERROR");
         }
 
-        task.setTaskStatus(taskAck.getTaskStatus());
-        entityManager.persist(task);
 
+        log.info("Task old state: " + task.getTaskStatus());
         Project project = task.getProject();
-        switch (taskAck.getTaskStatus()) {
 
+        switch (taskAck.getTaskStatus()) {
             case NOT_SENT:
             case WORKING:
             case RECEIVED:
@@ -51,6 +55,12 @@ public class KafkaReceiverService {
         }
 
         entityManager.persist(project);
+
+        task.setTaskStatus(taskAck.getTaskStatus());
+        entityManager.persist(task);
+
+        log.info("Task new state: " + task.getTaskStatus());
+
     }
 
 }

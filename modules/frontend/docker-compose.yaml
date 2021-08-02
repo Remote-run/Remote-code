@@ -1,0 +1,32 @@
+version: "3.8"
+
+
+services:
+  remote-code-frontend:
+    container_name: remote-code-frontend
+    image: remote-code-frontend:latest
+    build:
+      context: ./
+      dockerfile: Dockerfile
+
+
+    expose:
+      - "8080"
+
+    labels:
+      - "traefik.http.routers.frontend.rule=Host(`remote-code.woldseth.xyz`)"
+      - "traefik.docker.network=remote_code_net"
+
+
+    volumes:
+      - type: bind
+        source: $PWD/.
+        target: /application
+
+    networks:
+      - remote_code_net
+
+networks:
+  remote_code_net:
+    external: true
+

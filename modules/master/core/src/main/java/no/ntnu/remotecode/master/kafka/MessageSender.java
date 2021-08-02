@@ -4,17 +4,24 @@ import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.StringSerializer;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
+import javax.inject.Inject;
 import java.util.Properties;
 
 
 @Singleton
 public class MessageSender {
 
-    private final String kafkaHostAddress = "kafka:9092";
-    private final String producerId = "mbmrmkmgdf";
+    @Inject
+    @ConfigProperty(name = "remote.code.kafka.adress")
+    private String kafkaHostAddress;
+
+    @Inject
+    @ConfigProperty(name = "remote.code.kafka.producer.id")
+    private String producerId;
 
     private Producer<String, String> producer;
 

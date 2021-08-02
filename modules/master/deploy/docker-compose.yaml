@@ -9,6 +9,9 @@ services:
       context: ./../core
       dockerfile: Dockerfile
 
+    labels:
+      - "traefik.http.routers.app.rule=Host(`api.remote-code.woldseth.xyz`) && PathPrefix(`/app/`)"
+      - "traefik.docker.network=remote_code_net"
 
     expose:
       - "9080"

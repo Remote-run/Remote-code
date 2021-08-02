@@ -56,11 +56,7 @@ public class ProjectResource {
     @Valid
     @Path("/{id}")
     public Response deleteProject(@PathParam("id") UUID projectId) {
-        System.out.println("RECIVEDS");
-        ;
         boolean suc = projectService.deleteProject(projectId);
-        System.out.println("del ddne");
-        ;
         if (suc) {
             return Response.ok().build();
         } else {

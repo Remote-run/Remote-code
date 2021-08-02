@@ -13,6 +13,8 @@ services:
     networks:
       - remote_code_net
 
+    labels:
+      - "traefik.enable=false"
 
   kafka:
     image: bitnami/kafka
@@ -37,6 +39,10 @@ services:
     networks:
       - remote_code_net
 
+
+    labels:
+      - "traefik.enable=false"
+
   kafka-ui:
     image: provectuslabs/kafka-ui
     container_name: kafka-ui
@@ -50,6 +56,9 @@ services:
     networks:
       - remote_code_net
 
+
+    labels:
+      - "traefik.enable=false"
 networks:
   remote_code_net:
     external: true

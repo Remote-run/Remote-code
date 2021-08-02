@@ -28,7 +28,7 @@ import { ProvideReactive } from 'vue-property-decorator'
   }
 })
 export default class CurrentProjects extends Vue {
-  @ProvideReactive('user-proj') userProjects: Project[] = [];
+  userProjects: Project[] = [];
 
   mounted () {
     this.fetchUserProjects()

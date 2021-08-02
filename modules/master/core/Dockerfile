@@ -8,8 +8,7 @@ ARG REVISION=SNAPSHOT
 LABEL name="AUTH"
 LABEL version="$VERSION-$REVISION"
 
-LABEL traefik.docker.network=remote_code_net
-LABEL traefik.http.routers.master.rule="PathPrefix(`/api/app/`)"
+
 
 
 USER root

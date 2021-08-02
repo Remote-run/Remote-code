@@ -11,6 +11,10 @@
         <class>no.ntnu.remotecode.master.model.Project</class>
         <class>no.ntnu.remotecode.master.model.Template</class>
         <class>no.ntnu.remotecode.master.model.ComputeNode</class>
+
+        <!-- TODO: REMOVE THIS AFTER DEV -->
+        <shared-cache-mode>NONE</shared-cache-mode>
+
         <properties>
             <property name="javax.persistence.schema-generation.database.action" value="create"/>
         </properties>

@@ -39,7 +39,6 @@ export default class LoginDialog extends Vue {
     restService.login(this.username, this.password).then(response => {
       if (response.status === 200) {
         const token = response.headers.authorization
-        console.log(token)
         AuthService.logIn(token)
         window.location.reload()// yup this is bad
       } else {

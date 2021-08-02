@@ -26,9 +26,18 @@
                   id="defaultHttpEndpoint"
                   host="*"/>
 
-    <application location="core-1.0.war" type="war" context-root="/api/app/">
+    <application location="core-1.0.war" type="war" context-root="/app/">
     </application>
 
+
+    <cors domain="/app"
+          allowedOrigins="https://remote-code.woldseth.xyz"
+          allowedMethods="OPTIONS, GET, POST, DELETE, PATCH"
+          allowCredentials="true"
+          allowedHeaders="*"
+          exposeHeaders="*"
+          maxAge="3600"
+    />
 
     <include location="server_ds_config.xml"/>
 

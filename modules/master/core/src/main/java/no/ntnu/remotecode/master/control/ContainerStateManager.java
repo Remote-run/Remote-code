@@ -87,6 +87,7 @@ public class ContainerStateManager {
         newTask.setTaskStatus(TaskStatus.NOT_SENT);
 
         entityManager.persist(newTask);
+        entityManager.flush();
 
         messagingService.sendTask(newTask);
     }

@@ -40,10 +40,13 @@ class AuthServiceC {
   }
 
   public logIn (token: string) {
+    console.log('SAVING TOKEN')
+    console.log(token)
     this.loginLevel = LoginLevel.LOGGED_IN
     this.saveTokenToStorage(token)
     this.jwtB64String = token
     this.jwtObj = this.parseToken(token)
+    console.log(this.jwtObj)
   }
 
   public logOut () {

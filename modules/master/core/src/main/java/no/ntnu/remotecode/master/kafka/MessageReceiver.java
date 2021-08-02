@@ -1,6 +1,7 @@
 package no.ntnu.remotecode.master.kafka;
 
 
+import lombok.extern.java.Log;
 import no.ntnu.remotecode.master.control.KafkaReceiverService;
 import no.ntnu.remotecode.master.model.ContainerTask;
 import no.ntnu.remotecode.master.model.DTO.kafkamessage.TaskAck;
@@ -16,6 +17,7 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import javax.ejb.Local;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.enterprise.concurrent.ManagedExecutorService;
@@ -28,16 +30,19 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.function.Consumer;
+import java.util.logging.Level;
 import java.util.stream.Collectors;
 
-
+@Log
 @Singleton
 @Startup
 public class MessageReceiver {
 
+    @Inject
     @ConfigProperty(name = "remote.code.kafka.adress")
     private String kafkaHostAddress;
 
+    @Inject
     @ConfigProperty(name = "remote.code.kafka.consumer.id")
     private String consumerId;
 
@@ -53,6 +58,7 @@ public class MessageReceiver {
 
 
     public void startListening() {
+
         Properties props = new Properties();
 
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, this.kafkaHostAddress);
@@ -68,19 +74,18 @@ public class MessageReceiver {
 
 
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
-
         KafkaConsumer<String, String> consumer = new KafkaConsumer<String, String>(props);
         consumer.subscribe(this.topicHandlers.keySet().stream().map(Enum::toString).collect(Collectors.toList()));
 
 
         while (true) {
-            //            dbl.log("consume loop");
 
             ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(1000));
 
             records.forEach(record -> {
                 KafkaTopic recordTopic = KafkaTopic.valueOf(record.topic());
                 if (this.topicHandlers.containsKey(recordTopic)) {
+                    log.info("Toptic is of type " + recordTopic.toString());
                     this.executorService.submit(() -> this.topicHandlers.get(recordTopic).accept(record));
                 } else {
                     // dont think this can happen
@@ -96,7 +101,6 @@ public class MessageReceiver {
     @PostConstruct
     public void init() {
         topicHandlers.put(KafkaTopic.TASK_ACK, this::handleAckMessage);
-
 
         executorService.submit(this::startListening);
 
