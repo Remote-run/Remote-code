@@ -1,14 +1,11 @@
 package no.ntnu.remotecode.slave;
 
 
-import no.ntnu.remotecode.slave.docker.Interface.IDockerHostFileSystemInterface;
-import no.ntnu.remotecode.slave.docker.command.HostInteraction;
+import no.ntnu.remotecode.slave.service.IDockerHostFileSystemInterface;
+import no.ntnu.remotecode.slave.service.HostInteraction;
 import no.ntnu.remotecode.slave.util.FileUtils;
 import no.ntnu.remotecode.master.model.Project;
-import no.ntnu.remotecode.slave.docker.Interface.DockerInterface;
-import no.ntnu.remotecode.slave.docker.Interface.IDockerBasicFunctions;
-import no.ntnu.remotecode.slave.docker.command.DockerFunctions;
-import no.ntnu.remotecode.slave.docker.service.DockerContainerService;
+import no.ntnu.remotecode.slave.service.DockerContainerService;
 
 import java.io.File;
 
@@ -16,15 +13,22 @@ import java.io.File;
 1. starte co rutine som sjekker status på kjørende kontainere og cpu bruk osv.
 
  */
-public class ContainerManager implements DockerInterface {
+public class ContainerManager {
 
     public static DebugLogger dbl = new DebugLogger(true);
 
     private final DockerContainerService containerService = new DockerContainerService();
-    private final IDockerBasicFunctions dockerFunctions = new DockerFunctions();
 
     private IDockerHostFileSystemInterface hostFs = new HostInteraction();
 
+    /**
+     * Starts an instance of the provided {@link Project}.
+     * The container has been prevously run and stopped, it wil be started again.
+     * If the container havent been run on this node before it wil be built.
+     *
+     * @param project the container to start
+     * @return {@code true} if the start is sucsessfull {@code false} if not.
+     */
     public boolean startContainer(Project project) {
         dbl.log("container start order issued");
         try {
@@ -36,13 +40,13 @@ public class ContainerManager implements DockerInterface {
     }
 
     public boolean stopContainer(Project project) {
-        dockerFunctions.stopContainer(project.getContainerName());
+        containerService.stopContainer(project);
         return true;
     }
 
     public boolean deleteContainer(Project project) {
-        dockerFunctions.stopContainer(project.getContainerName());
-        dockerFunctions.deleteContainer(project.getContainerName());
+        containerService.stopContainer(project);
+        containerService.deleteContainer(project);
 
         File containerDataDir = new File(hostFs.getContainerDataDirContainer(), project.getDataDirName());
 

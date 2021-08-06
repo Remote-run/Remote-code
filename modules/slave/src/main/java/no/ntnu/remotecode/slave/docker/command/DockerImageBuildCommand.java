@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * Gives a easy way of building images for a specific file and context
  */
-public class DockerImageBuildCommand extends DockerCommand {
+public class DockerImageBuildCommand extends SystemCommand {
 
     private final String imageName;
     private final File buildDir;

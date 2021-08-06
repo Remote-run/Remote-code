@@ -77,6 +77,7 @@ public class ProjectResource {
     @Path("/{id}")
     public Response changeProjectPass(@PathParam("id") UUID projectId, @NotBlank String newPassword) {
         boolean suc = projectService.changeProjectPass(projectId, newPassword);
+
         if (suc) {
             return Response.ok().build();
         } else {

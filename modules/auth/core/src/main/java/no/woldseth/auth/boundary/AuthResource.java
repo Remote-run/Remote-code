@@ -9,6 +9,7 @@ import no.woldseth.auth.model.Group;
 import no.woldseth.auth.control.AuthenticationService;
 
 
+import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -16,6 +17,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -87,8 +89,46 @@ public class AuthResource {
             return authService.createUser(newAuthUserData).orElse(null);
         }
         return null;
-
-
     }
 
+
+    /**
+     * Creates a new {@link AuthenticatedUser} in the User {@link Group}
+     *
+     * @param username The username for the new user
+     * @param password The Password for the new user
+     * @return the newly created authenticated user.
+     */
+    //TODO: This is horrible and shold be changed
+    @POST
+    @Path("newuser")
+    @PermitAll
+    public Response newUserUser(
+            @QueryParam("username") String username, @QueryParam("password") String password) {
+        NewAuthUserData newAuthUserData = new NewAuthUserData();
+        newAuthUserData.setUserName(username);
+        newAuthUserData.setPassword(password);
+        newAuthUserData.setGroups(List.of(Group.USER_GROUP_NAME));
+
+        Optional<AuthenticatedUser> newUser = Optional.empty();
+        if (!authService.isPrincipalInUse(newAuthUserData.getUserName())) {
+            newUser = authService.createUser(newAuthUserData);
+        }
+
+
+        if (newUser.isPresent()) {
+            UsernamePasswordData usernamePasswordData = new UsernamePasswordData();
+            usernamePasswordData.setPassword(password);
+            usernamePasswordData.setUserName(username);
+
+            Optional<String> loginToken = authService.getToken(usernamePasswordData);
+            if (loginToken.isPresent()) {
+                return loginToken.map(s -> Response.ok().header(HttpHeaders.AUTHORIZATION, "Bearer " + s))
+                                 .orElse(Response.ok().status(Response.Status.UNAUTHORIZED)).build();
+            }
+        }
+
+        return Response.ok().status(Response.Status.BAD_REQUEST).build();
+
+    }
 }

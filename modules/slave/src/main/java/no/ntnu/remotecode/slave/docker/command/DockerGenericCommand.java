@@ -7,7 +7,7 @@ import java.util.Arrays;
 /**
  * simple wrapper to the DockerCommand class to alow for simple commands like image list etc..
  */
-public class DockerGenericCommand extends DockerCommand {
+public class DockerGenericCommand extends SystemCommand {
 
     private final ArrayList<String> command = new ArrayList<>();
 

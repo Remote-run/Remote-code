@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * The default run command for a container. Can be configured
  */
-public class DockerRunCommand extends DockerCommand {
+public class DockerRunCommand extends SystemCommand {
 
     private final HashMap<String, String> volumes = new HashMap<>();
     private final HashMap<String, String> envVariables = new HashMap<>();

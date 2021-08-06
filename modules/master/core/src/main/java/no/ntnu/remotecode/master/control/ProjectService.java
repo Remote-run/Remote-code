@@ -49,9 +49,9 @@ public class ProjectService {
     private static final String GET_USER_PROJECTS = "select pr from Project as pr where pr.containerOwnerId = :uid";// and not pr.containerStatus = :delKey";
 
 
-    private static final String FIND_PROJECT_BY_TEMPLATE_KEY = "SELECT pr from Project as pr where pr.containerTemplate.templateKey = :key";
+    private static final String FIND_PROJECT_BY_TEMPLATE_KEY = "SELECT pr from Project as pr where pr.containerTemplate.templateKey = :key AND pr.containerOwnerId = :uid";
 
-    private static final String FIND_PROJECT_BY_PROJECT_KEY = "SELECT pr from Project as pr where pr.projectKey = :key";
+    private static final String FIND_PROJECT_BY_PROJECT_KEY = "SELECT pr from Project as pr where pr.projectKey = :key AND pr.containerOwnerId = :uid";
 
 
     private File getContainerSaveDir() {
@@ -63,10 +63,11 @@ public class ProjectService {
     }
 
 
-    public Optional<Project> getProjectFromTemplateKey(UUID key) {
+    public Optional<Project> getUserProjectFromTemplateKey(UUID key, long userid) {
 
         TypedQuery<Project> query = entityManager.createQuery(FIND_PROJECT_BY_TEMPLATE_KEY, Project.class);
         query.setParameter("key", key);
+        query.setParameter("uid", userid);
         try {
             return Optional.of(query.getSingleResult());
         } catch (PersistenceException e) {
@@ -74,9 +75,11 @@ public class ProjectService {
         }
     }
 
-    public Optional<Project> getProjectFromProjectKey(UUID key) {
+    public Optional<Project> getProjectFromProjectKey(UUID key, long userid) {
         TypedQuery<Project> query = entityManager.createQuery(FIND_PROJECT_BY_PROJECT_KEY, Project.class);
         query.setParameter("key", key);
+        query.setParameter("uid", userid);
+
         try {
             return Optional.of(query.getSingleResult());
         } catch (PersistenceException e) {
@@ -99,7 +102,7 @@ public class ProjectService {
 
     public boolean deleteProject(UUID projId) {
 
-        Optional<Project> optionalProject = this.getProjectFromProjectKey(projId);
+        Optional<Project> optionalProject = this.getProjectFromProjectKey(projId, this.getUserId());
 
         if (optionalProject.isPresent()) {
             //            Project project = optionalProject.get();
@@ -114,7 +117,7 @@ public class ProjectService {
 
     public boolean changeProjectPass(UUID projId, String newPass) {
 
-        Optional<Project> optionalProject = this.getProjectFromProjectKey(projId);
+        Optional<Project> optionalProject = this.getProjectFromProjectKey(projId, this.getUserId());
         if (optionalProject.isPresent()) {
             Project project = optionalProject.get();
             project.setAccessesKey(newPass);
@@ -128,7 +131,7 @@ public class ProjectService {
 
 
     public Optional<Project> initializeTemplate(UUID uuid) {
-        Optional<Project> existingProject = getProjectFromTemplateKey(uuid);
+        Optional<Project> existingProject = getUserProjectFromTemplateKey(uuid, this.getUserId());
         if (existingProject.isPresent()) {
             return existingProject;
         }

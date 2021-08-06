@@ -1,0 +1,3 @@
+
+
+the slaves shold notify running when containers are registered as running not when the building is ok

@@ -2,7 +2,14 @@ package no.ntnu.remotecode.slave;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -13,6 +20,56 @@ import java.util.stream.Stream;
 public class DebugLogger {
 
     private final boolean print;
+    private static final SyncPrinter printer = SyncPrinter.getInstance();
+
+
+    private static class SyncPrinter {
+
+        private static SyncPrinter instance = new SyncPrinter();
+
+        public static SyncPrinter getInstance() {
+            return instance;
+        }
+
+        private SyncPrinter() {
+            Thread t = new Thread(() -> {
+                try {
+                    while (true) {
+                        String printStr = printQue.take();
+                        System.out.println(printStr);
+
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            });
+            t.start();
+        }
+
+        private BlockingQueue<String> printQue = new LinkedBlockingQueue<>();
+
+        // locks instead of synchronized to avoid something slipping in to a multiline print
+        private Lock lock = new ReentrantLock();
+
+        public void print(String printStr) {
+            try {
+                lock.lock();
+                printQue.add(printStr);
+            } finally {
+                lock.unlock();
+            }
+        }
+
+        public synchronized void print(List<String> strings) {
+            try {
+                lock.lock();
+                printQue.addAll(strings);
+            } finally {
+                lock.unlock();
+            }
+        }
+    }
+
 
     /**
      * Makes a debug logger
@@ -41,10 +98,12 @@ public class DebugLogger {
      */
     public void log(Object... tolog) {
         if (this.print) {
-            String printString = Stream.of(tolog).map(Objects::toString).collect(Collectors.joining(" "));
+            ArrayList<String> printList   = new ArrayList<>();
+            String            printString = Stream.of(tolog).map(Objects::toString).collect(Collectors.joining(" "));
 
-            System.out.printf("%-70s\t\t", printString);
-            System.out.println(this.getFormattedCallerStackPosString());
+            printList.add(String.format("%-70s\t\t", printString) + this.getFormattedCallerStackPosString());
+
+            printer.print(printList);
         }
     }
 
@@ -56,19 +115,23 @@ public class DebugLogger {
      */
     public void sLog(Object... tolog) {
         if (this.print) {
-            String printString = Stream.of(tolog).map(Objects::toString).collect(Collectors.joining(" "));
-            System.out.println(printString);
+            ArrayList<String> printList   = new ArrayList<>();
+            String            printString = Stream.of(tolog).map(Objects::toString).collect(Collectors.joining(" "));
+            printList.add(printString);
+            printer.print(printList);
         }
     }
 
 
     public void dumpStackHere() {
         if (this.print) {
-            System.out.printf("##### dumping stack at: %s #####\n", this.getFormattedCallerStackPosString());
+            ArrayList<String> printList = new ArrayList<>();
+            printList.add(String.format("##### dumping stack at: %s #####\n", this.getFormattedCallerStackPosString()));
             for (StackTraceElement stackTraceElement : Thread.currentThread().getStackTrace()) {
-                System.out.println(stackTraceElement);
+                printList.add(stackTraceElement.toString());
             }
-            System.out.println("##### dumping stack end #####");
+            printList.add("##### dumping stack end #####");
+            printer.print(printList);
         }
 
     }
@@ -80,23 +143,28 @@ public class DebugLogger {
      * @param file the file to debug
      */
     public void fileLog(File file) {
-        try {
-            System.out.printf("-- Debug file log at %s --\n", this.getFormattedCallerStackPosString());
-            System.out.printf("File name      : %s\n" + "File parent    : %s\n" + "Caonical path  : %s\n",
-                              file.getName(),
-                              file.getParent(),
-                              file.getCanonicalPath());
-            if (!file.exists()) {
-                System.out.println("- file dont exist -");
-            } else if (file.isDirectory()) {
-                System.out.printf("- file is directory -\n" + "Num children    : %s\n", file.listFiles().length);
-            } else if (file.isFile()) {
-                System.out.printf("- file is file -\n" + "Size             : %s\n", file.length());
-            }
+        if (print) {
+            ArrayList<String> printList = new ArrayList<>();
+            try {
+                printList.add(String.format("-- Debug file log at %s --\n", this.getFormattedCallerStackPosString()));
+                printList.add(String.format("File name      : %s\n" + "File parent    : %s\n" + "Caonical path  : %s\n",
+                                            file.getName(),
+                                            file.getParent(),
+                                            file.getCanonicalPath()));
+                if (!file.exists()) {
+                    printList.add("- file dont exist -");
+                } else if (file.isDirectory()) {
+                    printList.add(String.format("- file is directory -\n" + "Num children    : %s\n",
+                                                file.listFiles().length));
+                } else if (file.isFile()) {
+                    printList.add(String.format("- file is file -\n" + "Size             : %s\n", file.length()));
+                }
 
-            System.out.println("-- log end --");
-        } catch (IOException e) {
-            System.out.println("debug err IO exeption");
+                printList.add("-- log end --");
+                printer.print(printList);
+            } catch (IOException e) {
+                System.out.println("debug err IO exeption");
+            }
         }
     }
 
