@@ -19,7 +19,7 @@ popd
 
 # start the support systems, kafka and traefik
 pushd ./modules/
-docker-compose -f master.docker-compose.yaml --env-file ./../host.env up -d -- build
+docker-compose -f master.docker-compose.yaml --env-file ./../host.env up -d --build
 popd
 
 # start the master
