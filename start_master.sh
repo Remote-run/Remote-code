@@ -1,7 +1,7 @@
 
 
-DOCKER_BUILDKIT=1
-COMPOSE_DOCKER_CLI_BUILD=1
+export DOCKER_BUILDKIT=1
+export COMPOSE_DOCKER_CLI_BUILD=1
 
 # exit when any command fails
 set -e
