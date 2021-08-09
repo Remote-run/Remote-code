@@ -39,8 +39,8 @@ services:
     container_name: remote-code-master
     image: remote-code-master:latest
     build:
-      context: ./../core
-      dockerfile: Dockerfile
+      context: ./../
+      dockerfile: ./core/Dockerfile
 
     labels:
       - "traefik.http.routers.app.rule=Host(`api.remote-code.woldseth.xyz`) && PathPrefix(`/app/`)"
