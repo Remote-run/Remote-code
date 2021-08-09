@@ -9,7 +9,7 @@ trap popd EXIT
 
 # build the project
 pushd ./modules/auth/deploy
-docker-compose --env-file host.env up --build -d
+docker-compose --env-file ./../../../host.env up --build -d
 popd
 
 # build the project
