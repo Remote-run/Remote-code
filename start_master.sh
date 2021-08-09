@@ -23,6 +23,6 @@ docker-compose -f master.docker-compose.yaml --env-file ./../host.env up -d --bu
 popd
 
 # start the master
-pushd .modules/master/deploy
+pushd ./modules/master/deploy
 docker-compose up -d -- build
 popd
