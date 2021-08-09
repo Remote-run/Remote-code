@@ -9,7 +9,7 @@ trap popd EXIT
 
 # build the project
 pushd ./modules/auth/deploy
-docker-compose --env-file ./../../../host.env up --build -d
+docker-compose up --build -d
 popd
 
 # build the project
@@ -19,7 +19,7 @@ popd
 
 # start the support systems, kafka and traefik
 pushd ./modules/
-docker-compose -f master.docker-compose.yaml up -d -- build
+docker-compose -f master.docker-compose.yaml --env-file ./../host.env up -d -- build
 popd
 
 # start the master
