@@ -24,5 +24,5 @@ popd
 
 # start the master
 pushd ./modules/master/deploy
-docker-compose up -d -- build
+docker-compose up -d --build
 popd
