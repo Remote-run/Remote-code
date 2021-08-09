@@ -2,35 +2,6 @@ version: "3.8"
 
 
 services:
-  remote-code-db:
-    container_name: remote-code-db
-    image: postgres
-
-    env_file:
-      - postgress_db/runtime.env
-    environment:
-      PGDATA: '/var/lib/postgresql/data/pgdata'
-
-    expose:
-      - "5432"
-
-    networks:
-      remote_code_net:
-
-    labels:
-      - "traefik.enable=false"
-
-
-    volumes:
-      - type: volume
-        source: postgres_db
-        target: /var/lib/postgresql/data
-
-      - type: bind
-        source: ./postgress_db/init_script/
-        target: /docker-entrypoint-initdb.d
-
-    restart: unless-stopped
 
   reverse-proxy:
     container_name: traefik-proxy
@@ -38,9 +9,9 @@ services:
 
     ports:
       # Front ports (must have 80 for ACME protocol)
-      - "158.38.65.210:80:80"
-      - "158.38.65.210:443:443"
-      - "8090:8080"
+      - "${PUB_IP}:80:80"
+      - "${PUB_IP}:443:443"
+      - "${LOCAL_IP}:8090:8080"
 
     env_file:
       - ./traefik/godady_api.env
@@ -65,10 +36,72 @@ services:
       - remote_code_net
 
 
+  zookeeper:
+    image: bitnami/zookeeper
+    ports:
+      - "${LOCAL_IP}:2181:2181"
+    volumes:
+      - "zookeeper_data:/bitnami"
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+
+    networks:
+      - remote_code_net
+
+    labels:
+      - "traefik.enable=false"
+
+  kafka:
+    image: bitnami/kafka
+    container_name: remote-code-kafka
+    ports:
+      - "${LOCAL_IP}:9092:9092"
+      - "${LOCAL_IP}:9093:9093"
+    volumes:
+      - "kafka_data:/bitnami"
+    environment:
+      #      - KAFKA_BROKER_ID=1
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092
+      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CLIENT:PLAINTEXT,EXTERNAL:PLAINTEXT
+      - KAFKA_CFG_LISTENERS=CLIENT://:9092,EXTERNAL://:9093
+      - KAFKA_CFG_ADVERTISED_LISTENERS=CLIENT://kafka:9092,EXTERNAL://localhost:9093
+      - KAFKA_INTER_BROKER_LISTENER_NAME=CLIENT
+      - ALLOW_PLAINTEXT_LISTENER=yes
+    depends_on:
+      - zookeeper
+
+    networks:
+      - remote_code_net
+
+
+    labels:
+      - "traefik.enable=false"
+
+  kafka-ui:
+    image: provectuslabs/kafka-ui
+    container_name: kafka-ui
+    ports:
+      - "${LOCAL_IP}:8081:8080"
+    restart: always
+    environment:
+      - KAFKA_CLUSTERS_0_NAME=local
+      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka:9092
+      - KAFKA_CLUSTERS_0_ZOOKEEPER=zookeeper:2181
+    networks:
+      - remote_code_net
+
+
+    labels:
+      - "traefik.enable=false"
 networks:
   remote_code_net:
     external: true
 
 
+
 volumes:
-  postgres_db:
+  zookeeper_data:
+    driver: local
+  kafka_data:
+    driver: local

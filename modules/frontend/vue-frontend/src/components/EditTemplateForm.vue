@@ -27,15 +27,15 @@ import * as restService from '@/services/RestService'
 import { APP_ROUTES } from '@/router/Routes'
 
 export default class EditTemplateForm extends Vue {
-  // templateName = '';
-  // templateHttpCloneLink = '';
-  // templateDockerBuildSteps = '';
+  templateName = '';
+  templateHttpCloneLink = '';
+  templateDockerBuildSteps = '';
 
-  templateName = 'test template name';
-  templateHttpCloneLink = 'https://github.com/Remote-run/remote-code-tf-test.git';
-  templateDockerBuildSteps = 'RUN apt update && apt upgrade -y && apt install -y curl python3 python3-pip\n' +
-    'RUN pip3 install tensorflow pylint\n';
-  //
+  // templateName = 'MNST classifying with Python tensorflow exercise';
+  // templateHttpCloneLink = 'https://github.com/Remote-run/Remote-run-Python-Tensorflow-gpu-mnist-example.git';
+  // templateDockerBuildSteps = 'RUN apt update && apt upgrade -y && apt install -y curl python3 python3-pip\n' +
+  //   'RUN pip3 install tensorflow pylint pyplot\n';
+
   // mounted () {
   //   if (this.activeTemplate !== undefined){
   //     this.templateName = this.activeTemplate.templateName;

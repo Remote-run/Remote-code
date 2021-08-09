@@ -2,6 +2,39 @@ version: "3.8"
 
 
 services:
+
+
+  remote-code-db:
+    container_name: remote-code-db
+    image: postgres
+
+    env_file:
+      - service_db/runtime.env
+
+    environment:
+      PGDATA: '/var/lib/postgresql/data/pgdata'
+
+    expose:
+      - "5432"
+
+    networks:
+      remote_code_net:
+
+    labels:
+      - "traefik.enable=false"
+
+
+    volumes:
+      - type: bind
+        source: ./service_db/db_files
+        target: /var/lib/postgresql/data/pgdata
+
+      - type: bind
+        source: ./service_db/init_script/
+        target: /docker-entrypoint-initdb.d
+
+    restart: unless-stopped
+
   remote-code-master:
     container_name: remote-code-master
     image: remote-code-master:latest
@@ -28,6 +61,9 @@ services:
 
     networks:
       - remote_code_net
+
+    depends_on:
+      - remote-code-db
 
 networks:
   remote_code_net:

@@ -1,1 +1,0 @@
-docker exec -it test_remote_code_cont /bin/bash -c "cat ~/.config/code-server/config.yaml"

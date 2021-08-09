@@ -13,6 +13,9 @@ services:
     networks:
       - remote_code_net
 
+    environment:
+      HOST_NFS_PATH: ${PWD}/../NFS_SHARED_FILE/
+
     labels:
       - "traefik.enable=false"
 

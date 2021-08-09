@@ -14,9 +14,7 @@ services:
 
     env_file:
       - godady_api.env
-    #    environment:
-    #      GODADDY_API_KEY: ${API_KEY}
-    #      GODADDY_API_SECRET: ${API_SECRET}
+
 
 
     volumes:
