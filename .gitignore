@@ -26,8 +26,9 @@ NFS_SHARED_FILE/*
 .DS_store
 *.war
 
-.env
+host.env.example
 # traefik cert
 config/traefik/cert.json
 
 .gradle/
+host.env
