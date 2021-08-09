@@ -27,4 +27,3 @@ popd
 pushd ./modules/master/deploy
 mkdir ./service_db/db_files &2> /dev/null
 docker-compose up -d --build
-popd
