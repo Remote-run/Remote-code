@@ -107,4 +107,14 @@ public class ProjectResource {
             return Response.ok().status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
+
+
+    /**
+     * Used for readiness chek
+     */
+    @GET
+    @Path("ping")
+    public Response ping() {
+        return Response.ok("pong").build();
+    }
 }

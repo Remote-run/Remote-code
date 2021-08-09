@@ -1,4 +1,4 @@
-package no.woldseth.auth.health;
+package no.ntnu.remotecode.master.health;
 
 
 import org.eclipse.microprofile.health.HealthCheck;
@@ -14,7 +14,7 @@ import javax.ws.rs.client.ClientBuilder;
  */
 @Readiness
 @ApplicationScoped
-public class AuthReadinessCheck implements HealthCheck {
+public class MasterReadinessCheck implements HealthCheck {
 
     private static final String readinessCheck = "Auth Service Readiness Check";
 
@@ -30,7 +30,7 @@ public class AuthReadinessCheck implements HealthCheck {
     private boolean isSystemServiceReachable() {
         try {
             Client client = ClientBuilder.newClient();
-            client.target("http://localhost:9080/auth/key.pem").request().get();
+            client.target("http://localhost:9080/projects/ping").request().get();
 
             return true;
         } catch (Exception ex) {

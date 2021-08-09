@@ -59,6 +59,16 @@ services:
         source: $PWD/../../../NFS_SHARED_FILE
         target: /application_storage/shared_files
 
+
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost/health/ready" ]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+    restart: unless-stopped
+
     networks:
       - remote_code_net
 
