@@ -21,8 +21,11 @@ server
 /nbdist/
 /.nb-gradle/
 
-NFS_SHARED_FILE/*
-!NFS_SHARED_FILE/tmp_for_dev
+NFS_SHARED_FILE/container_dirs/*
+NFS_SHARED_FILE/templates/*
+!NFS_SHARED_FILE/templates/.gitkeep
+!NFS_SHARED_FILE/container_dirs/.gitkeep
+
 .DS_store
 *.war
 

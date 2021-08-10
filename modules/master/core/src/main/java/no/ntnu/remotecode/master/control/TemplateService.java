@@ -102,8 +102,12 @@ public class TemplateService {
         UUID templateKey = UUID.randomUUID();
 
 
-        File buildDir = new File(getTemplateSaveDir(), templateKey.toString());
-        buildDir.mkdirs();
+        File    buildDir = new File(getTemplateSaveDir(), templateKey.toString());
+        boolean suc      = buildDir.mkdirs();
+
+        if (!suc) {
+            throw new IOException("Unable to create template dir");
+        }
 
         Template newTemplate = new Template();
 
