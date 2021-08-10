@@ -4,6 +4,8 @@ Description of the system can be found in the [system_info](doc/system_info.md) 
 
 ## Requirements
 
+The services are built in build containers so nether maven nor Java is required
+
 #### Docker
 
 The containers are run using docker install instructions are found [here](https://docs.docker.com/get-docker/)
@@ -29,13 +31,13 @@ The traefik instance needs to be provided with a api key to whatever dns provide
 config file to the used provider and inject the correct env vars for that provider. A list of the providers and keys can
 be found [here](https://doc.traefik.io/traefik/https/acme/#providers).
 
-The master and slave can bud does not have to run on the same server
+The master and slave can but does not have to run on the same server. 
 
 - To start the master, run the start_master.sh script
 
 - To start the slave, run the start_slave.sh script
 
-
+The master instance is health checked and will auto-heal. 
 
 
 
