@@ -92,13 +92,16 @@ public class DockerContainerService {
         runCommand.addVolume(hostdirP, containerVolumeMountPath);
 
         runCommand.setDetached(true);
-        //        runCommand.setDumpIO(true);
+        runCommand.setDumpIO(true);
         Process process  = runCommand.run();
         int     exitCode = 1;
         try {
             exitCode = process.waitFor();
         } catch (InterruptedException e) {
             e.printStackTrace();
+        }
+        if (exitCode != 0) {
+            dbl.log("PROCESS RUN ERROR");
         }
         dbl.log("started command");
         return exitCode == 0;

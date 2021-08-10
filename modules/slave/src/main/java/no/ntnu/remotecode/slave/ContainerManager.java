@@ -31,12 +31,13 @@ public class ContainerManager {
      */
     public boolean startContainer(Project project) {
         dbl.log("container start order issued");
+        boolean suc = false;
         try {
-            containerService.startContainer(project);
+            suc = containerService.startContainer(project);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return true;
+        return suc;
     }
 
     public boolean stopContainer(Project project) {
