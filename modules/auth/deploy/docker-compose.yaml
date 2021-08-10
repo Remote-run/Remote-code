@@ -3,36 +3,36 @@ version: "3.8"
 
 services:
 
-  #  auth-db:
-  #    container_name: auth-db
-  #    image: postgres
-  #
-  #    env_file:
-  #      - service_db/runtime.env
-  #
-  #    environment:
-  #      PGDATA: '/var/lib/postgresql/data/pgdata'
-  #
-  #    expose:
-  #      - "5432"
-  #
-  #    networks:
-  #      remote_code_net:
-  #
-  #    labels:
-  #      - "traefik.enable=false"
-  #
-  #
-  #    volumes:
-  #      - type: bind
-  #        source: ./service_db/db_files
-  #        target: /var/lib/postgresql/data/pgdata
-  #
-  #      - type: bind
-  #        source: ./service_db/init_script/
-  #        target: /docker-entrypoint-initdb.d
-  #
-  #    restart: unless-stopped
+  auth-db:
+    container_name: auth-db
+    image: postgres
+
+    env_file:
+      - service_db/runtime.env
+
+    environment:
+      PGDATA: '/var/lib/postgresql/data/pgdata'
+
+    expose:
+      - "5432"
+
+    networks:
+      remote_code_net:
+
+    labels:
+      - "traefik.enable=false"
+
+
+    volumes:
+      - type: bind
+        source: ./service_db/db_files
+        target: /var/lib/postgresql/data
+
+      - type: bind
+        source: ./service_db/init_script/
+        target: /docker-entrypoint-initdb.d
+
+    restart: unless-stopped
 
 
   remote-code-auth:

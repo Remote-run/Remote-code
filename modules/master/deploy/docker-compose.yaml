@@ -27,7 +27,7 @@ services:
     volumes:
       - type: bind
         source: ./service_db/db_files
-        target: /var/lib/postgresql/data/pgdata
+        target: /var/lib/postgresql/data
 
       - type: bind
         source: ./service_db/init_script/
