@@ -8,7 +8,7 @@ trap popd EXIT
 
 # Build the base container
 # TODO: should be automated later
-modules/slave/container_envs/_base/build.sh
+docker image build modules/slave/container_envs/_base -t remote-code-base
 
 # start the slave
 pushd ./modules/master/deploy
