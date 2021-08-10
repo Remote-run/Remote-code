@@ -8,5 +8,4 @@ trap popd EXIT
 
 # start the slave
 pushd ./modules/master/deploy
-mkdir -p ./service_db/db_files
 docker-compose up -d --build

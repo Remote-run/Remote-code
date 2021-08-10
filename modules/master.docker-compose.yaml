@@ -3,6 +3,14 @@ version: "3.8"
 
 services:
 
+  autoheal:
+    restart: always
+    image: willfarrell/autoheal
+    environment:
+      - AUTOHEAL_CONTAINER_LABEL=all
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
   reverse-proxy:
     container_name: traefik-proxy
     image: traefik:v2.2
@@ -15,10 +23,7 @@ services:
 
     env_file:
       - ./traefik/godady_api.env
-    #    environment:
-    #      GODADDY_API_KEY: ${API_KEY}
-    #      GODADDY_API_SECRET: ${API_SECRET}
-    #
+
 
     volumes:
       - type: bind

@@ -9,7 +9,6 @@ trap popd EXIT
 
 # build the project
 pushd ./modules/auth/deploy
-mkdir -p ./service_db/db_files
 docker-compose up --build -d
 popd
 
@@ -25,5 +24,4 @@ popd
 
 # start the master
 pushd ./modules/master/deploy
-mkdir -p ./service_db/db_files
 docker-compose up -d --build
