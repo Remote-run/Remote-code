@@ -11,5 +11,5 @@ trap popd EXIT
 docker image build modules/slave/container_envs/_base -t remote-code-base
 
 # start the slave
-pushd ./modules/master/deploy
+pushd ./modules/slave
 docker-compose up -d --build
