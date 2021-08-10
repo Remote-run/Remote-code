@@ -92,7 +92,7 @@ public class DockerContainerService {
         runCommand.addVolume(hostdirP, containerVolumeMountPath);
 
         runCommand.setDetached(true);
-        runCommand.setDumpIO(true);
+        //        runCommand.setDumpIO(true);
         Process process  = runCommand.run();
         int     exitCode = 1;
         try {

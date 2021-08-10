@@ -67,7 +67,6 @@ public class DockerImageService {
                                                                            new File(abc, "Dockerfile"));
 
         buildCommand.setBlocking(true);
-        buildCommand.setDumpIO(true);
         buildCommand.run();
 
     }

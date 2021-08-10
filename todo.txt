@@ -2,6 +2,8 @@
 
 the slaves shold notify running when containers are registered as running not when the building is ok
 
+test building the templates provided
+round robin deligation of the gpus to the container running on the serer
 
 routing to slave workers:
 https://doc.traefik.io/traefik/v2.3/providers/file/

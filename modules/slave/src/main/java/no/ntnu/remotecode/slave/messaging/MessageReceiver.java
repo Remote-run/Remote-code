@@ -46,8 +46,9 @@ public class MessageReceiver extends KafkaConsumerBase {
 
         try {
             //Gson          gson = new Gson();
-            Jsonb jsonb = JsonbBuilder.create();
-            ContainerTask task = jsonb.fromJson(value, ContainerTask.class);//gson.fromJson(value, ContainerTask.class);
+            Jsonb         jsonb = JsonbBuilder.create();
+            ContainerTask task  = jsonb.fromJson(value,
+                                                 ContainerTask.class);//gson.fromJson(value, ContainerTask.class);
             taskId = task.getId();
             messageProducer.addAckMessage(taskId, TaskStatus.WORKING);
 
@@ -63,20 +64,27 @@ public class MessageReceiver extends KafkaConsumerBase {
                 case DELETE -> containerManager.deleteContainer(task.getProject());
             };
 
+            boolean alreadyComplete = containerStatusWatcher.getContainerState(task.getProject().getContainerName())
+                                                            .equals(wantedState);
 
-            long finalTaskId = taskId;
-            containerStatusWatcher.onStateChange(task.getProject().getContainerName(), dockerContainerState -> {
-                dbl.log("status change");
-                if (dockerContainerState == wantedState) {
-                    // if the new state is running send ack saying the task is complete and stop watching
-                    dbl.log("is ok sending container running");
-                    messageProducer.addAckMessage(finalTaskId, TaskStatus.COMPLETE);
-                    return false;
-                } else {
-                    return true;
+            if (!alreadyComplete) {
+                long finalTaskId = taskId;
+                containerStatusWatcher.onStateChange(task.getProject().getContainerName(), dockerContainerState -> {
+                    dbl.log("status change");
+                    if (dockerContainerState == wantedState) {
+                        // if the new state is running send ack saying the task is complete and stop watching
+                        dbl.log("is ok sending container running");
+                        messageProducer.addAckMessage(finalTaskId, TaskStatus.COMPLETE);
+                        return false;
+                    } else {
+                        return true;
 
-                }
-            });
+                    }
+                });
+            } else {
+                messageProducer.addAckMessage(taskId, TaskStatus.COMPLETE);
+            }
+
         } catch (Exception ignore) {
             ignore.printStackTrace();
             dbl.log("Task message error");
