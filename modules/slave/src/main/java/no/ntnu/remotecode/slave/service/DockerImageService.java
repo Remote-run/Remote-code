@@ -1,6 +1,7 @@
 package no.ntnu.remotecode.slave.service;
 
 import no.ntnu.remotecode.master.model.Template;
+import no.ntnu.remotecode.slave.DebugLogger;
 import no.ntnu.remotecode.slave.docker.DockerEngineInterface;
 import no.ntnu.remotecode.slave.docker.command.DockerImageBuildCommand;
 
@@ -14,6 +15,8 @@ import java.util.concurrent.Semaphore;
 public class DockerImageService {
 
 
+    public static DebugLogger dbl = new DebugLogger(true);
+
     DockerEngineInterface dockerEngineInterface = DockerEngineInterface.getDefault();
     IDockerHostFileSystemInterface hostFs = new HostInteraction();
 
@@ -21,8 +24,10 @@ public class DockerImageService {
 
 
     public void buildImage(Template template) throws InterruptedException, FileSystemException, FileNotFoundException {
+        dbl.log("new template request");
         boolean doImageExist = doImageExistLocally(template.getTemplateImageName());
         if (!doImageExist) {
+            dbl.log("image is not pressent building it");
             if (buildMap.containsKey(template.getTemplateImageName())) {
                 Semaphore lock = buildMap.get(template.getTemplateImageName());
 
@@ -52,6 +57,7 @@ public class DockerImageService {
     private void buildTemplate(Template template) throws FileSystemException, FileNotFoundException {
         //        File hostTemplateBuildDir = hostFs
         //                .getHostFileLocation(new File(hostFs.getTemplateDirHost(), template.getBuildDirName()));
+        dbl.log("Template is being built");
         File containerTemplateDir = hostFs.getHostFileLocation(new File(hostFs.getTemplateDirContainer(),
                                                                         template.getBuildDirName()));
 
@@ -61,6 +67,7 @@ public class DockerImageService {
                                                                            new File(abc, "Dockerfile"));
 
         buildCommand.setBlocking(true);
+        buildCommand.setDumpIO(true);
         buildCommand.run();
 
     }
