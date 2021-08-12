@@ -39,7 +39,9 @@ The master and slave can but does not have to run on the same server.
 
 The master instance is health checked and will auto-heal. 
 
+The traefik gui interface can be found on port 8090 on the master offline ip.
 
+The kafka gui interface can be found on port 8081 on the master offline ip.
 
 
 
