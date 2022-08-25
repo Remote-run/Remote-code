@@ -1,11 +1,6 @@
 # Remote code system
 
-
-
 [TOC]
-
-
-
 
 ## Overview
 
@@ -14,10 +9,6 @@ The remote code system is a tool for easily instantiating GPU accelerated vs-cod
 Architecturally the system consists of a master node responsible for serving the web page and organizing the workers who are managing the containers locally on different working nodes. The uml diagram below shows the system setup
 
 ![overordnet_syn_system](system_info.assets/overordnet_syn_system.png)
-
-
-
-
 
 ## The system from a users perspective
 
@@ -34,15 +25,13 @@ The first and most used method of access is through clicking on a project link. 
 
 #### Login page
 
-![Screenshot from 2021-08-05 09-57-08](system_info.assets/Screenshot from 2021-08-05 09-57-08.png)
+![Screenshot from 2021-08-05 09-57-08](system_info.assets/Screenshot1.png)
 *Image 1: The login screen shown to user who are not logged in*
 
 #### Project dialog
 
 ![Screenshot from 2021-08-05 10-31-17](system_info.assets/Screenshot from 2021-08-05 10-31-17.png)
 *Image 2: the project info page. Here users can see the project acces key if key is enabled, and a button that takes them to the project*
-
-
 
 ### Method 2 through the login portal
 
@@ -52,8 +41,6 @@ The other way for users to access their projects are through the projects page. 
 
 ![Screenshot from 2021-08-05 12-00-27](system_info.assets/Screenshot from 2021-08-05 12-00-27.png)
 *The user projects page*
-
-
 
 ## The system from a admins perspective
 
@@ -70,8 +57,6 @@ There are 2 ways of becoming an administrator ether by being added by another ad
 To create a new template the administrator has to navigate to the new template option in the side navigation. This will take the administrator to the create Template page. Here the administrator can define what the template is called what repository shod be cloned in to the starting directory and how the docker image shod be built. When the admin clicks save button (s)he will be navigated to the current templates page where the template will be located. this page wil be discussed in the next section.
 
 The Docker build steps only allows ``RUN`` or ``ENV`` lines, the image is built from a Cuda cudnn image to provide the gpu acceleration.
-
-
 
 #### New template page
 
@@ -90,19 +75,13 @@ The current templates page contains a list over the owned admin templates. On th
 ![Screenshot from 2021-08-05 12-22-13](system_info.assets/Screenshot from 2021-08-05 12-22-13.png)
 *list over templates owned by the current administrator*
 
-
-
 ### Create new admin user
 
 To create a new administrator throug the web page the logged in admin has to navigate to the *New admin user* page. On this page there is a simple form for adding new administrators.
 
-
-
 #### New admin page
 
 ![Screenshot from 2021-08-05 12-25-10](system_info.assets/Screenshot from 2021-08-05 12-25-10.png)
-
-
 
 ## Vs-code instance
 
@@ -117,14 +96,10 @@ The project cloned in both instances where a MNIST demo. when clicking the link,
 
 In the project the user can easily run GPU accelerated ML instances from the IDE terminal. Because the session persists the user can close the browser while the training is running and open it later to get the results
 
-
-
 ![Screenshot from 2021-08-05 11-47-16](system_info.assets/Screenshot from 2021-08-05 11-47-16.png)
 *In the console at the bottom we can see a 97% accurate MNIST classifier has been trained through the browser. Also note the model has been saved to the save_data seen in the file tree on the left, from where it can be downloaded for future use.*
 
-
-
-### Multi staged training with remote-run 
+### Multi staged training with remote-run
 
 The repository cloned above is a remote-run compatible repository, this means that training tasks can be delegated to a running remote run server where it can be trained. 
 
@@ -137,4 +112,3 @@ One scenario this cold be useful is by having a large numer of low cost GPU's fo
 
 ![Screenshot from 2021-08-05 12-28-30](system_info.assets/Screenshot from 2021-08-05 12-28-30.png)
 *In the console a remote-run client dialog can be seen*
-
