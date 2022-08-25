@@ -4,8 +4,6 @@ Description of the system can be found in the [system_info](doc/system_info.md) 
 
 ## Requirements
 
-The services are built in build containers so nether maven nor Java is required
-
 #### Docker
 
 The containers are run using docker install instructions are found [here](https://docs.docker.com/get-docker/)
