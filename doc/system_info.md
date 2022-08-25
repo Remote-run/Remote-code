@@ -1,7 +1,5 @@
 # Remote code system
 
-[TOC]
-
 ## Overview
 
 The remote code system is a tool for easily instantiating GPU accelerated vs-code instances in the browser. These instances can subsequently be used to run GPU accelerated ML library's like TensorFlow. The system is designed to have 2 groups: Administrators capable of generating new templates and sharing links to initialize these templates. Users capable of creating a new instance of a generated template from the link provided by an administrator. 
@@ -24,13 +22,11 @@ The first and most used method of access is through clicking on a project link. 
 *Uml diagram of the activity flow*
 
 #### Login page
-
-![Screenshot from 2021-08-05 09-57-08](system_info.assets/Screenshot1.png)
+![](system_info.assets/login.png)
 *Image 1: The login screen shown to user who are not logged in*
 
 #### Project dialog
-
-![Screenshot from 2021-08-05 10-31-17](system_info.assets/Screenshot from 2021-08-05 10-31-17.png)
+![](system_info.assets/proj_dialog.png)
 *Image 2: the project info page. Here users can see the project acces key if key is enabled, and a button that takes them to the project*
 
 ### Method 2 through the login portal
@@ -38,8 +34,7 @@ The first and most used method of access is through clicking on a project link. 
 The other way for users to access their projects are through the projects page. The login is the same as over. In the project page the users will se their own projects, status for the project containers, link to go to the container, and the option to delete the container
 
 #### The user projects page
-
-![Screenshot from 2021-08-05 12-00-27](system_info.assets/Screenshot from 2021-08-05 12-00-27.png)
+![](system_info.assets/owned_proj.png)
 *The user projects page*
 
 ## The system from a admins perspective
@@ -59,11 +54,9 @@ To create a new template the administrator has to navigate to the new template o
 The Docker build steps only allows ``RUN`` or ``ENV`` lines, the image is built from a Cuda cudnn image to provide the gpu acceleration.
 
 #### New template page
-
-![Screenshot from 2021-08-05 12-07-55](system_info.assets/Screenshot from 2021-08-05 12-07-55.png)
+![](system_info.assets/new_template_empty.png)
 *the page for adding new templates*
-
-![Screenshot from 2021-08-05 12-13-01](system_info.assets/Screenshot from 2021-08-05 12-13-01.png)
+![](system_info.assets/new_template_filled.png)
 *new template page with the values used to create the mnst example
 
 ### Edit / delete templates
@@ -71,8 +64,7 @@ The Docker build steps only allows ``RUN`` or ``ENV`` lines, the image is built 
 The current templates page contains a list over the owned admin templates. On this page the admin can delete/edit the different templates (s)he has created.
 
 #### The current user templates page
-
-![Screenshot from 2021-08-05 12-22-13](system_info.assets/Screenshot from 2021-08-05 12-22-13.png)
+![](system_info.assets/current_user_owned.png)
 *list over templates owned by the current administrator*
 
 ### Create new admin user
@@ -80,23 +72,20 @@ The current templates page contains a list over the owned admin templates. On th
 To create a new administrator throug the web page the logged in admin has to navigate to the *New admin user* page. On this page there is a simple form for adding new administrators.
 
 #### New admin page
-
-![Screenshot from 2021-08-05 12-25-10](system_info.assets/Screenshot from 2021-08-05 12-25-10.png)
+![](system_info.assets/create_admin_user.png)
 
 ## Vs-code instance
 
 The project cloned in both instances where a MNIST demo. when clicking the link, ether through my projects or the project info page the user will be met with a vs-code instance in the browser with the directory cloned from the template specification open. The repository is cloned when building the individual containers so updates to the repository can be completed post template generation. 
 
 #### Landing page in project
-
-![Screenshot from 2021-08-05 10-44-58](system_info.assets/Screenshot from 2021-08-05 10-44-58.png)
+![](system_info.assets/proj_landing_page.png)
 *here we can see the usual welcom page in vs code with the template repository cloned in to the side bar*
 
 #### Running ML in the project
 
 In the project the user can easily run GPU accelerated ML instances from the IDE terminal. Because the session persists the user can close the browser while the training is running and open it later to get the results
-
-![Screenshot from 2021-08-05 11-47-16](system_info.assets/Screenshot from 2021-08-05 11-47-16.png)
+![](system_info.assets/running_ml.png)
 *In the console at the bottom we can see a 97% accurate MNIST classifier has been trained through the browser. Also note the model has been saved to the save_data seen in the file tree on the left, from where it can be downloaded for future use.*
 
 ### Multi staged training with remote-run
@@ -109,6 +98,5 @@ One scenario this cold be useful is by having a large numer of low cost GPU's fo
 - For "Production"/ long training sessions, where quick completion time is the most important factor, the developer can simply send the project developed and tested on remote-code to a remote run cluster with high performance gpu's, and simply receive a mail with the training result when the training is complete.
 
 #### Running remote-run from a remote-code instance
-
-![Screenshot from 2021-08-05 12-28-30](system_info.assets/Screenshot from 2021-08-05 12-28-30.png)
+![](system_info.assets/show_cuda.png)
 *In the console a remote-run client dialog can be seen*
